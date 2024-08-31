@@ -9,15 +9,33 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_native_splash: 2.4.0
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
 
+
 flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    - assets/TwistBloom_logo.png
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-Italic.ttf
+          style: italic
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  background_image: "assets/splash_background.png"
+  image: "assets/TwistBloom_logo.png"
