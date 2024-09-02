@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/auth_page.dart';
+import 'package:twist_bloom/signin_page.dart';
 import 'dart:math' as math;
 import 'dart:async';
 

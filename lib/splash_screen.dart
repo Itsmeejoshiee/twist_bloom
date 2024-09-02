@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/auth_page.dart';
+import 'package:twist_bloom/signin_page.dart';
 import 'dart:math' as math;
 import 'dart:async';
 
@@ -10,7 +10,7 @@ void main() {
 void _navigateToAuthPage(BuildContext context) {
   Navigator.of(context).push(
     PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => AuthPage(),
+      pageBuilder: (context, animation, secondaryAnimation) => SignInPage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;

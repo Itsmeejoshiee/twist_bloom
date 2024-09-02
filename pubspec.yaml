@@ -22,15 +22,20 @@ flutter:
 
   assets:
     - assets/TwistBloom_logo.png
+    - assets/icon/google.png
 
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins-Regular.ttf
-        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
           weight: 700
-        - asset: assets/fonts/Poppins-Italic.ttf
+        - asset: assets/fonts/Poppins/Poppins-Italic.ttf
           style: italic
+    
+    - family: Arimo
+      fonts:
+        - asset: assets/fonts/Arimo/static/Arimo-Regular.ttf
 
 flutter_native_splash:
   android: true
