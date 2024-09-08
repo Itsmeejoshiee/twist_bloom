@@ -16,6 +16,16 @@ class SettingsPage extends StatelessWidget {
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           title: Center(child: Text('Settings')),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: (){},
+            ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {},
+            )
+          ],
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
@@ -32,64 +42,25 @@ class SettingsPage extends StatelessWidget {
           ),
           child: DefaultTextStyle(
             style: TextStyle(fontSize: 20, color: Colors.black),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text('Notification Preference')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Language')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Privacy Settings')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Account Security')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Shipping Preferences')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Order History')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Help & Support')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('App Version')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Terms & Condition')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Feedback')
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Data Sync')
-                  ],
-                ),
-              ],
+            child: Container(
+              margin: EdgeInsetsDirectional.symmetric(horizontal: 16 ,vertical: 60),
+              color: Colors.white,
+              child: ListView(
+                children: [
+                  _buildListTile(Icons.notifications, 'Notification Preference'),
+                  _buildListTile(Icons.language, 'Language'),
+                  _buildListTile(Icons.currency_exchange, 'Currency'),
+                  _buildListTile(Icons.privacy_tip, 'Privacy Settings'),
+                  _buildListTile(Icons.security, 'Account Security'),
+                  _buildListTile(Icons.local_shipping, 'Shipping Preferences'),
+                  _buildListTile(Icons.history, 'Order History'),
+                  _buildListTile(Icons.help, 'Help & Support'),
+                  _buildListTile(Icons.info, 'App Version'),
+                  _buildListTile(Icons.article, 'Terms & Conditions'),
+                  _buildListTile(Icons.feedback, 'Feedback'),
+                  _buildListTile(Icons.sync, 'Data Sync'),
+                ],
+              ),
             ),
           ),
         ),
@@ -97,3 +68,13 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
+
+  ListTile _buildListTile(IconData icon, String title) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      onTap: () {
+        // Add your onTap functionality here
+      },
+    );
+  }
