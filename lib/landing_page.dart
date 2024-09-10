@@ -50,13 +50,13 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          _pages[_currentIndex], 
+          _pages[_currentIndex],
           const Positioned(
             top: 20,
             left: 10,
             child: IconButton(
               icon: Icon(Icons.account_circle, color: Colors.black, size: 48),
-              onPressed: null, 
+              onPressed: null,
             ),
           ),
           Positioned(
@@ -77,13 +77,13 @@ class _MainScreenState extends State<MainScreen> {
 class BottomNavBar extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
-  final double iconSize; 
+  final double iconSize;
 
   const BottomNavBar({
     super.key,
     required this.currentIndex,
     required this.onTap,
-    this.iconSize = 30.0, 
+    this.iconSize = 30.0,
   });
 
   @override
@@ -94,10 +94,10 @@ class BottomNavBar extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
             blurRadius: 10,
-            offset: const Offset(0, -2), 
+            offset: const Offset(0, -2),
           ),
         ],
-        color: Colors.white, 
+        color: Colors.white,
       ),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -130,12 +130,12 @@ class BottomNavBar extends StatelessWidget {
             isSelected: currentIndex == 4,
           ),
         ],
-        selectedItemColor: Colors.transparent, 
-        unselectedItemColor: Colors.grey, 
-        showUnselectedLabels: false, 
-        showSelectedLabels: false, 
-        backgroundColor: Colors.transparent, 
-        elevation: 0, 
+        selectedItemColor: Colors.transparent,
+        unselectedItemColor: Colors.grey,
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
     );
   }
@@ -147,20 +147,20 @@ class BottomNavBar extends StatelessWidget {
   }) {
     return BottomNavigationBarItem(
       icon: Container(
-        width: iconSize + 16, 
-        height: iconSize + 16, 
+        width: iconSize + 16,
+        height: iconSize + 16,
         decoration: BoxDecoration(
           color: isSelected ? const Color(0xFFFF92B2) : Colors.transparent,
-          borderRadius: BorderRadius.circular(12), 
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
-            if (isSelected) _buildInnerShadow(), 
+            if (isSelected) _buildInnerShadow(),
             Center(
               child: Image.asset(
                 iconPath,
-                color: isSelected ? Colors.white : Colors.black, 
+                color: isSelected ? Colors.white : Colors.black,
                 width: iconSize,
                 height: iconSize,
               ),
@@ -168,13 +168,13 @@ class BottomNavBar extends StatelessWidget {
           ],
         ),
       ),
-      label: '', 
+      label: '',
     );
   }
 
   Widget _buildInnerShadow() {
     return CustomPaint(
-      size: Size(iconSize + 16, iconSize + 16), 
+      size: Size(iconSize + 16, iconSize + 16),
       painter: InnerShadowPainter(),
     );
   }
@@ -194,19 +194,19 @@ class InnerShadowPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Rect rect = Offset.zero & size;
-    final RRect rrect = RRect.fromRectAndRadius(rect, Radius.circular(borderRadius));
+    final RRect rrect =
+        RRect.fromRectAndRadius(rect, Radius.circular(borderRadius));
 
     final Paint shadowPaint = Paint()
       ..color = shadowColor
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, blurRadius);
-    
+
     final Path shadowPath = Path()
       ..addRRect(rrect)
       ..addRRect(rrect.inflate(blurRadius))
       ..fillType = PathFillType.evenOdd;
-    
-    final Path clipPath = Path()
-      ..addRRect(rrect);
+
+    final Path clipPath = Path()..addRRect(rrect);
 
     canvas.clipPath(clipPath);
     canvas.drawPath(shadowPath, shadowPaint);
@@ -236,48 +236,49 @@ class _SearchWidgetState extends State<SearchWidget> {
           duration: const Duration(milliseconds: 1),
           child: _isSearching
               ? SizedBox(
-            height: 40,
-            width: 240,
-            child: Center(
-              child: TextField(
-                controller: _searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search...',
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(
-                      color: Colors.black12,
-                      width: 1.0,
+                  height: 40,
+                  width: 240,
+                  child: Center(
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Search...',
+                        filled: true,
+                        fillColor: Colors.white,
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: const BorderSide(
+                            color: Colors.black12,
+                            width: 1.0,
+                          ),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: const Icon(Icons.clear),
+                          onPressed: () {
+                            setState(() {
+                              _searchController.clear();
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   ),
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.clear),
-                    onPressed: () {
-                      setState(() {
-                        _searchController.clear();
-                      });
-                    },
-                  ),
-                ),
-              ),
-            ),
-          )
+                )
               : IconButton(
-            key: ValueKey<bool>(_isSearching),
-            icon: const Icon(Icons.search, color: Colors.black, size: 48),
-            onPressed: () {
-              setState(() {
-                _isSearching = true;
-              });
-            },
-          ),
+                  key: ValueKey<bool>(_isSearching),
+                  icon: const Icon(Icons.search, color: Colors.black, size: 48),
+                  onPressed: () {
+                    setState(() {
+                      _isSearching = true;
+                    });
+                  },
+                ),
         ),
         if (_isSearching)
           IconButton(
             key: ValueKey<bool>(_isSearching),
-            icon: const Icon(Icons.arrow_forward_ios_outlined, color: Colors.black),
+            icon: const Icon(Icons.arrow_forward_ios_outlined,
+                color: Colors.black),
             onPressed: () {
               setState(() {
                 _searchController.clear();
@@ -456,7 +457,7 @@ class ElevatedPromoWidget extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         child: Container(
           height: 150,
-          padding: const EdgeInsets.fromLTRB(16,16,16,16),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: Row(
             children: [
               Expanded(
@@ -466,7 +467,8 @@ class ElevatedPromoWidget extends StatelessWidget {
                   children: const [
                     Text(
                       'Latest Promo!',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 8),
                     Text('Click to discover our latest offers'),
@@ -484,13 +486,14 @@ class ElevatedPromoWidget extends StatelessWidget {
 
 class LatestProductsSlideshow extends StatefulWidget {
   @override
-  _LatestProductsSlideshowState createState() => _LatestProductsSlideshowState();
+  _LatestProductsSlideshowState createState() =>
+      _LatestProductsSlideshowState();
 }
 
 class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
   final PageController _pageController = PageController(viewportFraction: 0.8);
   int _currentPage = 0;
-  final Duration _scrollDuration = Duration(seconds: 3); 
+  final Duration _scrollDuration = Duration(seconds: 3);
   final List<Map<String, dynamic>> slideshowProducts = [
     {
       'imageUrl': 'assets/icon/product/product1.jpg',
@@ -507,7 +510,6 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
     {
       'imageUrl': 'assets/icon/product/product1.jpg',
     },
-    
   ];
 
   @override
@@ -521,14 +523,14 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
       if (_pageController.hasClients) {
         _currentPage++;
         if (_currentPage >= (slideshowProducts.length / 2).ceil()) {
-          _currentPage = 0; 
+          _currentPage = 0;
         }
         _pageController.animateToPage(
           _currentPage,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
-        _autoScroll(); 
+        _autoScroll();
       }
     });
   }
@@ -566,8 +568,8 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
               },
               itemBuilder: (context, pageIndex) {
                 final startIndex = pageIndex * 2;
-                final endIndex = (startIndex + 2).clamp(
-                    0, slideshowProducts.length);
+                final endIndex =
+                    (startIndex + 2).clamp(0, slideshowProducts.length);
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -588,29 +590,30 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
                         opacity: isCurrentPage ? 1.0 : 0.5,
                         child: isCurrentPage
                             ? Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: Colors.transparent,
-                          ),
-                          child: ProductSquareCard(
-                            imageUrl: product['imageUrl'],
-                          ),
-                        )
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  color: Colors.transparent,
+                                ),
+                                child: ProductSquareCard(
+                                  imageUrl: product['imageUrl'],
+                                ),
+                              )
                             : ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                            child: Container(
-                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
-                                color: Colors.black.withOpacity(0.1),
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                      sigmaX: 5.0, sigmaY: 5.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      color: Colors.black.withOpacity(0.1),
+                                    ),
+                                    child: ProductSquareCard(
+                                      imageUrl: product['imageUrl'],
+                                    ),
+                                  ),
+                                ),
                               ),
-                              child: ProductSquareCard(
-                                imageUrl: product['imageUrl'],
-                              ),
-                            ),
-                          ),
-                        ),
                       );
                     },
                   ),

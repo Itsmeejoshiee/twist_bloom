@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -458,7 +459,7 @@ class SecurityPage extends StatelessWidget {
       home: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: Center(child: Text('Account Security')),
+            title: Text('Account Security'),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -479,7 +480,103 @@ class SecurityPage extends StatelessWidget {
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [],
+                        children: [
+                          ListTile(
+                            title: Text('Two Factor Authentication'),
+                          ),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text('Phone Number'),
+                                  Text('09123456789')
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text('Email Address'),
+                                  Text('spo1jkc@gmail.com')
+                                ],
+                              ),
+                            ),
+                          ),
+                          ListTile(title: Text('Password')),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text('Current Password'),
+                                  Text('********')
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [Text('Change Password'), Text('')],
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            title: Text('Login History'),
+                          ),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text(
+                                      'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa'),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text(
+                                      'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa'),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 40)
+                        ],
                       ))))),
     );
   }
@@ -494,7 +591,7 @@ class ShippingPrefPage extends StatelessWidget {
       home: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: Center(child: Text('Shipping Preference')),
+            title: Text('Shipping Preference'),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -515,7 +612,40 @@ class ShippingPrefPage extends StatelessWidget {
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [],
+                        children: [
+                          ListTile(
+                            title: Text('Shipping Address'),
+                          ),
+                          Text('Region/City/District'),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [Text('')],
+                              ),
+                            ),
+                          ),
+                          Text('Street/Building Name'),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [Text('')],
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            title: Text('Delivery'),
+                            subtitle: Text('Standard Shipping'),
+                          ),
+                          SizedBox(height: 20)
+                        ],
                       ))))),
     );
   }
@@ -530,7 +660,7 @@ class OrderHistoryPage extends StatelessWidget {
       home: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: Center(child: Text('Order History')),
+            title: Text('Order History'),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -551,7 +681,47 @@ class OrderHistoryPage extends StatelessWidget {
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [],
+                        children: [
+                          ListTile(title: Text('Order Tracking')),
+                          //Add Timeline Tile here
+
+                          //Add Timeline Tile here
+                          ListTile(
+                            title: Text('Order History'),
+                          ),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text(
+                                      'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa')
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text(
+                                      'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa')
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 40),
+                        ],
                       ))))),
     );
   }
