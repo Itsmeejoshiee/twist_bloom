@@ -94,10 +94,10 @@ class BottomNavBar extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
             blurRadius: 10,
-            offset: const Offset(0, -2), // Shadow on top
+            offset: const Offset(0, -2), 
           ),
         ],
-        color: Colors.white, // Background color of the bar
+        color: Colors.white, 
       ),
       child: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -130,12 +130,12 @@ class BottomNavBar extends StatelessWidget {
             isSelected: currentIndex == 4,
           ),
         ],
-        selectedItemColor: Colors.transparent, // Transparent to allow custom icon styling
-        unselectedItemColor: Colors.grey, // Color for unselected items
-        showUnselectedLabels: false, // Hide labels
-        showSelectedLabels: false, // Hide labels
-        backgroundColor: Colors.transparent, // Transparent background for the bar
-        elevation: 0, // No elevation for a flat bottom bar
+        selectedItemColor: Colors.transparent, 
+        unselectedItemColor: Colors.grey, 
+        showUnselectedLabels: false, 
+        showSelectedLabels: false, 
+        backgroundColor: Colors.transparent, 
+        elevation: 0, 
       ),
     );
   }
@@ -147,20 +147,20 @@ class BottomNavBar extends StatelessWidget {
   }) {
     return BottomNavigationBarItem(
       icon: Container(
-        width: iconSize + 16, // Adjust size with padding
-        height: iconSize + 16, // Adjust size with padding
+        width: iconSize + 16, 
+        height: iconSize + 16, 
         decoration: BoxDecoration(
           color: isSelected ? const Color(0xFFFF92B2) : Colors.transparent,
-          borderRadius: BorderRadius.circular(12), // Rounded corners for the square
+          borderRadius: BorderRadius.circular(12), 
         ),
         child: Stack(
           alignment: Alignment.center,
           children: [
-            if (isSelected) _buildInnerShadow(), // Add inner shadow only if selected
+            if (isSelected) _buildInnerShadow(), 
             Center(
               child: Image.asset(
                 iconPath,
-                color: isSelected ? Colors.white : Colors.black, // Change icon color based on selection
+                color: isSelected ? Colors.white : Colors.black, 
                 width: iconSize,
                 height: iconSize,
               ),
@@ -168,13 +168,13 @@ class BottomNavBar extends StatelessWidget {
           ],
         ),
       ),
-      label: '', // No label to keep it icon-only
+      label: '', 
     );
   }
 
   Widget _buildInnerShadow() {
     return CustomPaint(
-      size: Size(iconSize + 16, iconSize + 16), // Adjust size to match container
+      size: Size(iconSize + 16, iconSize + 16), 
       painter: InnerShadowPainter(),
     );
   }
