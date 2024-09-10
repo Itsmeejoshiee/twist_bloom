@@ -595,7 +595,21 @@ class HelpPage extends StatelessWidget {
 
 //App Version Page
 
-class AppVerPage extends StatelessWidget {
+class AppVerPage extends StatefulWidget {
+  @override
+  _AppVerPageState createState() => _AppVerPageState();
+}
+
+class _AppVerPageState extends State<AppVerPage> {
+  bool _isAutoUpdate = false;
+
+  void _toggleAutoUpdate(bool value) {
+    setState(() {
+      _isAutoUpdate = value;
+      // Auto Update Logic
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -633,10 +647,14 @@ class AppVerPage extends StatelessWidget {
                             subtitle: Text('Twist & Bloom App Version 1.0.0'),
                           ),
                           ListTile(
-                            title: Text('Auto update over Wi-Fi'),
-                            subtitle: Text(
-                                'Update app automatically when connected to Wi-Fi Network'),
-                          ),
+                              title: Text('Auto update over Wi-Fi'),
+                              subtitle: Text(
+                                  'Update app automatically when connected to Wi-Fi Network'),
+                              trailing: Switch(
+                                onChanged: _toggleAutoUpdate,
+                                value: _isAutoUpdate,
+                                activeColor: Colors.green,
+                              )),
                         ],
                       ))))),
     );
