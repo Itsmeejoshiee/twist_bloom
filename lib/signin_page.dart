@@ -19,7 +19,7 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   bool _obscurePassword = true;
 
- @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
@@ -38,78 +38,78 @@ class _SignInPageState extends State<SignInPage> {
             ),
           ),
           child: Column(
-              children: [
-                Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 40.0),
+                      child: Text(
+                        "Let's Get Started",
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Text(
+                      "Continue with",
+                      style: TextStyle(fontSize: 14),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 40.0),
-                          child: Text(
-                            "Let's Get Started",
-                            style: TextStyle(
-                              
-                              fontSize: 20),
-                            textAlign: TextAlign.center,
+                        IconButton(
+                          icon: Image.asset(
+                            "assets/icon/google.png",
+                            width: 40,
+                            height: 40,
                           ),
-                        ),
-                        Text(
-                          "Continue with",
-                          style: TextStyle(fontSize: 14),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              icon: Image.asset(
-                                "assets/icon/google.png",
-                                width: 40,
-                                height: 40,
-                              ),
-                              onPressed: () {
+                          onPressed: () {
 //Dito yung sa google pati wala pa icon ng google paking shit walang google icon yung paking flutter
-                              },
-                            ),
-                            SizedBox(width: 16),
-                            IconButton(
-                              icon: Icon(Icons.facebook, size: 40, color: Colors.blue),
-                              onPressed: () {
-//Dito yung sa fb
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 32),
-                        _buildTextField(
-                          labelText: "Full Name",
-                          hintText: "Enter your full name",
-                        ),
-                        SizedBox(height: 25),
-                        _buildTextField(
-                          labelText: "E-mail",
-                          hintText: "Enter your email",
-                        ),
-                        SizedBox(height: 25),
-                        _buildTextField(
-                          labelText: "Password",
-                          hintText: "Enter your password",
-                          obscureText: _obscurePassword,
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscurePassword = !_obscurePassword;
-                              }
-                            );
                           },
                         ),
+                        SizedBox(width: 16),
+                        IconButton(
+                          icon: Icon(Icons.facebook,
+                              size: 40, color: Colors.blue),
+                          onPressed: () {
+//Dito yung sa fb
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 32),
+                    _buildTextField(
+                      labelText: "Full Name",
+                      hintText: "Enter your full name",
+                    ),
+                    SizedBox(height: 25),
+                    _buildTextField(
+                      labelText: "E-mail",
+                      hintText: "Enter your email",
+                    ),
+                    SizedBox(height: 25),
+                    _buildTextField(
+                      labelText: "Password",
+                      hintText: "Enter your password",
+                      obscureText: _obscurePassword,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -146,7 +146,9 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                               TextSpan(
                                 text: "Log in",
-                                style: TextStyle(color: Colors.blue, decoration: TextDecoration.none),
+                                style: TextStyle(
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.none),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     Navigator.of(context).push(
@@ -198,7 +200,7 @@ class _SignInPageState extends State<SignInPage> {
             labelText: labelText,
             hintText: hintText,
             labelStyle: TextStyle(fontFamily: 'Poppins'),
-            hintStyle: TextStyle(fontFamily: 'Arimo' ),
+            hintStyle: TextStyle(fontFamily: 'Arimo'),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: BorderSide.none,

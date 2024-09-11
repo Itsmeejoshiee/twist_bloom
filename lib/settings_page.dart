@@ -684,8 +684,30 @@ class OrderHistoryPage extends StatelessWidget {
                         children: [
                           ListTile(title: Text('Order Tracking')),
                           //Add Timeline Tile here
-
+                          TimelineTile(
+                            isFirst: true,
+                            alignment: TimelineAlign.manual,
+                            lineXY: 0.25,
+                            startChild: Column(
+                              children: [Text('September 1'), Text('7:00 AM')],
+                            ),
+                            endChild: Text(' Order Packed'),
+                            beforeLineStyle: LineStyle(color: Colors.black),
+                            indicatorStyle: IndicatorStyle(color: Colors.black),
+                          ),
+                          TimelineTile(
+                            alignment: TimelineAlign.manual,
+                            lineXY: 0.25,
+                            startChild: Column(
+                              children: [Text('September 2'), Text('9:00 AM')],
+                            ),
+                            endChild: Text(' Order Shipped'),
+                            beforeLineStyle: LineStyle(color: Colors.black),
+                            indicatorStyle: IndicatorStyle(color: Colors.black),
+                          ),
                           //Add Timeline Tile here
+
+                          SizedBox(height: 25),
                           ListTile(
                             title: Text('Order History'),
                           ),
@@ -736,7 +758,7 @@ class HelpPage extends StatelessWidget {
       home: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: Center(child: Text('Help & Support')),
+            title: Text('Help & Support'),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -757,7 +779,87 @@ class HelpPage extends StatelessWidget {
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [],
+                        children: [
+                          Center(
+                            child: Text('FAQ'),
+                          ),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text(
+                                      'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa')
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text(
+                                      'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa')
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text(
+                                      'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa')
+                                ],
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            title: Text('About us'),
+                          ),
+                          Container(
+                            width: 274,
+                            child: Card(
+                              color: Colors.grey[200],
+                              elevation: 4,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Column(
+                                children: [
+                                  Text(
+                                      'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa')
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          TextButton(
+                              onPressed: () {
+                                Placeholder();
+                              },
+                              style: TextButton.styleFrom(
+                                  foregroundColor: Colors.black,
+                                  backgroundColor: Colors.grey[300],
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 10.0),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20))),
+                              child: Text('Contact us'))
+                        ],
                       ))))),
     );
   }
@@ -786,7 +888,7 @@ class _AppVerPageState extends State<AppVerPage> {
       home: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: Center(child: Text('App Version')),
+            title: Text('App Version'),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -825,6 +927,25 @@ class _AppVerPageState extends State<AppVerPage> {
                                 value: _isAutoUpdate,
                                 activeColor: Colors.green,
                               )),
+                          ListTile(
+                            title: Text('Latest Update'),
+                            subtitle: Container(
+                              width: 274,
+                              child: Card(
+                                color: Colors.grey[200],
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                        'Last update was installed on September  1, 2024 at 6:12pm')
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 30)
                         ],
                       ))))),
     );
@@ -856,7 +977,38 @@ class TermsAndConditionsPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
           ),
-          body: Container()),
+          body: GradientBackground(
+              child: Center(
+                  child: Card(
+                      margin: const EdgeInsets.all(10),
+                      elevation: 4, // To Give Shadow Effect
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(10), //Rounded Corners
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            title: Text('General Terms & Conditions'),
+                            subtitle: Container(
+                              width: 274,
+                              child: Card(
+                                color: Colors.grey[200],
+                                elevation: 4,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                        'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque. Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque.Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque.Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque.Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque.')
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ))))),
     );
   }
 }
@@ -870,7 +1022,7 @@ class FeedBackPage extends StatelessWidget {
       home: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: Center(child: Text('Feedback')),
+            title: Text('Feedback'),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -891,7 +1043,12 @@ class FeedBackPage extends StatelessWidget {
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [],
+                        children: [
+                          ListTile(
+                            title: Text('Feedback'),
+                            subtitle: TextFormField(),
+                          )
+                        ],
                       ))))),
     );
   }
@@ -899,14 +1056,28 @@ class FeedBackPage extends StatelessWidget {
 
 //Data Sync Page
 
-class DataSyncPage extends StatelessWidget {
+class DataSyncPage extends StatefulWidget {
+  @override
+  _DataSyncPageState createState() => _DataSyncPageState();
+}
+
+class _DataSyncPageState extends State<DataSyncPage> {
+  bool _isAutoSync = true;
+
+  void _toggleAutoSync(bool value) {
+    setState() {
+      _isAutoSync = value;
+      //Auto Sync Logic
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
           extendBodyBehindAppBar: true,
           appBar: AppBar(
-            title: Center(child: Text('Data Sync')),
+            title: Text('Data Sync'),
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {
@@ -927,7 +1098,17 @@ class DataSyncPage extends StatelessWidget {
                       ),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [],
+                        children: [
+                          ListTile(
+                              title: Text('Auto Sync Data'),
+                              subtitle: Text(
+                                  'Automatically sync from your old device'),
+                              trailing: Switch(
+                                onChanged: _toggleAutoSync,
+                                value: _isAutoSync,
+                                activeColor: Colors.green,
+                              ))
+                        ],
                       ))))),
     );
   }
