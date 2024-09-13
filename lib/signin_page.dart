@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:twist_bloom/landing_page.dart';
 import 'package:twist_bloom/login_page.dart';
 import 'dart:math' as math;
 
@@ -121,7 +122,9 @@ class _SignInPageState extends State<SignInPage> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-//Dito yung sa register
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const HomePage(),
+                            ));
                           },
                           child: Text("Register"),
                           style: ElevatedButton.styleFrom(
@@ -153,7 +156,7 @@ class _SignInPageState extends State<SignInPage> {
                                   ..onTap = () {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
-                                        builder: (context) => const LoginPage(),
+                                        builder: (context) => const HomePage(),
                                       ),
                                     );
                                   },
