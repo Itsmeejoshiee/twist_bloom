@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'product.dart';
 import 'dart:async';
 import 'like_page.dart';
+import 'cart.dart';
 
 void main() {
   runApp(const HomePage());
@@ -382,7 +383,12 @@ class OrdersPage extends StatelessWidget {
                 _buildCustomIconButton(
                   'assets/icon/cart.png',
                   'My Shipping Cart',
-                      () {}, // Provide a callback if needed
+                      () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const CartPage()),
+                        );
+                      },
                 ),
                 _buildCustomIconButton(
                   'assets/icon/likes.png',
