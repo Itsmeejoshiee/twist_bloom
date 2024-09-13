@@ -24,6 +24,8 @@ flutter:
   assets:
     - assets/TwistBloom_logo.png
     - assets/icon/google.png
+    - assets/icon/product/
+    - assets/icon/
 
   fonts:
     - family: Poppins
