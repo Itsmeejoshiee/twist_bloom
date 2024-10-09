@@ -5,7 +5,7 @@ CS-301
 
 Group Members:
 Gorospe, Josiah Faith V.
-Cauguuran, Jhon Kevin T.
+Cauguiran, Jhon Kevin T.
 Castro, Medell Emmanuel R.
 David, Arthur Christian M.
 Capulong, Ma. Jhenina S. 
