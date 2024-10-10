@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/signin_page.dart';
+import 'package:twist_bloom/Views/signin_page.dart';
 import 'dart:math' as math;
 import 'dart:async';
 
@@ -30,6 +30,7 @@ class LoadingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Timer(Duration(seconds: 2), () => _navigateToAuthPage(context));
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
           decoration: BoxDecoration(

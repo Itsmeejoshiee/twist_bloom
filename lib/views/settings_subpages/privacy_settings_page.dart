@@ -1,29 +1,16 @@
-// Data Sync Page
+// Privacy Settings Page
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/gradient_background.dart';
+import 'package:twist_bloom/controller/gradient_background.dart';
 
-class DataSyncPage extends StatefulWidget {
-  @override
-  _DataSyncPageState createState() => _DataSyncPageState();
-}
-
-class _DataSyncPageState extends State<DataSyncPage> {
-  bool _isAutoSync = true;
-
-  void _toggleAutoSync(bool value) {
-    setState(() {
-      _isAutoSync = value;
-      // Auto Sync Logic
-    });
-  }
-
+class PrivacySettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Data Sync'),
+          title: Text('Privacy Settings'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -44,15 +31,7 @@ class _DataSyncPageState extends State<DataSyncPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
-                    title: Text('Auto Sync Data'),
-                    subtitle: Text('Automatically sync from your old device'),
-                    trailing: Switch(
-                      onChanged: _toggleAutoSync,
-                      value: _isAutoSync,
-                      activeColor: Colors.green,
-                    ),
-                  ),
+                  // Add your privacy settings options here
                 ],
               ),
             ),

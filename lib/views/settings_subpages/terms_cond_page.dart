@@ -1,35 +1,30 @@
-// App Version Page
+// Terms And Conditions Page
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/gradient_background.dart';
+import 'package:twist_bloom/controller/gradient_background.dart';
 
-class AppVerPage extends StatefulWidget {
-  @override
-  _AppVerPageState createState() => _AppVerPageState();
-}
-
-class _AppVerPageState extends State<AppVerPage> {
-  bool _isAutoUpdate = false;
-
-  void _toggleAutoUpdate(bool value) {
-    setState(() {
-      _isAutoUpdate = value;
-      // Auto Update Logic
-    });
-  }
-
+class TermsAndConditionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('App Version'),
+          title: Center(child: Text('Terms & Conditions')),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                // Implement search functionality here
+              },
+            ),
+          ],
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
@@ -45,25 +40,7 @@ class _AppVerPageState extends State<AppVerPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    title: Text('App Update'),
-                    subtitle: Text('Your app is up to date.'),
-                  ),
-                  ListTile(
-                    title: Text('Version'),
-                    subtitle: Text('Twist & Bloom App Version 1.0.0'),
-                  ),
-                  ListTile(
-                    title: Text('Auto update over Wi-Fi'),
-                    subtitle: Text(
-                        'Update app automatically when connected to Wi-Fi Network'),
-                    trailing: Switch(
-                      onChanged: _toggleAutoUpdate,
-                      value: _isAutoUpdate,
-                      activeColor: Colors.green,
-                    ),
-                  ),
-                  ListTile(
-                    title: Text('Latest Update'),
+                    title: Text('General Terms & Conditions'),
                     subtitle: Container(
                       width: 274,
                       child: Card(
@@ -75,13 +52,15 @@ class _AppVerPageState extends State<AppVerPage> {
                         child: Column(
                           children: [
                             Text(
-                                'Last update was installed on September 1, 2024 at 6:12pm')
+                              'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque. Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque. Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque. Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque. Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque.',
+                              textAlign: TextAlign
+                                  .justify, // Justify text for better readability
+                            ),
                           ],
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
                 ],
               ),
             ),

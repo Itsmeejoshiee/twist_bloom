@@ -1,15 +1,16 @@
-// Security Page
+// Help Page
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/gradient_background.dart';
+import 'package:twist_bloom/controller/gradient_background.dart';
 
-class SecurityPage extends StatelessWidget {
+class HelpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Account Security'),
+          title: Text('Help & Support'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -30,77 +31,8 @@ class SecurityPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
-                    title: Text('Two Factor Authentication'),
-                  ),
-                  Container(
-                    width: 274,
-                    child: Card(
-                      color: Colors.grey[200],
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          Text('Phone Number'),
-                          Text('09123456789'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    width: 274,
-                    child: Card(
-                      color: Colors.grey[200],
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          Text('Email Address'),
-                          Text('spo1jkc@gmail.com'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text('Password'),
-                  ),
-                  Container(
-                    width: 274,
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          Text('Current Password'),
-                          Text('********'),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 274,
-                    child: Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          Text('Change Password'),
-                          Text(''),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ListTile(
-                    title: Text('Login History'),
+                  Center(
+                    child: Text('FAQ'),
                   ),
                   Container(
                     width: 274,
@@ -119,7 +51,6 @@ class SecurityPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
                   Container(
                     width: 274,
                     child: Card(
@@ -137,7 +68,61 @@ class SecurityPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40),
+                  Container(
+                    width: 274,
+                    child: Card(
+                      color: Colors.grey[200],
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('About us'),
+                  ),
+                  Container(
+                    width: 274,
+                    child: Card(
+                      color: Colors.grey[200],
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () {
+                      Placeholder();
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.grey[300],
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.0,
+                        vertical: 10.0,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    child: Text('Contact us'),
+                  ),
                 ],
               ),
             ),

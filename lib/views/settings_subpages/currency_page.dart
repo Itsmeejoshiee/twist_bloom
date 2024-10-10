@@ -1,16 +1,16 @@
-// Order History Page
+// Currency Page
 import 'package:flutter/material.dart';
-import 'package:timeline_tile/timeline_tile.dart';
-import 'package:twist_bloom/gradient_background.dart';
+import 'package:twist_bloom/controller/gradient_background.dart';
 
-class OrderHistoryPage extends StatelessWidget {
+class CurrencyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Order History'),
+          title: Text('Currency'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -32,78 +32,78 @@ class OrderHistoryPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    title: Text('Order Tracking'),
-                  ),
-                  // Add Timeline Tile here
-                  TimelineTile(
-                    isFirst: true,
-                    alignment: TimelineAlign.manual,
-                    lineXY: 0.25,
-                    startChild: Column(
-                      children: [
-                        Text('September 1'),
-                        Text('7:00 AM'),
-                      ],
-                    ),
-                    endChild: Text('Order Packed'),
-                    beforeLineStyle: LineStyle(color: Colors.black),
-                    indicatorStyle: IndicatorStyle(color: Colors.black),
-                  ),
-                  TimelineTile(
-                    alignment: TimelineAlign.manual,
-                    lineXY: 0.25,
-                    startChild: Column(
-                      children: [
-                        Text('September 2'),
-                        Text('9:00 AM'),
-                      ],
-                    ),
-                    endChild: Text('Order Shipped'),
-                    beforeLineStyle: LineStyle(color: Colors.black),
-                    indicatorStyle: IndicatorStyle(color: Colors.black),
-                  ),
-                  // Add additional Timeline Tile here
-
-                  SizedBox(height: 25),
-                  ListTile(
-                    title: Text('Order History'),
-                  ),
-                  Container(
-                    width: 274,
-                    child: Card(
-                      color: Colors.grey[200],
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
-                          ),
-                        ],
+                    title: Text(
+                      'Preferred Currency',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 20,
                       ),
                     ),
-                  ),
-                  SizedBox(height: 20),
-                  Container(
-                    width: 274,
-                    child: Card(
-                      color: Colors.grey[200],
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
-                          ),
-                        ],
-                      ),
-                    ),
+                    subtitle: Text('Philippine Peso (Php)'),
                   ),
                   SizedBox(height: 40),
+                  ListTile(
+                    title: Text(
+                      'Transaction History',
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 274,
+                    child: Card(
+                      color: Colors.grey[200],
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    width: 274,
+                    child: Card(
+                      color: Colors.grey[200],
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    width: 274,
+                    child: Card(
+                      color: Colors.grey[200],
+                      elevation: 4,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

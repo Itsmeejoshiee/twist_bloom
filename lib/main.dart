@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/splash_screen.dart';
+import 'package:twist_bloom/Views/splash_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,6 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: LoadingPage(),
     );
   }

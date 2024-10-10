@@ -1,11 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/settings_subpages/settings_subpages.dart';
-import 'package:twist_bloom/gradient_background.dart';
+import 'settings_subpages/settings_subpages.dart';
+import '../controller/gradient_background.dart';
 
 void main() {
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: SettingsPage(),
   ));
 }

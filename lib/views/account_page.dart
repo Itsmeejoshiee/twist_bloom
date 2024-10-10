@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/signin_page.dart';
+import 'signin_page.dart';
+import 'landing_page.dart';
 
 void main() {
   runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
     home: AccountPage(),
   ));
 }
@@ -41,7 +43,12 @@ class AccountPage extends StatelessWidget {
           title: Text('Account'),
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainScreen()),
+              );
+            },
           ),
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -143,26 +150,12 @@ class AccountPage extends StatelessWidget {
                                   ),
                                   icon: Icon(
                                       Icons.security, color: Colors.black),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) => LoginAndSecurity()),
+                                    );
+                                  },
                                   label: const Text('Login and Security',
-                                      style: TextStyle(color: Colors.black,
-                                          fontSize: 20,
-                                          fontFamily: 'Poppins')
-                                  ))),
-
-                          SizedBox(
-                              height: 50,
-                              width: 350,
-                              child: ElevatedButton.icon(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                      shadowColor: Colors.transparent,
-                                      alignment: Alignment.centerLeft
-                                  ),
-                                  icon: Icon(
-                                      Icons.privacy_tip, color: Colors.black),
-                                  onPressed: () {},
-                                  label: const Text('Data and Privacy',
                                       style: TextStyle(color: Colors.black,
                                           fontSize: 20,
                                           fontFamily: 'Poppins')
@@ -190,24 +183,6 @@ class AccountPage extends StatelessWidget {
 
                       child: Column(
                         children: <Widget>[
-                          SizedBox(
-                              height: 50,
-                              width: 350,
-                              child: ElevatedButton.icon(
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.white,
-                                      shadowColor: Colors.transparent,
-                                      alignment: Alignment.centerLeft
-                                  ),
-                                  icon: Icon(
-                                      Icons.help_center, color: Colors.black),
-                                  onPressed: () {},
-                                  label: const Text('Help Center',
-                                      style: TextStyle(color: Colors.black,
-                                          fontSize: 20,
-                                          fontFamily: 'Poppins')
-                                  ))),
-
                           SizedBox(
                               height: 50,
                               width: 350,
@@ -341,9 +316,9 @@ class PersonalInfoPage extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => EditNamePage()));
                     }),
                     _buildInfoButton(context, 'Bio', () {
-                    Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => EditBioPage()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => EditBioPage()));
                     }),
                     _buildInfoButton(context, 'Gender', () {
                       _showGenderSelect(context);
@@ -377,11 +352,6 @@ class PersonalInfoPage extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => EditPhonePage()));
-                    }),
-                    _buildInfoButton(context, 'Email', () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => EditEmailPage()));
                     }),
                     _buildInfoButton(context, 'Address', () {
                       Navigator.push(
@@ -423,80 +393,80 @@ class PersonalInfoPage extends StatelessWidget {
 
   void _showGenderSelect(BuildContext context) { // Gender pop up
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Center(child: Text('Gender')),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          backgroundColor: Colors.white,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Center(child: Text('Gender')),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            backgroundColor: Colors.white,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
 
-              SizedBox(
-                width: 300,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shadowColor: Colors.transparent,
-                      alignment: Alignment.centerLeft
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Male', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
-                )),
+                SizedBox(
+                    width: 300,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shadowColor: Colors.transparent,
+                          alignment: Alignment.centerLeft
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Male', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
+                    )),
 
-              SizedBox(
-                  width: 300,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shadowColor: Colors.transparent,
-                      alignment: Alignment.centerLeft
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Female', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
-                )),
+                SizedBox(
+                    width: 300,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shadowColor: Colors.transparent,
+                          alignment: Alignment.centerLeft
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Female', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
+                    )),
 
-              SizedBox(
-                  width: 300,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      shadowColor: Colors.transparent,
-                      alignment: Alignment.centerLeft
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Others', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
-                )),
-            ],
-          ),
-        );
-      }
-      );
-    }
-  }
-
-  void _showBirthdayPicker(BuildContext context) async { // Birthday pop up
-    DateTime? selectedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.light(), // You can change to ThemeData.dark() for a dark mode picker
-          child: child!,
-        );
-      },
+                SizedBox(
+                    width: 300,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shadowColor: Colors.transparent,
+                          alignment: Alignment.centerLeft
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Others', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
+                    )),
+              ],
+            ),
+          );
+        }
     );
+  }
+}
+
+void _showBirthdayPicker(BuildContext context) async { // Birthday pop up
+  DateTime? selectedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(1900),
+    lastDate: DateTime(2100),
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData.light(), // You can change to ThemeData.dark() for a dark mode picker
+        child: child!,
+      );
+    },
+  );
 }
 
 // Name Edit Page
@@ -671,63 +641,6 @@ class EditPhonePage extends StatelessWidget {
               child: TextField(
                 keyboardType: TextInputType.phone,
                 decoration: InputDecoration(border: InputBorder.none, hintText: 'Phone Number'),
-                style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// Email Edit Page
-class EditEmailPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: Text('Edit Email'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Save email functionality here
-              Navigator.pop(context);
-            },
-            child: Text('Save', style: TextStyle(color: Colors.white)),
-          )
-        ],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: GradientBackground(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 4,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: TextField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(border: InputBorder.none, hintText: 'Email'),
                 style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
               ),
             ),
@@ -990,6 +903,203 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
     );
   }
 }
+
+//Login And Security Account option
+class LoginAndSecurity extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text('Account Info'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: GradientBackground(
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 4,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    _buildInfoButton(context, 'Email', () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => EditEmailPage()));
+                    }),
+                    _buildInfoButton(context, 'Password', () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => EditPasswordPage()));
+                    }),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoButton(BuildContext context, String text, VoidCallback onPressed) {
+    return SizedBox(
+      height: 50,
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          shadowColor: Colors.transparent,
+          alignment: Alignment.centerLeft,
+        ),
+        onPressed: onPressed,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(text, style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'Poppins')),
+            Icon(Icons.arrow_forward_ios, color: Colors.black),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Email Edit Page
+class EditEmailPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text('Edit Email'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Save email functionality here
+              Navigator.pop(context);
+            },
+            child: Text('Save', style: TextStyle(color: Colors.white)),
+          )
+        ],
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: GradientBackground(
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 4,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(border: InputBorder.none, hintText: 'Email'),
+                style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//Edit Login password
+class EditPasswordPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        title: Text('Edit Password'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Save email functionality here
+              Navigator.pop(context);
+            },
+            child: Text('Save', style: TextStyle(color: Colors.white)),
+          )
+        ],
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: GradientBackground(
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
+              padding: EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 4,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(border: InputBorder.none, hintText: 'Password'),
+                style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
 
 
 

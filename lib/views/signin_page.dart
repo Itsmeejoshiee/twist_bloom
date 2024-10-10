@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:twist_bloom/landing_page.dart';
-import 'package:twist_bloom/login_page.dart';
+import 'package:twist_bloom/Views/landing_page.dart';
+import 'package:twist_bloom/Views/login_page.dart';
 import 'dart:math' as math;
 
 void main() {
@@ -23,6 +23,7 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Poppins',
       ),
