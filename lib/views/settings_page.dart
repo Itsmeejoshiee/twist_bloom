@@ -20,18 +20,6 @@ class SettingsPage extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: Text('Settings'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          )
-        ],
-        backgroundColor: Colors.transparent,
-        elevation: 0,
       ),
       body: GradientBackground(
         child: Center(
