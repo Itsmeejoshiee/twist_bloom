@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/product.dart';
+import 'promo_step3_page.dart';
 
 class PromoStep2Page extends StatefulWidget {
   const PromoStep2Page({super.key});
@@ -114,7 +115,7 @@ class _PromoStep2Page extends State<PromoStep2Page> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PromoStep2Page()),
+            MaterialPageRoute(builder: (context) => PromoStep3Page()),
           );
         },
         child: const Icon(Icons.arrow_forward),
