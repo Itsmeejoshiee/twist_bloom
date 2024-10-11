@@ -64,7 +64,6 @@ class ProductCard extends StatelessWidget {
   }
 }
 
-
 class ProductSquareCard extends StatelessWidget {
   final String imageUrl;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/views/product.dart';
+import 'package:twist_bloom/widgets/product.dart';
 
 class PromoStep1Page extends StatefulWidget {
   const PromoStep1Page({super.key});

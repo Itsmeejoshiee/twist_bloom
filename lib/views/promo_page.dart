@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/views/promo_subpages/promo_step1_page.dart';
 import 'landing_page.dart';
+import '../widgets/gradient_background.dart';
 
 class PromoScreen extends StatelessWidget {
   @override
