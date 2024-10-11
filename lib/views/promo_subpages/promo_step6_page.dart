@@ -1,82 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/product.dart';
-import 'promo_step6_page.dart';
+import 'promo_cart.dart';
 
-class PromoStep5Page extends StatefulWidget {
-  final Map<String, dynamic> selectedProduct;
-  const PromoStep5Page({super.key, required this.selectedProduct});
+class PromoStep6Page extends StatefulWidget {
+  const PromoStep6Page({super.key});
 
   @override
-  _PromoStep5Page createState() => _PromoStep5Page();
+  _PromoStep6Page createState() => _PromoStep6Page();
 }
 
-class _PromoStep5Page extends State<PromoStep5Page> {
+class _PromoStep6Page extends State<PromoStep6Page> {
   List<Map<String, dynamic>> products = [
     {
-      'imageUrl': 'assets/icon/product/ribbons/cream.png',
-      'title': 'Cream',
+      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design1.png',
+      'title': 'Style #1',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/ribbons/milky_white.png',
-      'title': 'Milky White',
+      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design2.png',
+      'title': 'Style #2',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/ribbons/golden_yellow.png',
-      'title': 'Golden Yellow',
+      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design3.png',
+      'title': 'Style #3',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/ribbons/wine_red_ribbon.png',
-      'title': 'Wine Red',
+      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design4.png',
+      'title': 'Style #4',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/ribbons/pink_rose.png',
-      'title': 'Pink Rose',
+      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design5.png',
+      'title': 'Style #5',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/ribbons/light_blue.png',
-      'title': 'Light Blue',
+      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design6.png',
+      'title': 'Style #6',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/ribbons/blue_fishtail.png',
-      'title': 'Blue (fishtail)',
-      'price': 0.0,
-    },
-    {
-      'imageUrl': 'assets/icon/product/ribbons/burgundy_fishtail.png',
-      'title': 'Burgundy (fishtail)',
-      'price': 0.0,
-    },
-    {
-      'imageUrl': 'assets/icon/product/ribbons/light_purple_fishtail.png',
-      'title': 'Light Purple (fishtail)',
-      'price': 0.0,
-    },
-    {
-      'imageUrl': 'assets/icon/product/ribbons/white_fishtail.png',
-      'title': 'White (fishtail)',
-      'price': 0.0,
-    },
-    {
-      'imageUrl': 'assets/icon/product/ribbons/milky_white_fishtail.png',
-      'title': 'Milky White (fishtail)',
+      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design7.png',
+      'title': 'Style #7',
       'price': 0.0,
     },
   ];
 
-  List<Map<String, dynamic>> selectedProducts = [];  // Allow multiple selections
+  Map<String, dynamic>? selectedProduct;
 
   void selectProduct(Map<String, dynamic> product) {
     setState(() {
-      if (selectedProducts.contains(product)) {
-        selectedProducts.remove(product); // Deselect the product if it's already selected
-      } else if (selectedProducts.length < 2) {
-        selectedProducts.add(product);  // Select the new product if less than 2
+      if (selectedProduct == product) {
+        selectedProduct = null; // Deselect the product if it's already selected
+      } else {
+        selectedProduct = product; // Select the new product
       }
     });
   }
@@ -106,17 +85,9 @@ class _PromoStep5Page extends State<PromoStep5Page> {
               fit: BoxFit.cover,
             ),
             const SizedBox(height: 16.0),
-            RichText(
-              text: TextSpan(
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
-                children: <TextSpan>[
-                  const TextSpan(text: 'Step 5: Pick your ribbon '),
-                  TextSpan(
-                    text: '(Up to 2)',
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
-                  ),
-                ],
-              ),
+            const Text(
+              'Step 6: Pick your wrapping style',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16.0),
             Expanded(
@@ -130,12 +101,12 @@ class _PromoStep5Page extends State<PromoStep5Page> {
                 itemCount: products.length,
                 itemBuilder: (context, index) {
                   final product = products[index];
-                  final isSelected = selectedProducts.contains(product);
+                  final isSelected = selectedProduct == product;
                   return GestureDetector(
                     onTap: () => selectProduct(product),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: isSelected ? Colors.pink[100] : Colors.white,
+                        color: isSelected ? Colors.pink[100] : Colors.white, // Highlight with pink
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
                           color: isSelected ? Colors.pink : Colors.grey,
@@ -163,9 +134,9 @@ class _PromoStep5Page extends State<PromoStep5Page> {
           children: [
             FloatingActionButton.extended(
               backgroundColor: const Color(0xFFFF92B2),
-              onPressed: selectedProducts.isNotEmpty
+              onPressed: selectedProduct != null
                   ? () {
-                // Basket Location
+                // Add to Basket functionality goes here
               }
                   : null, // Disable button if no product is selected
               label: const Text(
@@ -178,12 +149,14 @@ class _PromoStep5Page extends State<PromoStep5Page> {
               ),
             ),
             FloatingActionButton(
-              backgroundColor: const Color(0xFFFF92B2),
-              onPressed: selectedProducts.isNotEmpty
+              backgroundColor: const Color(0xFFFF92B2), // Pink background
+              onPressed: selectedProduct != null
                   ? () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => PromoStep6Page())
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => PromoCartPage(selectedProduct: selectedProduct!), // Pass selectedProduct
+                  ),
                 );
               }
                   : null, // Disable button if no product is selected

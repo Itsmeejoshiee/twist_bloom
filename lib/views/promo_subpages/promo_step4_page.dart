@@ -82,7 +82,7 @@ class _PromoStep4Page extends State<PromoStep4Page> {
                 children: <TextSpan>[
                   const TextSpan(text: 'Step 4: Pick your Accent '),
                   TextSpan(
-                    text: '(Up to 2)',
+                    text: '(Up t',
                     style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
                   ),
                 ],
