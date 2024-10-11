@@ -1,7 +1,7 @@
 // Order History Page
 import 'package:flutter/material.dart';
 import 'package:timeline_tile/timeline_tile.dart';
-import 'package:twist_bloom/controller/gradient_background.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class OrderHistoryPage extends StatelessWidget {
   @override

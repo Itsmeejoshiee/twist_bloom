@@ -1,6 +1,6 @@
 // Notification Preference Page
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/controller/gradient_background.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class NotificationPreferencePage extends StatefulWidget {
   @override

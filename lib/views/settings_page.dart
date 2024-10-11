@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'settings_subpages/settings_subpages.dart';
-import '../controller/gradient_background.dart';
+import '../widgets/gradient_background.dart';
 
 void main() {
   runApp(MaterialApp(
