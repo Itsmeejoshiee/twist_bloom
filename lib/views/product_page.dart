@@ -65,7 +65,7 @@ class _AllProductsPageState extends State<AllProductsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Search Bar - expanded by default
+            // Search Bar is expanded by default
             const SizedBox(height: 16.0),
             Expanded(
               child: GridView.builder(

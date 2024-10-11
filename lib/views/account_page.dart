@@ -5,7 +5,6 @@ import 'signin_page.dart';
 import 'landing_page.dart';
 import 'account_subpages/personal_info_page.dart';
 import 'account_subpages/login_security.dart';
-import '../widgets/gradient_background.dart';
 
 void main() {
   runApp(MaterialApp(
