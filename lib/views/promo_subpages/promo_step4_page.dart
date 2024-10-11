@@ -1,66 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/product.dart';
-import 'promo_step4_page.dart';
+import 'promo_step5_page.dart';
 
-class PromoStep3Page extends StatefulWidget {
-  const PromoStep3Page({super.key});
+class PromoStep4Page extends StatefulWidget {
+  final Map<String, dynamic> selectedProduct;
+  const PromoStep4Page({super.key, required this.selectedProduct});
 
   @override
-  _PromoStep3Page createState() => _PromoStep3Page();
+  _PromoStep4Page createState() => _PromoStep4Page();
 }
 
-class _PromoStep3Page extends State<PromoStep3Page> {
+class _PromoStep4Page extends State<PromoStep4Page> {
   List<Map<String, dynamic>> products = [
     {
-      'imageUrl': 'assets/icon/product/wrappers/kraft_board.png',
-      'title': 'Kraft Board',
+      'imageUrl': 'assets/icon/product/accents/sinamay_cream.png',
+      'title': 'Sinamay (Cream)',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/wrappers/kraft_paper.png',
-      'title': 'Kraft Paper',
+      'imageUrl': 'assets/icon/product/accents/sinamay_golden_yellow.png',
+      'title': 'Sinamay (Golden Yellow)',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/wrappers/navy_blue.png',
-      'title': 'Navy Blue',
+      'imageUrl': 'assets/icon/product/accents/tissue_paper.png',
+      'title': 'Tissue Paper (White)',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/wrappers/lime_green.png',
-      'title': 'Lime Green',
+      'imageUrl': 'assets/icon/product/accents/snowflake_net.png',
+      'title': 'Snowflake Net (White)',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/wrappers/cardamom_purple.png',
-      'title': 'Cardamom Purple',
-      'price': 0.0,
-    },
-    {
-      'imageUrl': 'assets/icon/product/wrappers/milky_yellow.png',
-      'title': 'Milky Yellow',
-      'price': 0.0,
-    },
-    {
-      'imageUrl': 'assets/icon/product/wrappers/gouache.png',
-      'title': 'Gouache + Milky White',
-      'price': 0.0,
-    },
-    {
-      'imageUrl': 'assets/icon/product/wrappers/wine_red.png',
-      'title': 'Wine Red',
+      'imageUrl': 'assets/icon/product/accents/pearl_wave_yarn.png',
+      'title': 'Pearl Wave Yarn (Per meter)',
       'price': 0.0,
     },
   ];
 
-  Map<String, dynamic>? selectedProduct;
+  List<Map<String, dynamic>> selectedProducts = [];  // Allow multiple selections
 
   void selectProduct(Map<String, dynamic> product) {
     setState(() {
-      if (selectedProduct == product) {
-        selectedProduct = null; // Deselect the product if it's already selected
-      } else {
-        selectedProduct = product; // Select the new product
+      if (selectedProducts.contains(product)) {
+        selectedProducts.remove(product); // Deselect the product if it's already selected
+      } else if (selectedProducts.length < 2) {
+        selectedProducts.add(product);  // Select the new product if less than 2
       }
     });
   }
@@ -90,9 +76,17 @@ class _PromoStep3Page extends State<PromoStep3Page> {
               fit: BoxFit.cover,
             ),
             const SizedBox(height: 16.0),
-            const Text(
-              'Step 3: Pick your Main Wrapper',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            RichText(
+              text: TextSpan(
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                children: <TextSpan>[
+                  const TextSpan(text: 'Step 4: Pick your Accent '),
+                  TextSpan(
+                    text: '(Up to 2)',
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 16.0),
             Expanded(
@@ -106,7 +100,7 @@ class _PromoStep3Page extends State<PromoStep3Page> {
                 itemCount: products.length,
                 itemBuilder: (context, index) {
                   final product = products[index];
-                  final isSelected = selectedProduct == product;
+                  final isSelected = selectedProducts.contains(product);
                   return GestureDetector(
                     onTap: () => selectProduct(product),
                     child: Container(
@@ -139,34 +133,28 @@ class _PromoStep3Page extends State<PromoStep3Page> {
           children: [
             FloatingActionButton.extended(
               backgroundColor: const Color(0xFFFF92B2),
-              onPressed: selectedProduct != null
+              onPressed: selectedProducts.isNotEmpty
                   ? () {
-                // Add to Basket functionality goes here
+                // Basket Location
               }
                   : null, // Disable button if no product is selected
-              label: const Text(
-                "Check Basket",
-                style: TextStyle(color: Colors.white),
-              ),
-              icon: const Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
-              ),
+              label: const Text("Check Basket",
+                style: TextStyle(color: Colors.white),),
+              icon: const Icon(Icons.shopping_cart,
+                color: Colors.white,),
             ),
             FloatingActionButton(
               backgroundColor: const Color(0xFFFF92B2), // Pink background
-              onPressed: selectedProduct != null
+              onPressed: selectedProducts.isNotEmpty
                   ? () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PromoStep4Page(selectedProduct: selectedProduct!), // Pass selectedProduct
-                  ),
+                    context,
+                    MaterialPageRoute(builder: (context) => PromoStep5Page(selectedProduct: {},))
                 );
               }
                   : null, // Disable button if no product is selected
               child: const Icon(
-                Icons.arrow_forward,
+                Icons.arrow_forward, // Icon with >
                 color: Colors.white,
               ),
             ),

@@ -199,7 +199,7 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
   final Duration _scrollDuration = Duration(seconds: 3);
   final List<Map<String, dynamic>> slideshowProducts = [
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
+      'imageUrl': 'assets/icon/product/sample_bouquets/lily_pretty.png',
     },
     {
       'imageUrl': 'assets/icon/product/product2.jpg',
@@ -337,8 +337,8 @@ class FeaturedProductsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> products = [
       {
-        'imageUrl': 'assets/icon/product/product1.jpg',
-        'title': 'Product 1',
+        'imageUrl': 'assets/icon/product/sample_bouquets/lily_pretty.png',
+        'title': 'Lily Pretty',
         'price': 19.99,
       },
       {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/widgets/product.dart';
+import 'package:twist_bloom/widgets/product.dart'; // Importing Product widget
 import 'promo_step3_page.dart';
 
 class PromoStep2Page extends StatefulWidget {
@@ -12,27 +12,27 @@ class PromoStep2Page extends StatefulWidget {
 class _PromoStep2Page extends State<PromoStep2Page> {
   List<Map<String, dynamic>> products = [
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
+      'imageUrl': 'assets/icon/product/fillers/lavender.png',
       'title': 'Lavender',
       'price': 45.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
+      'imageUrl': 'assets/icon/product/fillers/eucalyptus.png',
       'title': 'Eucalyptus',
       'price': 30.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
+      'imageUrl': 'assets/icon/product/fillers/leather_fern.png',
       'title': 'Leather Fern',
       'price': 45.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
+      'imageUrl': 'assets/icon/product/fillers/baby_breath.png',
       'title': "Baby's Breath (2 Stems)",
       'price': 35.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
+      'imageUrl': 'assets/icon/product/fillers/waxflower.png',
       'title': 'Waxflower (2 Stems)',
       'price': 35.0,
     },
@@ -86,7 +86,7 @@ class _PromoStep2Page extends State<PromoStep2Page> {
             ),
             const SizedBox(height: 16.0),
             const Text(
-              'Step 2: Pick your filler (1 Filler)',
+              'Step 2: Pick your filler',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16.0),
@@ -115,67 +115,11 @@ class _PromoStep2Page extends State<PromoStep2Page> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PromoStep3Page()),
+            MaterialPageRoute(builder: (context) => const PromoStep3Page()),
           );
         },
-        child: const Icon(Icons.arrow_forward),
-        backgroundColor: Color(0xFFFF92B2),
-      ),
-    );
-  }
-}
-
-// ProductCard widget to reflect design changes
-class ProductCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final double price;
-
-  const ProductCard({
-    required this.imageUrl,
-    required this.title,
-    required this.price,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Image.asset(
-                imageUrl,
-                fit: BoxFit.contain,
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 4.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('₱ $price'),
-                Row(
-                  children: const [
-                    Icon(Icons.favorite_border, size: 16),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
+        child: const Icon(Icons.arrow_forward,color: Colors.white,),
+        backgroundColor: const Color(0xFFFF92B2),
       ),
     );
   }

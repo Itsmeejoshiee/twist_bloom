@@ -27,6 +27,12 @@ flutter:
     - assets/icon/google.png
     - assets/icon/
     - assets/icon/product/
+    - assets/icon/product/accents/
+    - assets/icon/product/fillers/
+    - assets/icon/product/flowers/
+    - assets/icon/product/ribbons/
+    - assets/icon/product/sample_bouquets/
+    - assets/icon/product/wrappers/
     - assets/icon/
 
   fonts:

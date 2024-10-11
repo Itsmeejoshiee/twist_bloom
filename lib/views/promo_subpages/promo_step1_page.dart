@@ -12,32 +12,32 @@ class PromoStep1Page extends StatefulWidget {
 class _PromoStep1Page extends State<PromoStep1Page> {
   List<Map<String, dynamic>> products = [
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
+      'imageUrl': 'assets/icon/product/flowers/tulip.png',
       'title': 'Tulip',
       'price': 65.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
+      'imageUrl': 'assets/icon/product/flowers/sunflower.png',
       'title': 'Sunflower',
       'price': 75.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
+      'imageUrl': 'assets/icon/product/flowers/poppy.png',
       'title': 'Poppy (2 Stems)',
       'price': 45.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
+      'imageUrl': 'assets/icon/product/flowers/rose.png',
       'title': 'Rose',
       'price': 70.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
+      'imageUrl': 'assets/icon/product/flowers/lily.png',
       'title': 'Lily',
       'price': 65.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
+      'imageUrl': 'assets/icon/product/flowers/gerbera.png',
       'title': 'Gerbera',
       'price': 70.0,
     },
@@ -91,7 +91,7 @@ class _PromoStep1Page extends State<PromoStep1Page> {
             ),
             const SizedBox(height: 16.0),
             const Text(
-              'Step 1: Pick your flower (1 Flower)',
+              'Step 1: Pick your flower',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16.0),
@@ -123,7 +123,7 @@ class _PromoStep1Page extends State<PromoStep1Page> {
             MaterialPageRoute(builder: (context) => PromoStep2Page()),
           );
         },
-        child: const Icon(Icons.arrow_forward),
+        child: const Icon(Icons.arrow_forward, color: Colors.white,),
         backgroundColor: Color(0xFFFF92B2),
       ),
     );
