@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart';
+import 'package:twist_bloom/views/product.dart';
+
+class PromoStep1Page extends StatefulWidget {
+  const PromoStep1Page({super.key});
+
+  @override
+  _PromoStep1Page createState() => _PromoStep1Page();
+}
+
+class _PromoStep1Page extends State<PromoStep1Page> {
+  List<Map<String, dynamic>> products = [
+    {
+      'imageUrl': 'assets/icon/product/product1.jpg',
+      'title': 'Product 1',
+      'price': 69.99,
+    },
+    {
+      'imageUrl': 'assets/icon/product/product2.jpg',
+      'title': 'Product 2',
+      'price': 29.99,
+    },
+    {
+      'imageUrl': 'assets/icon/product/product1.jpg',
+      'title': 'Product 1',
+      'price': 49.99,
+    },
+    {
+      'imageUrl': 'assets/icon/product/product2.jpg',
+      'title': 'Product 2',
+      'price': 59.99,
+    },
+  ];
+
+  List<Map<String, dynamic>> filteredProducts = [];
+
+  @override
+  void initState() {
+    super.initState();
+    filteredProducts = products;
+  }
+
+  void filterProducts() {
+    setState(() {
+      filteredProducts.sort((a, b) => a['price'].compareTo(b['price']));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('STEP 1'),
+        actions: [
+          IconButton(
+            icon: Image.asset('assets/icon/filter.png'),
+            onPressed: () {
+              filterProducts();
+            },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 1, 8, 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Search Bar - expanded by default
+            const SizedBox(height: 16.0),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 3.16 / 4,
+                ),
+                itemCount: filteredProducts.length,
+                itemBuilder: (context, index) {
+                  return ProductCard(
+                    imageUrl: filteredProducts[index]['imageUrl'],
+                    title: filteredProducts[index]['title'],
+                    price: filteredProducts[index]['price'],
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
