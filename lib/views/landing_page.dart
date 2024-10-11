@@ -6,6 +6,7 @@ import 'package:timeline_tile/timeline_tile.dart';
 import 'like_page.dart';
 import 'cart.dart';
 import 'package:twist_bloom/views/account_page.dart';
+import 'promo_page.dart';
 
 void main() {
   runApp(const HomePage());
@@ -1823,32 +1824,64 @@ class ElevatedPromoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Handle promo click
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => PromoScreen()),
+        );
       },
-      child: Card(
-        elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-        child: Container(
-          height: 150,
-          padding: const EdgeInsets.fromLTRB(16, 1, 16, 16),
-          child: Row(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: Stack(
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
-                      'Latest Promo!',
-                      style:
-                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              // Background image
+              Image.asset(
+                'assets/promo_background.png',
+                height: 150,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              // Card content
+              Container(
+                height: 150,
+                padding: const EdgeInsets.fromLTRB(16, 1, 16, 16),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.40), // Optional overlay for readability
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Latest Promo!',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white, // Text color
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            'Click to discover our latest offers',
+                            style: TextStyle(
+                              color: Colors.white, // Text color
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    SizedBox(height: 8),
-                    Text('Click to discover our latest offers'),
+                    const Icon(
+                      Icons.local_offer,
+                      size: 40,
+                      color: Colors.red,
+                    ),
                   ],
                 ),
               ),
-              const Icon(Icons.local_offer, size: 40, color: Colors.red),
             ],
           ),
         ),

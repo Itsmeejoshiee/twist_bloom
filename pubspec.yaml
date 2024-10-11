@@ -23,6 +23,7 @@ flutter:
 
   assets:
     - assets/TwistBloom_logo.png
+    - assets/promo_background.png
     - assets/icon/google.png
     - assets/icon/
     - assets/icon/product/
