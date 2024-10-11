@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:twist_bloom/Views/landing_page.dart';
-import 'package:twist_bloom/Views/login_page.dart';
-import 'dart:math' as math;
 
 void main() {
   runApp(const SignInPage());

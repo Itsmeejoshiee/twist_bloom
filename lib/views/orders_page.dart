@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'cart.dart';
-import 'like_page.dart';
+import 'orders_subpages/shopping_cart.dart';
+import 'orders_subpages/like_page.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});

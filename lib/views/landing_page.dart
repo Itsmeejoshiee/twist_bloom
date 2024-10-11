@@ -1,15 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'orders_page.dart';
-import 'account_page.dart';
 import 'promo_page.dart';
-import 'messaging_page.dart';
-import 'product_page.dart';
 import 'settings_page.dart';
+import 'account_page.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/search_widget.dart';
 import '../widgets/product.dart';
+import 'principal_pages.dart';
 
 void main() {
   runApp(const HomePage());
