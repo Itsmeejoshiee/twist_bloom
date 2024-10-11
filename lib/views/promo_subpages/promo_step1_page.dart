@@ -123,64 +123,8 @@ class _PromoStep1Page extends State<PromoStep1Page> {
             MaterialPageRoute(builder: (context) => PromoStep2Page()),
           );
         },
-        child: const Icon(Icons.arrow_forward, color: Colors.white,),
+        child: const Icon(Icons.arrow_forward, color: Colors.white),
         backgroundColor: Color(0xFFFF92B2),
-      ),
-    );
-  }
-}
-
-// ProductCard widget to reflect design changes
-class ProductCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final double price;
-
-  const ProductCard({
-    required this.imageUrl,
-    required this.title,
-    required this.price,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Image.asset(
-                imageUrl,
-                fit: BoxFit.contain,
-              ),
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 4.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('₱ $price'),
-                Row(
-                  children: const [
-                    Icon(Icons.favorite_border, size: 16),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }
