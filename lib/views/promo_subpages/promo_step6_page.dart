@@ -3,7 +3,7 @@ import 'package:twist_bloom/widgets/product.dart';
 import 'promo_cart.dart';
 
 class PromoStep6Page extends StatefulWidget {
-  const PromoStep6Page({super.key});
+  const PromoStep6Page({super.key, required Map selectedProduct});
 
   @override
   _PromoStep6Page createState() => _PromoStep6Page();
@@ -130,24 +130,27 @@ class _PromoStep6Page extends State<PromoStep6Page> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center, // Center the buttons
           children: [
-            FloatingActionButton.extended(
-              backgroundColor: const Color(0xFFFF92B2),
-              onPressed: selectedProduct != null
-                  ? () {
-                // Add to Basket functionality goes here
-              }
-                  : null, // Disable button if no product is selected
-              label: const Text(
-                "Check Basket",
-                style: TextStyle(color: Colors.white),
-              ),
-              icon: const Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
+            Expanded(
+              child: FloatingActionButton.extended(
+                backgroundColor: const Color(0xFFFF92B2),
+                onPressed: selectedProduct != null
+                    ? () {
+                  // Add to Basket functionality goes here
+                }
+                    : null, // Disable button if no product is selected
+                label: const Text(
+                  "Check Basket",
+                  style: TextStyle(color: Colors.white),
+                ),
+                icon: const Icon(
+                  Icons.shopping_cart,
+                  color: Colors.white,
+                ),
               ),
             ),
+            const SizedBox(width: 16), // Space between buttons
             FloatingActionButton(
               backgroundColor: const Color(0xFFFF92B2), // Pink background
               onPressed: selectedProduct != null

@@ -129,20 +129,23 @@ class _PromoStep4Page extends State<PromoStep4Page> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center, // Center the buttons
           children: [
-            FloatingActionButton.extended(
-              backgroundColor: const Color(0xFFFF92B2),
-              onPressed: selectedProducts.isNotEmpty
-                  ? () {
-                // Basket Location
-              }
-                  : null, // Disable button if no product is selected
-              label: const Text("Check Basket",
-                style: TextStyle(color: Colors.white),),
-              icon: const Icon(Icons.shopping_cart,
-                color: Colors.white,),
+            Expanded(
+              child: FloatingActionButton.extended(
+                backgroundColor: const Color(0xFFFF92B2),
+                onPressed: selectedProducts.isEmpty
+                    ? () {
+                  // Basket Location
+                }
+                    : null, // Disable button if no product is selected
+                label: const Text("Check Basket",
+                  style: TextStyle(color: Colors.white),),
+                icon: const Icon(Icons.shopping_cart,
+                  color: Colors.white,),
+              ),
             ),
+            const SizedBox(width: 16), // Space between buttons
             FloatingActionButton(
               backgroundColor: const Color(0xFFFF92B2), // Pink background
               onPressed: selectedProducts.isNotEmpty

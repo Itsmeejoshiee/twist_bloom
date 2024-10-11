@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/views/promo_subpages/promo_cart.dart';
 import 'package:twist_bloom/widgets/product.dart';
 import 'promo_step6_page.dart';
 
@@ -159,36 +160,35 @@ class _PromoStep5Page extends State<PromoStep5Page> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center, // Center the buttons
           children: [
-            FloatingActionButton.extended(
-              backgroundColor: const Color(0xFFFF92B2),
-              onPressed: selectedProducts.isNotEmpty
-                  ? () {
-                // Basket Location
-              }
-                  : null, // Disable button if no product is selected
-              label: const Text(
-                "Check Basket",
-                style: TextStyle(color: Colors.white),
-              ),
-              icon: const Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
+            Expanded(
+              child: FloatingActionButton.extended(
+                backgroundColor: const Color(0xFFFF92B2),
+                onPressed: selectedProducts.isEmpty
+                    ? () {
+                  // Basket Location
+                }
+                    : null, // Disable button if no product is selected
+                label: const Text("Check Basket",
+                  style: TextStyle(color: Colors.white),),
+                icon: const Icon(Icons.shopping_cart,
+                  color: Colors.white,),
               ),
             ),
+            const SizedBox(width: 16), // Space between buttons
             FloatingActionButton(
-              backgroundColor: const Color(0xFFFF92B2),
+              backgroundColor: const Color(0xFFFF92B2), // Pink background
               onPressed: selectedProducts.isNotEmpty
                   ? () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PromoStep6Page())
+                    MaterialPageRoute(builder: (context) => PromoStep6Page(selectedProduct: {},))
                 );
               }
                   : null, // Disable button if no product is selected
               child: const Icon(
-                Icons.arrow_forward,
+                Icons.arrow_forward, // Icon with >
                 color: Colors.white,
               ),
             ),
