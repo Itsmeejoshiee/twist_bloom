@@ -63,7 +63,6 @@ class _PromoStep1Page extends State<PromoStep1Page> {
   Widget build(BuildContext context) {
     return GradientBackground(
         child: Scaffold(
-          backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: const Text('MIX & MATCH'),
             backgroundColor: Colors.transparent, // Make app bar transparent
@@ -81,7 +80,8 @@ class _PromoStep1Page extends State<PromoStep1Page> {
               ),
             ],
           ),
-          body: Stack(
+          body: Container(
+            child: Stack(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -160,6 +160,7 @@ class _PromoStep1Page extends State<PromoStep1Page> {
                 ),
               ),
             ],
+          ),
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {

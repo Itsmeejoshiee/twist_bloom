@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/Views/account_page.dart';
 
 class LikesPage extends StatefulWidget {
   const LikesPage({Key? key}) : super(key: key);
@@ -20,8 +21,10 @@ class _LikesPageState extends State<LikesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GradientBackground(
+        child: Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: Row(
           children: [
             const Text('Likes'),
@@ -51,7 +54,8 @@ class _LikesPageState extends State<LikesPage> {
         ],
         elevation: 4, // Shadow for the AppBar
       ),
-      body: Stack(
+      body: Container(
+      child: Stack(
         children: [
           GridView.builder(
             padding: const EdgeInsets.all(8.0),
@@ -85,7 +89,7 @@ class _LikesPageState extends State<LikesPage> {
           ),
           if (_isEditing) _buildEditingNavBar(),
         ],
-      ),
+      ),),),
     );
   }
 
@@ -237,7 +241,7 @@ class pc extends StatelessWidget {
               child: TextButton(
                 onPressed: onSelectNow,
                 child: Text(
-                  isEditing ? (isSelected ? 'Selected' : 'Select Now') : 'Add to Cart',
+                  isEditing ? (isSelected ? 'Selected' : 'Select') : 'Add to Cart',
                   style: TextStyle(
                     fontSize: 14, // Adjusted font size
                     color: Colors.white, // Ensure text color contrasts with button color

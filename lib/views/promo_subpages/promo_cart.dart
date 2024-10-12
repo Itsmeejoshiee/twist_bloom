@@ -23,7 +23,6 @@ class _PromoCartPageState extends State<PromoCartPage> {
   Widget build(BuildContext context) {
     return GradientBackground(
         child: Scaffold(
-          backgroundColor: Colors.transparent,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             title: const Text('Basket'),

@@ -65,7 +65,6 @@ class _PromoStep6Page extends State<PromoStep6Page> {
   Widget build(BuildContext context) {
     return GradientBackground(
         child:Scaffold(
-        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: const Text('MIX & MATCH'),
           backgroundColor: Colors.transparent,
