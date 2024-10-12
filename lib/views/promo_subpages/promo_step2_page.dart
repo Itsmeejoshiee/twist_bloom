@@ -124,27 +124,37 @@ class _PromoStep2Page extends State<PromoStep2Page> {
           ),
           // Positioned button at the bottom center
           Positioned(
-            bottom: 20,
+            bottom: 16,
             left: 0,
-            right: 0,
+            right: 76,
             child: Center(
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => PromoCartPage(selectedProduct: {}))
+                    context,
+                    MaterialPageRoute(builder: (context) => PromoCartPage(selectedProduct: {})),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
-                  backgroundColor: Colors.black, // Customize your color here
+                  padding: const EdgeInsets.symmetric(horizontal: 85, vertical: 16.0),
+                  backgroundColor: const Color(0xFFFF92B2), // Customize your color here
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
                 ),
-                child: const Text(
-                  'Check Basket',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min, // Ensures the Row takes up minimal space
+                  children: [
+                    Icon(
+                      Icons.shopping_cart, // Basket icon
+                      color: Colors.white,    // Icon color
+                    ),
+                    SizedBox(width: 8),        // Space between icon and text
+                    Text(
+                      'Check Basket',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ],
                 ),
               ),
             ),
