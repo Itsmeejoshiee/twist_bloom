@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class PromoCartPage extends StatefulWidget {
   const PromoCartPage({Key? key, required Map<String, dynamic> selectedProduct}) : super(key: key);
@@ -20,30 +21,34 @@ class _PromoCartPageState extends State<PromoCartPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Basket'),
-        elevation: 0,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.all(8.0),
-              children: [
-                _buildCategory('Flower'),
-                _buildProductList('Flower'),
-                const SizedBox(height: 10),
-                _buildCategory('Fillers'),
-                _buildProductList('Fillers'),
-                const SizedBox(height: 10),
-                _buildCategory('Wrapper'),
-                _buildProductList('Wrapper'),
-              ],
-            ),
+    return GradientBackground(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: const Text('Basket'),
+            elevation: 0,
           ),
-          _buildCheckoutNavBar(),
-        ],
+          body: Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.all(8.0),
+                  children: [
+                    _buildCategory('Flower'),
+                    _buildProductList('Flower'),
+                    const SizedBox(height: 10),
+                    _buildCategory('Fillers'),
+                    _buildProductList('Fillers'),
+                    const SizedBox(height: 10),
+                    _buildCategory('Wrapper'),
+                    _buildProductList('Wrapper'),
+                  ],
+                ),
+              ),
+              _buildCheckoutNavBar(),
+            ],
+          ),
       ),
     );
   }

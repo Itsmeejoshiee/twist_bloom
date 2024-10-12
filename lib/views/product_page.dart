@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/product.dart';
+import '../widgets/gradient_background.dart';
 
 class AllProductsPage extends StatefulWidget {
   const AllProductsPage({super.key});
@@ -48,45 +49,49 @@ class _AllProductsPageState extends State<AllProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('All Products'),
-        actions: [
-          IconButton(
-            icon: Image.asset('assets/icon/filter.png'),
-            onPressed: () {
-              filterProducts();
-            },
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 1, 8, 8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Search Bar is expanded by default
-            const SizedBox(height: 16.0),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 3.16 / 4,
-                ),
-                itemCount: filteredProducts.length,
-                itemBuilder: (context, index) {
-                  return ProductCard(
-                    imageUrl: filteredProducts[index]['imageUrl'],
-                    title: filteredProducts[index]['title'],
-                    price: filteredProducts[index]['price'],
-                  );
-                },
-              ),
+    return GradientBackground(
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.white10,
+          title: const Text('All Products'),
+          actions: [
+            IconButton(
+              icon: Image.asset('assets/icon/filter.png'),
+              onPressed: () {
+                filterProducts();
+              },
             ),
           ],
         ),
+        body: GradientBackground(child:Padding(
+          padding: const EdgeInsets.fromLTRB(8, 1, 8, 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Search Bar is expanded by default
+              const SizedBox(height: 16.0),
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 3.16 / 4,
+                  ),
+                  itemCount: filteredProducts.length,
+                  itemBuilder: (context, index) {
+                    return ProductCard(
+                      imageUrl: filteredProducts[index]['imageUrl'],
+                      title: filteredProducts[index]['title'],
+                      price: filteredProducts[index]['price'],
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),),
       ),
     );
   }

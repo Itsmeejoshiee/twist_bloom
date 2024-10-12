@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'orders_subpages/shopping_cart.dart';
 import 'orders_subpages/like_page.dart';
+import '../widgets/gradient_background.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
@@ -9,18 +10,9 @@ class OrdersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: Container(
+      body: GradientBackground(
+        child:Container(
         height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(-0.4, 1),
-            end: Alignment(0.4, -1),
-            colors: [
-              Color.fromRGBO(224, 209, 158, 0.14),
-              Color.fromRGBO(255, 252, 237, 1.0),
-            ],
-          ),
-        ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 64, 16, 16),
           child: Column(
@@ -34,7 +26,7 @@ class OrdersPage extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ),),
     );
   }
 
@@ -64,7 +56,7 @@ class OrdersPage extends StatelessWidget {
               children: [
                 _buildCustomIconButton(
                   'assets/icon/cart.png',
-                  'My Shipping Cart',
+                  'My Shopping Cart',
                       () {
                     Navigator.push(
                       context,

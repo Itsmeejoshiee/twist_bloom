@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=C:\Users\emman\Downloads\flutter_windows_3.22.3-stable\flutter
-FLUTTER_APPLICATION_PATH=C:\Users\emman\Downloads\twist_bloom-main\twist_bloom-main
+FLUTTER_ROOT=C:\src\flutter
+FLUTTER_APPLICATION_PATH=C:\Users\jheni\OneDrive\Documents\3rdYear1stSem\ADET\test\twist_bloom
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=0.1.0

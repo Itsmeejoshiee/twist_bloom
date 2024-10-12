@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/product.dart';
 import 'promo_cart.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class PromoStep6Page extends StatefulWidget {
   const PromoStep6Page({super.key, required Map selectedProduct});
@@ -62,115 +63,117 @@ class _PromoStep6Page extends State<PromoStep6Page> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('MIX & MATCH'),
+    return GradientBackground(
+        child:Scaffold(
         backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.of(context).pop(),
+        appBar: AppBar(
+          title: const Text('MIX & MATCH'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Banner image at the top
-            Image.asset(
-              'assets/promo_background.png',
-              height: 120.0,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 16.0),
-            const Text(
-              'Step 6: Pick your wrapping style',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16.0),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 3.16 / 4,
-                ),
-                itemCount: products.length,
-                itemBuilder: (context, index) {
-                  final product = products[index];
-                  final isSelected = selectedProduct == product;
-                  return GestureDetector(
-                    onTap: () => selectProduct(product),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: isSelected ? Colors.pink[100] : Colors.white, // Highlight with pink
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: isSelected ? Colors.pink : Colors.grey,
-                          width: 2,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Banner image at the top
+              Image.asset(
+                'assets/promo_background.png',
+                height: 120.0,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(height: 16.0),
+              const Text(
+                'Step 6: Pick your wrapping style',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16.0),
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 3.16 / 4,
+                  ),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    final isSelected = selectedProduct == product;
+                    return GestureDetector(
+                      onTap: () => selectProduct(product),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: isSelected ? Colors.pink[100] : Colors.white, // Highlight with pink
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: isSelected ? Colors.pink : Colors.grey,
+                            width: 2,
+                          ),
+                        ),
+                        child: ProductCard(
+                          imageUrl: product['imageUrl'],
+                          title: product['title'],
+                          price: product['price'],
                         ),
                       ),
-                      child: ProductCard(
-                        imageUrl: product['imageUrl'],
-                        title: product['title'],
-                        price: product['price'],
-                      ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center, // Center the buttons
-          children: [
-            Expanded(
-              child: FloatingActionButton.extended(
-                backgroundColor: const Color(0xFFFF92B2),
-                onPressed: selectedProduct != null
-                    ? () {
-                  // Add to Basket functionality goes here
-                }
-                    : null, // Disable button if no product is selected
-                label: const Text(
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center, // Center the buttons
+              children: [
+                Expanded(
+                  child: FloatingActionButton.extended(
+                    backgroundColor: const Color(0xFFFF92B2),
+                    onPressed: selectedProduct != null
+                        ? () {
+                      // Add to Basket functionality goes here
+                    }
+                        : null, // Disable button if no product is selected
+                    label: const Text(
                   "Check Basket",
                   style: TextStyle(color: Colors.white),
-                ),
-                icon: const Icon(
-                  Icons.shopping_cart,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            const SizedBox(width: 16), // Space between buttons
-            FloatingActionButton(
-              backgroundColor: const Color(0xFFFF92B2), // Pink background
-              onPressed: selectedProduct != null
-                  ? () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PromoCartPage(selectedProduct: selectedProduct!), // Pass selectedProduct
+                    ),
+                    icon: const Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
+                    ),
                   ),
-                );
-              }
-                  : null, // Disable button if no product is selected
-              child: const Icon(
-                Icons.arrow_forward,
-                color: Colors.white,
-              ),
+                ),
+                const SizedBox(width: 16), // Space between buttons
+                FloatingActionButton(
+                  backgroundColor: const Color(0xFFFF92B2), // Pink background
+                  onPressed: selectedProduct != null ? () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PromoCartPage(selectedProduct: selectedProduct!), // Pass selectedProduct
+                      ),
+                    );
+                  }
+                      : null, // Disable button if no product is selected
+                  child: const Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
     );
   }
 }
