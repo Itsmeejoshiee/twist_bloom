@@ -17,8 +17,9 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text('Settings'),
       ),
       body: GradientBackground(
