@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class LavenderDetails extends StatefulWidget {
   const LavenderDetails({Key? key}) : super(key: key);
@@ -8,74 +9,99 @@ class LavenderDetails extends StatefulWidget {
 }
 
 class _LavenderDetails extends State<LavenderDetails> {
-  List<String> colors = ['Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White'];
+  List<String> colors = [
+    'Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White'
+  ];
   String selectedColor = 'Red';
   int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+    return GradientBackground(
+      child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: const Text('Lavender'),
         ),
-        title: const Text('Lavender'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Center(
-              child: Image.asset(
-                'assets/icon/product/flower1.jpg', // Placeholder image
-                width: 200,
-                height: 200,
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Lavender',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              '₱45 for 1 stem',
-              style: TextStyle(fontSize: 18, color: Colors.redAccent),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: const [
-                TagWidget('Lavender'),
-                SizedBox(width: 5),
-                TagWidget('Filler'),
-                SizedBox(width: 5),
-                TagWidget('Pre-order'),
-              ],
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Lorem ipsum odor amet, consectetur adipiscing elit. Maecenas varius fusce efficitur habitasse sollicitudin ipsum nunc. Adipiscing praesent mus curae cras malesuada ridiculus rutrum.',
-              style: TextStyle(fontSize: 14),
-            ),
-            const Spacer(),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  _showCustomizationSheet();
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFF92B2), // Pink color
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10), // Makes the image rounder
+                  child: Image.asset(
+                    'assets/icon/product/fillers/lavender.png', // Placeholder image
+                    width: 360,
+                    height: 350,
+                    fit: BoxFit.cover, // Ensures the image fills the container properly
+                  ),
                 ),
-                child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 16)),
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              const Text(
+                'Lavender',
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              const Row(
+                children: [
+                  Text(
+                    '₱45',
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Color(0xFFFF92B2),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(width: 4), // Optional: add some space between the two texts
+                  Text(
+                    'for 1 stem',
+                    style: TextStyle(
+                      fontSize: 16, // Adjust the font size as desired
+                      color: Colors.black, // Change to desired color if needed
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 8),
+              Row(
+                children: const [
+                  TagWidget('Lavender'),
+                  SizedBox(width: 7),
+                  TagWidget('Filler'),
+                  SizedBox(width: 7),
+                  TagWidget('Pre-order'),
+                ],
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Lorem ipsum odor amet, consectetur adipiscing elit. Maecenas varius fusce efficitur habitasse sollicitudin ipsum nunc. Adipiscing praesent mus curae cras malesuada ridiculus rutrum.',
+                style: TextStyle(fontSize: 16),
+              ),
+              const Spacer(),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _showCustomizationSheet();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFF92B2), // Pink color
+                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  ),
+                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -205,7 +231,7 @@ class TagWidget extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: const TextStyle(fontSize: 12, color: Colors.black),
+        style: const TextStyle(fontSize: 20, color: Color(0xFF59333E)),
       ),
     );
   }
