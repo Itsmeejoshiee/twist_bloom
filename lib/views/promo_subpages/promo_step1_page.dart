@@ -6,6 +6,7 @@ import 'package:twist_bloom/views/products_details/Flowers/rose_details.dart';
 import 'package:twist_bloom/views/products_details/Flowers/sunflower_details.dart';
 import 'package:twist_bloom/views/products_details/Flowers/tulip_details.dart';
 import 'package:twist_bloom/views/promo_subpages/promo_cart.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 import '../../widgets/product_ontap.dart';
 import 'promo_step2_page.dart';
 
@@ -70,7 +71,7 @@ class _PromoStep1Page extends State<PromoStep1Page> {
       appBar: AppBar(
         title: const Text('MIX & MATCH'),
         surfaceTintColor: Colors.transparent,
-        backgroundColor: const Color(0xFFFEFAEB), // Make app bar transparent
+        backgroundColor: const Color(0xFFFDFAFA), // Make app bar transparent
         elevation: 0, // Remove shadow
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -83,17 +84,7 @@ class _PromoStep1Page extends State<PromoStep1Page> {
           ),
         ],
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(-0.4, 1),
-            end: Alignment(0.4, -1),
-            colors: [
-              Color.fromRGBO(224, 209, 158, 0.14),
-              Color.fromRGBO(255, 252, 237, 1.0),
-            ],
-          ),
-        ),
+      body: GradientBackground(
         child: Stack(
           children: [
             Padding(

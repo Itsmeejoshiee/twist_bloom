@@ -66,7 +66,7 @@ class _PromoStep2Page extends State<PromoStep2Page> {
       appBar: AppBar(
         title: const Text('MIX & MATCH'),
         surfaceTintColor: Colors.transparent,
-        backgroundColor: Color(0xFFFEFAEB),
+        backgroundColor: Color(0xFFFDFAFA),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -81,17 +81,7 @@ class _PromoStep2Page extends State<PromoStep2Page> {
           ),
         ],
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(-0.4, 1),
-            end: Alignment(0.4, -1),
-            colors: [
-              Color.fromRGBO(224, 209, 158, 0.14),
-              Color.fromRGBO(255, 252, 237, 1.0),
-            ],
-          ),
-        ),
+      body: GradientBackground(
         child: Stack(
           children: [
             Padding(

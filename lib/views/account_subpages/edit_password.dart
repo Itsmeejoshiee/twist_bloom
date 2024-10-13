@@ -9,7 +9,12 @@ class EditPasswordPage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Edit Password'),
+        title: const Text('Edit Password',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -31,6 +36,7 @@ class EditPasswordPage extends StatelessWidget {
       body: GradientBackground(
         child: Column(
           children: [
+            SizedBox(height: 30,),
             Container(
               margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
               padding: const EdgeInsets.all(16),

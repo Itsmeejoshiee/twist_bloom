@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'dart:async';
 import 'promo_page.dart';
 import '../widgets/bottom_navbar.dart';
@@ -56,12 +57,13 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         children: [
           _pages[_currentIndex],
-          if (_currentIndex != 4)
+          // Show the profile icon and SearchWidget only for HomePage and OrdersPage
+          if (_currentIndex == 0) ...[
             Positioned(
-              top: 20,
+              top: 50,
               left: 10,
               child: IconButton(
-                icon: const Icon(Icons.account_circle,
+                icon: const Icon(Icons.account_circle_outlined,
                     color: Colors.black, size: 48),
                 onPressed: () {
                   Navigator.push(
@@ -71,12 +73,12 @@ class _MainScreenState extends State<MainScreen> {
                 },
               ),
             ),
-          if (_currentIndex != 4) // Conditionally render SearchWidget for other pages
             const Positioned(
-              top: 20,
+              top: 50,
               right: 10,
               child: SearchWidget(),
             ),
+          ],
         ],
       ),
       bottomNavigationBar: BottomNavBar(
@@ -92,23 +94,13 @@ class HomePageContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(-0.4, 1),
-          end: Alignment(0.4, -1),
-          colors: [
-            Color.fromRGBO(224, 209, 158, 0.14),
-            Color.fromRGBO(255, 252, 237, 1.0)
-          ],
-        ),
-      ),
+    return GradientBackground(
       child: ListView(
-        padding: const EdgeInsets.only(top: 90),
-        children: [
-          const ElevatedPromoWidget(),
+        padding: const EdgeInsets.only(top: 120),
+        children: const [
+          ElevatedPromoWidget(),
           LatestProductsSlideshow(),
-          const FeaturedProductsGrid(),
+          FeaturedProductsGrid(),
         ],
       ),
     );
@@ -148,13 +140,13 @@ class ElevatedPromoWidget extends StatelessWidget {
                   color: Colors.black
                       .withOpacity(0.40), // Optional overlay for readability
                 ),
-                child: Row(
+                child: const Row(
                   children: [
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
                             'Latest Promo!',
                             style: TextStyle(
@@ -173,7 +165,7 @@ class ElevatedPromoWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Icon(
+                    Icon(
                       Icons.local_offer,
                       size: 40,
                       color: Colors.red,
@@ -203,19 +195,28 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
   final Duration _scrollDuration = const Duration(seconds: 3);
   final List<Map<String, dynamic>> slideshowProducts = [
     {
-      'imageUrl': 'assets/icon/product/sample_bouquets/lily_pretty.png',
+      'imageUrl': 'assets/icon/product/bouquets/latest1.png',
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
+      'imageUrl': 'assets/icon/product/bouquets/latest2.png',
     },
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
+      'imageUrl': 'assets/icon/product/bouquets/latest3.png',
     },
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
+      'imageUrl': 'assets/icon/product/bouquets/latest4.png',
     },
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
+      'imageUrl': 'assets/icon/product/bouquets/latest5.png',
+    },
+    {
+      'imageUrl': 'assets/icon/product/bouquets/latest6.png',
+    },
+    {
+      'imageUrl': 'assets/icon/product/bouquets/latest7.png',
+    },
+    {
+      'imageUrl': 'assets/icon/product/bouquets/latest8.png',
     },
   ];
 
@@ -342,29 +343,29 @@ class FeaturedProductsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> products = [
       {
-        'imageUrl': 'assets/icon/product/sample_bouquets/lily_pretty.png',
+        'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct1.png',
         'title': 'Lily Pretty',
-        'price': 19.99,
+        'price': 200.0,
       },
       {
-        'imageUrl': 'assets/icon/product/product2.jpg',
-        'title': 'Product 2',
-        'price': 29.99,
+        'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct2.png',
+        'title': 'Tulip Elegante',
+        'price': 250.0,
       },
       {
-        'imageUrl': 'assets/icon/product/product1.jpg',
-        'title': 'Product 3',
-        'price': 39.99,
+        'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct3.png',
+        'title': 'Lavender Dream',
+        'price': 280.0,
       },
       {
-        'imageUrl': 'assets/icon/product/product2.jpg',
-        'title': 'Product 4',
-        'price': 49.99,
+        'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct4.png',
+        'title': 'Sunshine Glory',
+        'price': 200.0,
       },
     ];
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 1, 16, 16),
+      padding: const EdgeInsets.fromLTRB(16, 2, 16, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

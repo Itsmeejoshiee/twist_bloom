@@ -13,37 +13,37 @@ class PromoStep6Page extends StatefulWidget {
 class _PromoStep6Page extends State<PromoStep6Page> {
   List<Map<String, dynamic>> products = [
     {
-      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design1.png',
+      'imageUrl': 'assets/icon/product/bouquets/sample_design1.png',
       'title': 'Style #1',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design2.png',
+      'imageUrl': 'assets/icon/product/bouquets/sample_design2.png',
       'title': 'Style #2',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design3.png',
+      'imageUrl': 'assets/icon/product/bouquets/sample_design3.png',
       'title': 'Style #3',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design4.png',
+      'imageUrl': 'assets/icon/product/bouquets/sample_design4.png',
       'title': 'Style #4',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design5.png',
+      'imageUrl': 'assets/icon/product/bouquets/sample_design5.png',
       'title': 'Style #5',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design6.png',
+      'imageUrl': 'assets/icon/product/bouquets/sample_design6.png',
       'title': 'Style #6',
       'price': 0.0,
     },
     {
-      'imageUrl': 'assets/icon/product/sample_bouquets/sample_design7.png',
+      'imageUrl': 'assets/icon/product/bouquets/sample_design7.png',
       'title': 'Style #7',
       'price': 0.0,
     },
@@ -68,7 +68,7 @@ class _PromoStep6Page extends State<PromoStep6Page> {
         appBar: AppBar(
           title: const Text('MIX & MATCH'),
           surfaceTintColor: Colors.transparent,
-          backgroundColor: Color(0xFFFEFAEB), // Make app bar transparent
+          backgroundColor: Color(0xFFFDFAFA), // Make app bar transparent
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),

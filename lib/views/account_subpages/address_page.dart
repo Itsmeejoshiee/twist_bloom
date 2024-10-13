@@ -19,7 +19,10 @@ class _AddressPageState extends State<AddressPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Address'),
+        title: const Text('Address',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

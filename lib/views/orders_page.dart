@@ -18,7 +18,7 @@ class OrdersPage extends StatelessWidget {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(16, 76, 16, 0), // Reduced bottom padding to 0
+              padding: const EdgeInsets.fromLTRB(16, 40, 16, 0), // Reduced bottom padding to 0
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

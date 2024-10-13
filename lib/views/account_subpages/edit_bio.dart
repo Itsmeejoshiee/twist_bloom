@@ -14,7 +14,12 @@ class _EditBioPageState extends State<EditBioPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Edit Bio'),
+        title: const Text('Edit Bio',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {

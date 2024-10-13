@@ -28,7 +28,10 @@ class PersonalInfoPage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Account Info'),
+        title: const Text('Account Info',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -42,6 +45,7 @@ class PersonalInfoPage extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
+              const SizedBox(height: 30),
               // First box with 4 buttons
               Container(
                 margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),

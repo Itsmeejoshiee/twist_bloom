@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 import '../../controllers/address_controller.dart';
 
 class AddEditAddressPage extends StatefulWidget {
@@ -45,30 +46,35 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isEdit ? 'Edit Address' : 'Add New Address'),
+        title: Text(widget.isEdit ? 'Edit Address' : 'Add New Address',
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25,
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            _buildTextField('Region/City/District', _controller.regionCityDistrictController),
-            const SizedBox(height: 16),
-            _buildTextField('Street/Building Name', _controller.streetBuildingController),
-            const SizedBox(height: 16),
-            _buildTextField('Unit/Floor', _controller.unitFloorController),
-            const Spacer(),
-            ElevatedButton(
-              onPressed: () {
-                widget.onSave(
-                  _controller.regionCityDistrictController.text,
-                  _controller.streetBuildingController.text,
-                  _controller.unitFloorController.text,
-                );
-                Navigator.pop(context);
-              },
-              child: const Text('Save'),
-            ),
-          ],
+      body: GradientBackground(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              _buildTextField('Region/City/District', _controller.regionCityDistrictController),
+              const SizedBox(height: 16),
+              _buildTextField('Street/Building Name', _controller.streetBuildingController),
+              const SizedBox(height: 16),
+              _buildTextField('Unit/Floor', _controller.unitFloorController),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: () {
+                  widget.onSave(
+                    _controller.regionCityDistrictController.text,
+                    _controller.streetBuildingController.text,
+                    _controller.unitFloorController.text,
+                  );
+                  Navigator.pop(context);
+                },
+                child: const Text('Save'),
+              ),
+            ],
+          ),
         ),
       ),
     );

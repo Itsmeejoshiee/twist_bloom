@@ -9,7 +9,12 @@ class EditPhonePage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Edit Phone Number'),
+        title: const Text('Edit Phone Number',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -22,7 +27,7 @@ class EditPhonePage extends StatelessWidget {
               // Save phone number functionality here
               Navigator.pop(context);
             },
-            child: const Text('Save', style: TextStyle(color: Colors.white)),
+            child: const Text('Save', style: TextStyle(color: Colors.black)),
           )
         ],
         backgroundColor: Colors.transparent,
@@ -31,6 +36,7 @@ class EditPhonePage extends StatelessWidget {
       body: GradientBackground(
         child: Column(
           children: [
+            SizedBox(height: 30),
             Container(
               margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
               padding: const EdgeInsets.all(16),

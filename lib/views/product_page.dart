@@ -3,6 +3,7 @@ import 'package:twist_bloom/views/products_details/Fillers/lavender_details.dart
 import 'package:twist_bloom/widgets/product_ontap.dart';
 import '../widgets/gradient_background.dart';
 import '../views/products_details/product_details.dart';
+import 'account_page.dart';
 
 class AllProductsPage extends StatefulWidget {
   const AllProductsPage({super.key});
@@ -90,30 +91,81 @@ class _AllProductsPageState extends State<AllProductsPage> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          surfaceTintColor: Colors.transparent,
           backgroundColor: Colors.white10,
-          title: const Text('All Products'),
-          actions: [
-            IconButton(
-              icon: Image.asset('assets/icon/filter.png'),
-              onPressed: () {
-                filterProducts();
-              },
-            ),
-          ],
+          title: Row(
+            children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.account_circle,
+                  color: Colors.black,
+                  size: 32,
+                ),
+                onPressed: () {
+                  // Navigate to profile page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AccountPage()),
+                  );
+                },
+              ),
+              const Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search products...',
+                      border: InputBorder.none,
+                    ),
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.search,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  // Add search logic here
+                },
+              ),
+            ],
+          ),
         ),
-        body: GradientBackground(child:Padding(
-          padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Search Bar is expanded by default
-              const SizedBox(height: 16.0),
+              // Title and Filter button inside the body
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'All Products',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Image.asset('assets/icon/filter.png',height: 50, width: 50,),
+                      onPressed: () {
+                        filterProducts();
+                      },
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
+                    mainAxisSpacing: 13,
                     childAspectRatio: 3.16 / 4,
                   ),
                   itemCount: filteredProducts.length,
@@ -123,7 +175,7 @@ class _AllProductsPageState extends State<AllProductsPage> {
                       title: filteredProducts[index]['title'],
                       price: filteredProducts[index]['price'],
                       onTap: () {
-                        // Add navigation based on the title of the product
+                        // Add navigation logic based on the product's title
                         switch (filteredProducts[index]['title']) {
                           case 'Tulip':
                             Navigator.push(
@@ -191,7 +243,6 @@ class _AllProductsPageState extends State<AllProductsPage> {
                               MaterialPageRoute(builder: (context) => const WaxFlowerDetails()),
                             );
                             break;
-                        // Add more cases for other products as needed
                           default:
                           // Handle default case or show an error message
                             break;
@@ -203,7 +254,7 @@ class _AllProductsPageState extends State<AllProductsPage> {
               ),
             ],
           ),
-        ),),
+        ),
       ),
     );
   }

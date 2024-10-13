@@ -13,7 +13,10 @@ class AccountPage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Account'),
+        title: const Text('Account',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,
+          ),
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -31,10 +34,11 @@ class AccountPage extends StatelessWidget {
           child: Column(
             children: [
               // First box
+              const SizedBox(height: 20),
               Container(
-                margin: EdgeInsets.only(
+                margin: const EdgeInsets.only(
                     top: 100, left: 32, right: 32, bottom: 12),
-                padding: EdgeInsets.all(32),
+                padding: const EdgeInsets.all(32),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),

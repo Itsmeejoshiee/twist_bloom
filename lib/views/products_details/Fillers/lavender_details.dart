@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class LavenderDetails extends StatefulWidget {
   const LavenderDetails({super.key});
@@ -31,7 +32,7 @@ class _LavenderDetails extends State<LavenderDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFFCED),
+        backgroundColor: const Color(0xFFFDFAFA),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -40,17 +41,7 @@ class _LavenderDetails extends State<LavenderDetails> {
         ),
         title: const Text('Lavender'),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(-0.4, 1),
-            end: Alignment(0.4, -1),
-            colors: [
-              Color.fromRGBO(224, 209, 158, 0.14),
-              Color.fromRGBO(255, 252, 237, 1.0),
-            ],
-          ),
-        ),
+      body: GradientBackground(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
           child: Column(

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:twist_bloom/Views/landing_page.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 void main() {
   runApp(const SignInPage());
@@ -26,17 +27,7 @@ class _SignInPageState extends State<SignInPage> {
         fontFamily: 'Poppins',
       ),
       home: Scaffold(
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(-0.4, 1),
-              end: Alignment(0.4, -1),
-              colors: [
-                Color.fromRGBO(224, 209, 158, 0.14),
-                Color.fromRGBO(255, 252, 237, 1.0)
-              ],
-            ),
-          ),
+        body: GradientBackground(
           child: Column(
             children: [
               Expanded(
