@@ -6,11 +6,11 @@ class ProductCard extends StatelessWidget {
   final double price;
 
   const ProductCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
     required this.title,
     required this.price,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +68,9 @@ class ProductSquareCard extends StatelessWidget {
   final String imageUrl;
 
   const ProductSquareCard({
-    Key? key,
+    super.key,
     required this.imageUrl,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class ProductSquareCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.2), // Shadow color
             blurRadius: 8.0, // Shadow blur radius
-            offset: Offset(0, 4), // Shadow offset
+            offset: const Offset(0, 4), // Shadow offset
           ),
         ],
         image: DecorationImage(

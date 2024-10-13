@@ -4,14 +4,16 @@ import 'edit_email.dart';
 import 'edit_password.dart';
 
 class LoginAndSecurity extends StatelessWidget {
+  const LoginAndSecurity({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Account Info'),
+        title: const Text('Account Info'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -24,8 +26,8 @@ class LoginAndSecurity extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                margin: EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
-                padding: EdgeInsets.all(16),
+                margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -34,7 +36,7 @@ class LoginAndSecurity extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 4,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -74,8 +76,8 @@ class LoginAndSecurity extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(text, style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'Poppins')),
-            Icon(Icons.arrow_forward_ios, color: Colors.black),
+            Text(text, style: const TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'Poppins')),
+            const Icon(Icons.arrow_forward_ios, color: Colors.black),
           ],
         ),
       ),

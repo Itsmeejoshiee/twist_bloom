@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class LavenderDetails extends StatefulWidget {
-  const LavenderDetails({Key? key}) : super(key: key);
+  const LavenderDetails({super.key});
 
   @override
   _LavenderDetails createState() => _LavenderDetails();
@@ -60,7 +60,7 @@ class _LavenderDetails extends State<LavenderDetails> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(width: 4), // Optional: add some space between the two texts
+                  SizedBox(width: 4), // Optional: add some space between the two texts
                   Text(
                     'for 1 stem',
                     style: TextStyle(
@@ -72,8 +72,8 @@ class _LavenderDetails extends State<LavenderDetails> {
               ),
 
               const SizedBox(height: 8),
-              Row(
-                children: const [
+              const Row(
+                children: [
                   TagWidget('Lavender'),
                   SizedBox(width: 7),
                   TagWidget('Filler'),
@@ -219,7 +219,7 @@ class _LavenderDetails extends State<LavenderDetails> {
 class TagWidget extends StatelessWidget {
   final String label;
 
-  const TagWidget(this.label, {Key? key}) : super(key: key);
+  const TagWidget(this.label, {super.key});
 
   @override
   Widget build(BuildContext context) {

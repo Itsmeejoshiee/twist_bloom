@@ -21,14 +21,16 @@ void _showBirthdayPicker(BuildContext context) async { // Birthday pop up
 }
 
 class PersonalInfoPage extends StatelessWidget {
+  const PersonalInfoPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Account Info'),
+        title: const Text('Account Info'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -42,8 +44,8 @@ class PersonalInfoPage extends StatelessWidget {
             children: [
               // First box with 4 buttons
               Container(
-                margin: EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
-                padding: EdgeInsets.all(16),
+                margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -52,7 +54,7 @@ class PersonalInfoPage extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 4,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -80,8 +82,8 @@ class PersonalInfoPage extends StatelessWidget {
 
               // Second box with 3 buttons
               Container(
-                margin: EdgeInsets.only(top: 12, left: 32, right: 32, bottom: 12),
-                padding: EdgeInsets.all(16),
+                margin: const EdgeInsets.only(top: 12, left: 32, right: 32, bottom: 12),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -90,7 +92,7 @@ class PersonalInfoPage extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 4,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -131,8 +133,8 @@ class PersonalInfoPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(text, style: TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'Poppins')),
-            Icon(Icons.arrow_forward_ios, color: Colors.black),
+            Text(text, style: const TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'Poppins')),
+            const Icon(Icons.arrow_forward_ios, color: Colors.black),
           ],
         ),
       ),
@@ -144,7 +146,7 @@ class PersonalInfoPage extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Center(child: Text('Gender')),
+            title: const Center(child: Text('Gender')),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
@@ -164,7 +166,7 @@ class PersonalInfoPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Male', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
+                      child: const Text('Male', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
                     )),
 
                 SizedBox(
@@ -178,7 +180,7 @@ class PersonalInfoPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Female', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
+                      child: const Text('Female', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
                     )),
 
                 SizedBox(
@@ -192,7 +194,7 @@ class PersonalInfoPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      child: Text('Others', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
+                      child: const Text('Others', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
                     )),
               ],
             ),

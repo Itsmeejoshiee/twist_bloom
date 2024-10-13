@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../account_page.dart';
 
 class EditBioPage extends StatefulWidget {
+  const EditBioPage({super.key});
+
   @override
   _EditBioPageState createState() => _EditBioPageState();
 }
@@ -12,9 +14,9 @@ class _EditBioPageState extends State<EditBioPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Edit Bio'),
+        title: const Text('Edit Bio'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -24,7 +26,7 @@ class _EditBioPageState extends State<EditBioPage> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Save', style: TextStyle(color: Colors.black)),
+            child: const Text('Save', style: TextStyle(color: Colors.black)),
           )
         ],
         backgroundColor: Colors.transparent,
@@ -34,8 +36,8 @@ class _EditBioPageState extends State<EditBioPage> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
-              padding: EdgeInsets.all(16),
+              margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
@@ -44,11 +46,11 @@ class _EditBioPageState extends State<EditBioPage> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 4,
                     blurRadius: 5,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
-              child: TextField(
+              child: const TextField(
                 maxLines: 6,
                 decoration: InputDecoration(border: InputBorder.none, hintText: "Set bio here"),
                 style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),

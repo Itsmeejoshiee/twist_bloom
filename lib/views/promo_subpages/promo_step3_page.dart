@@ -70,17 +70,17 @@ class _PromoStep3Page extends State<PromoStep3Page> {
   @override
   Widget build(BuildContext context) {
     return GradientBackground(
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('MIX & MATCH'),
-            surfaceTintColor: Colors.transparent,
-            backgroundColor: Color(0xFFFEFAEB), // Make app bar transparent
-            elevation: 0,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('MIX & MATCH'),
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Color(0xFFFEFAEB), // Make app bar transparent
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.of(context).pop(),
           ),
+        ),
         body: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(

@@ -9,13 +9,13 @@ class AddEditAddressPage extends StatefulWidget {
   final Function(String, String, String) onSave;
 
   const AddEditAddressPage({
-    Key? key,
+    super.key,
     this.initialRegionCityDistrict,
     this.initialStreetBuilding,
     this.initialUnitFloor,
     required this.isEdit,
     required this.onSave,
-  }) : super(key: key);
+  });
 
   @override
   _AddEditAddressPageState createState() => _AddEditAddressPageState();
