@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'principal_classes.dart';
 
 class MessagesPage extends StatelessWidget {
   const MessagesPage({super.key});
@@ -34,7 +33,7 @@ class MessagesAndNotificationsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 40),
+              const SizedBox(height: 76),
               Row(
                 children: [
                   const SizedBox(height: 30),

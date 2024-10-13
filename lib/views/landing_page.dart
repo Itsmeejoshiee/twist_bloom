@@ -56,25 +56,27 @@ class _MainScreenState extends State<MainScreen> {
       body: Stack(
         children: [
           _pages[_currentIndex],
-          Positioned(
-            top: 20,
-            left: 10,
-            child: IconButton(
-              icon: const Icon(Icons.account_circle,
-                  color: Colors.black, size: 48),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AccountPage()),
-                );
-              },
+          if (_currentIndex != 4)
+            Positioned(
+              top: 20,
+              left: 10,
+              child: IconButton(
+                icon: const Icon(Icons.account_circle,
+                    color: Colors.black, size: 48),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AccountPage()),
+                  );
+                },
+              ),
             ),
-          ),
-          const Positioned(
-            top: 20,
-            right: 10,
-            child: SearchWidget(),
-          ),
+          if (_currentIndex != 4) // Conditionally render SearchWidget for other pages
+            const Positioned(
+              top: 20,
+              right: 10,
+              child: SearchWidget(),
+            ),
         ],
       ),
       bottomNavigationBar: BottomNavBar(

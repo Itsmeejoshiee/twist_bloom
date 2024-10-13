@@ -6,6 +6,7 @@ import 'orders_subpages/to_pay.dart';
 import 'orders_subpages/to_rate.dart';
 import 'orders_subpages/to_receive.dart';
 import 'orders_subpages/to_ship.dart';
+import 'package:twist_bloom/views/orders_subpages/completed.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
@@ -139,7 +140,12 @@ class OrdersPage extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 165.0),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      //Navigator.push(
+                      //context,
+                      //MaterialPageRoute(builder: (context) => const CompletedPage(completedProducts: _completedProductsList)),
+                    //);
+                  },
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.blue,
                       textStyle: const TextStyle(fontSize: 14),
