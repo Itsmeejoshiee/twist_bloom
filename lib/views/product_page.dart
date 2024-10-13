@@ -2,16 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/views/products_details/Fillers/lavender_details.dart';
 import 'package:twist_bloom/widgets/product_ontap.dart';
 import '../widgets/gradient_background.dart';
-import 'products_details/Fillers/baby_breath_details.dart';
-import 'products_details/Fillers/eucalyptus_details.dart';
-import 'products_details/Fillers/leather_fern_details.dart';
-import 'products_details/Fillers/wax_flower_details.dart';
-import 'products_details/Flowers/gerbera_details.dart';
-import 'products_details/Flowers/lily_details.dart';
-import 'products_details/Flowers/poppy_details.dart';
-import 'products_details/Flowers/rose_details.dart';
-import 'products_details/Flowers/sunflower_details.dart';
-import 'products_details/Flowers/tulip_details.dart';
+import '../views/products_details/product_details.dart';
 
 class AllProductsPage extends StatefulWidget {
   const AllProductsPage({super.key});
@@ -74,7 +65,7 @@ class _AllProductsPageState extends State<AllProductsPage> {
     },
     {
       'imageUrl': 'assets/icon/product/fillers/waxflower.png',
-      'title': 'Waxflower',
+      'title': 'Wax Flower',
       'price': 35.0,
     },
   ];
@@ -111,7 +102,7 @@ class _AllProductsPageState extends State<AllProductsPage> {
           ],
         ),
         body: GradientBackground(child:Padding(
-          padding: const EdgeInsets.fromLTRB(8, 1, 8, 8),
+          padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
