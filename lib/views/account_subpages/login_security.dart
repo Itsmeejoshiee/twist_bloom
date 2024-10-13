@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../account_page.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'edit_email.dart';
 import 'edit_password.dart';
 

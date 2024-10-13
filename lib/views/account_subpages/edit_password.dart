@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../account_page.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class EditPasswordPage extends StatelessWidget {
   const EditPasswordPage({super.key});

@@ -3,6 +3,7 @@ import 'package:twist_bloom/views/orders_subpages/completed.dart';
 import 'package:twist_bloom/views/orders_subpages/to_pay.dart';
 import 'package:twist_bloom/views/orders_subpages/to_receive.dart';
 import 'package:twist_bloom/views/orders_subpages/to_ship.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class ToRatePage extends StatelessWidget {
   final List<Map<String, dynamic>> completedProducts;
@@ -11,8 +12,11 @@ class ToRatePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GradientBackground(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: const Text('To Rate'),
       ),
       body: Column(
@@ -44,7 +48,7 @@ class ToRatePage extends StatelessWidget {
                 : Center(child: Text('No products to rate.')), 
           ),
         ],
-      ),
+      ),),
     );
   }
 

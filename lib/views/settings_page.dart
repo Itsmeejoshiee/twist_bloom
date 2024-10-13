@@ -3,13 +3,7 @@
 import 'package:flutter/material.dart';
 import 'settings_subpages/settings_subpages.dart';
 import '../widgets/gradient_background.dart';
-
-void main() {
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: SettingsPage(),
-  ));
-}
+import 'principal_classes.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -17,11 +11,10 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GradientBackground(
-        child: Scaffold(
+      child: Scaffold(
         extendBodyBehindAppBar: false,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          surfaceTintColor: Colors.transparent,
           backgroundColor: Colors.transparent,
           title: Text('Settings'),
         ),
@@ -47,12 +40,12 @@ class SettingsPage extends StatelessWidget {
                           NotificationPreferencePage()),
                       _buildListTile(
                           context, Icons.language, 'Language', LanguagePage()),
-                      _buildListTile(context, Icons.currency_exchange, 'Currency',
-                          CurrencyPage()),
+                      _buildListTile(context, Icons.currency_exchange,
+                          'Currency', CurrencyPage()),
                       _buildListTile(context, Icons.privacy_tip,
                           'Privacy Settings', PrivacySettingsPage()),
-                      _buildListTile(context, Icons.security, 'Account Security',
-                          SecurityPage()),
+                      _buildListTile(context, Icons.security,
+                          'Account Security', SecurityPage()),
                       _buildListTile(context, Icons.local_shipping,
                           'Shipping Preferences', ShippingPrefPage()),
                       _buildListTile(context, Icons.history, 'Order History',
@@ -61,8 +54,8 @@ class SettingsPage extends StatelessWidget {
                           context, Icons.help, 'Help & Support', HelpPage()),
                       _buildListTile(
                           context, Icons.info, 'App Version', AppVerPage()),
-                      _buildListTile(context, Icons.article, 'Terms & Conditions',
-                          TermsAndConditionsPage()),
+                      _buildListTile(context, Icons.article,
+                          'Terms & Conditions', TermsAndConditionsPage()),
                       _buildListTile(
                           context, Icons.feedback, 'Feedback', FeedBackPage()),
                       _buildListTile(
@@ -73,20 +66,22 @@ class SettingsPage extends StatelessWidget {
               ),
             ),
           ),
-        ),),
+        ),
+      ),
     );
   }
 
-  ListTile _buildListTile(BuildContext context, IconData icon, String title, Widget page) {
+  ListTile _buildListTile(
+      BuildContext context, IconData icon, String title, Widget page) {
     return ListTile(
       leading: Icon(icon),
       title: Text(title),
       onTap: () {
         Navigator.push(
           context,
-              MaterialPageRoute(builder: (context) => page),
-            );
-          },
+          MaterialPageRoute(builder: (context) => page),
         );
+      },
+    );
   }
 }

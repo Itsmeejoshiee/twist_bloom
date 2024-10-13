@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../account_page.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class EditNamePage extends StatefulWidget {
   const EditNamePage({super.key});

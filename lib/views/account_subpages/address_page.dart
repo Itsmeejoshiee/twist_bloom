@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../account_page.dart';
 import 'add_edit_address.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class AddressPage extends StatefulWidget {
   const AddressPage({super.key});

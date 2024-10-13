@@ -1,15 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/views/products_details/Fillers/lavender_details.dart';
 import 'dart:async';
 import 'promo_page.dart';
-import 'settings_page.dart';
-import 'account_page.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/search_widget.dart';
-import '../widgets/product_ontap.dart';
-import 'principal_pages.dart';
-import 'package:twist_bloom/views/products_details/Fillers/lavender_details.dart';
+import '../widgets/product.dart';
+import 'principal_classes.dart';
 
 void main() {
   runApp(const HomePage());
@@ -64,8 +60,9 @@ class _MainScreenState extends State<MainScreen> {
             top: 20,
             left: 10,
             child: IconButton(
-              icon: const Icon(Icons.account_circle, color: Colors.black, size: 48),
-              onPressed: (){
+              icon: const Icon(Icons.account_circle,
+                  color: Colors.black, size: 48),
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AccountPage()),
@@ -146,15 +143,16 @@ class ElevatedPromoWidget extends StatelessWidget {
                 height: 150,
                 padding: const EdgeInsets.fromLTRB(16, 1, 16, 16),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.40), // Optional overlay for readability
+                  color: Colors.black
+                      .withOpacity(0.40), // Optional overlay for readability
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Text(
                             'Latest Promo!',
                             style: TextStyle(
@@ -173,7 +171,7 @@ class ElevatedPromoWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.local_offer,
                       size: 40,
                       color: Colors.red,
@@ -276,13 +274,14 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
               itemBuilder: (context, pageIndex) {
                 final startIndex = pageIndex * 2;
                 final endIndex =
-                (startIndex + 2).clamp(0, slideshowProducts.length);
+                    (startIndex + 2).clamp(0, slideshowProducts.length);
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: GridView.builder(
                     padding: EdgeInsets.zero,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 8.0,
                       mainAxisSpacing: 8.0,
@@ -297,30 +296,30 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
                         opacity: isCurrentPage ? 1.0 : 0.5,
                         child: isCurrentPage
                             ? Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: Colors.transparent,
-                          ),
-                          child: ProductSquareCard(
-                            imageUrl: product['imageUrl'],
-                          ),
-                        )
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  color: Colors.transparent,
+                                ),
+                                child: ProductSquareCard(
+                                  imageUrl: product['imageUrl'],
+                                ),
+                              )
                             : ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                                sigmaX: 5.0, sigmaY: 5.0),
-                            child: Container(
-                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
-                                color: Colors.black.withOpacity(0.1),
+                                child: BackdropFilter(
+                                  filter: ImageFilter.blur(
+                                      sigmaX: 5.0, sigmaY: 5.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      color: Colors.black.withOpacity(0.1),
+                                    ),
+                                    child: ProductSquareCard(
+                                      imageUrl: product['imageUrl'],
+                                    ),
+                                  ),
+                                ),
                               ),
-                              child: ProductSquareCard(
-                                imageUrl: product['imageUrl'],
-                              ),
-                            ),
-                          ),
-                        ),
                       );
                     },
                   ),
@@ -388,37 +387,10 @@ class FeaturedProductsGrid extends StatelessWidget {
               childAspectRatio: 3.16 / 4,
             ),
             itemBuilder: (context, index) {
-              final product = products[index];
-
-              return ProductCardOnTap(
-                imageUrl: product['imageUrl'],
-                title: product['title'],
-                price: product['price'],
-                onTap: () {
-                  // Define different navigation based on index or product property
-                  if (index == 0) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LavenderDetails(), // Navigate to page 1
-                      ),
-                    );
-                  } else if (index == 1) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LavenderDetails(), // Navigate to page 2
-                      ),
-                    );
-                  } else if (product['title'] == 'Product 3') {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LavenderDetails(), // Navigate to page 3
-                      ),
-                    );
-                  }
-                },
+              return ProductCard(
+                imageUrl: products[index]['imageUrl'],
+                title: products[index]['title'],
+                price: products[index]['price'],
               );
             },
           ),

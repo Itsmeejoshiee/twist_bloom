@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/Views/account_page.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class LikesPage extends StatefulWidget {
   const LikesPage({super.key});
@@ -23,73 +23,76 @@ class _LikesPageState extends State<LikesPage> {
   Widget build(BuildContext context) {
     return GradientBackground(
         child: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Row(
-          children: [
-            const Text('Likes'),
-            const SizedBox(width: 8),
-            Text(
-              '$_likeCount',
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFFFF92B2),
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Row(
+              children: [
+                const Text('Likes'),
+                const SizedBox(width: 8),
+                Text(
+                  '$_likeCount',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFF92B2),
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _isEditing = !_isEditing; // Toggle editing mode
+                  });
+                },
+                child: Text(
+                  _isEditing ? 'Done' : 'Edit',
+                  style: const TextStyle(color: Color(0xFFFF92B2)),
+                ),
               ),
+            ],
+            elevation: 4, // Shadow for the AppBar
+          ),
+          body: Container(
+            child: Stack(
+              children: [
+                GridView.builder(
+                  padding: const EdgeInsets.all(8.0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2, // Number of items per row
+                    crossAxisSpacing: 8.0,
+                    mainAxisSpacing: 8.0,
+                    childAspectRatio: 151 / 213, // Ratio for width/height of the product card
+                  ),
+                  itemCount: _products.length,
+                  itemBuilder: (context, index) {
+                    return pc(
+                      image: _products[index]['image'],
+                      title: _products[index]['title'],
+                      price: _products[index]['price'],
+                      rating: _products[index]['rating'],
+                      isSelected: _selectedProducts[index],
+                      isEditing: _isEditing,
+                      onSelect: (bool? value) {
+                        setState(() {
+                          _selectedProducts[index] = value ?? false;
+                        });
+                      },
+                      onSelectNow: () {
+                        setState(() {
+                          _selectedProducts[index] = !_selectedProducts[index];
+                        });
+                      },
+                    );
+                  },
+                ),
+                if (_isEditing) _buildEditingNavBar(),
+              ],
             ),
-          ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              setState(() {
-                _isEditing = !_isEditing; // Toggle editing mode
-              });
-            },
-            child: Text(
-              _isEditing ? 'Done' : 'Edit',
-              style: const TextStyle(color: Color(0xFFFF92B2)),
-            ),
-          ),
-        ],
-        elevation: 4, // Shadow for the AppBar
       ),
-      body: Container(
-      child: Stack(
-        children: [
-          GridView.builder(
-            padding: const EdgeInsets.all(8.0),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Number of items per row
-              crossAxisSpacing: 8.0,
-              mainAxisSpacing: 8.0,
-              childAspectRatio: 151 / 213, // Ratio for width/height of the product card
-            ),
-            itemCount: _products.length,
-            itemBuilder: (context, index) {
-              return pc(
-                image: _products[index]['image'],
-                title: _products[index]['title'],
-                price: _products[index]['price'],
-                rating: _products[index]['rating'],
-                isSelected: _selectedProducts[index],
-                isEditing: _isEditing,
-                onSelect: (bool? value) {
-                  setState(() {
-                    _selectedProducts[index] = value ?? false;
-                  });
-                },
-                onSelectNow: () {
-                  setState(() {
-                    _selectedProducts[index] = !_selectedProducts[index];
-                  });
-                },
-              );
-            },
-          ),
-          if (_isEditing) _buildEditingNavBar(),
-        ],
-      ),),),
     );
   }
 

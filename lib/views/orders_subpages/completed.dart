@@ -3,6 +3,7 @@ import 'package:twist_bloom/views/orders_subpages/to_pay.dart';
 import 'package:twist_bloom/views/orders_subpages/to_rate.dart';
 import 'package:twist_bloom/views/orders_subpages/to_receive.dart';
 import 'package:twist_bloom/views/orders_subpages/to_ship.dart';
+import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class CompletedPage extends StatelessWidget {
   final List<Map<String, dynamic>> completedProducts;
@@ -11,42 +12,46 @@ class CompletedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Completed'),
-      ),
-      body: Column(
-        children: [
-          
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return GradientBackground(
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: const Text('Completed'),
+          ),
+          body: Column(
             children: [
-              _buildNavigationButton('To Pay', ToPayPage(paidProducts: []), context),
-              _buildNavigationButton('To Ship', ToShipPage(paidProducts: []), context),
-              _buildNavigationButton('To Receive', ToReceivePage(shippedProducts: []), context),
-              _buildNavigationButton('Completed', CompletedPage(completedProducts: []), context), 
-              _buildNavigationButton('To Rate', ToRatePage(completedProducts: completedProducts), context), 
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavigationButton('To Pay', ToPayPage(paidProducts: []), context),
+                  _buildNavigationButton('To Ship', ToShipPage(paidProducts: []), context),
+                  _buildNavigationButton('To Receive', ToReceivePage(shippedProducts: []), context),
+                  _buildNavigationButton('Completed', CompletedPage(completedProducts: []), context),
+                  _buildNavigationButton('To Rate', ToRatePage(completedProducts: completedProducts), context),
+                ],
+              ),
+
+              Expanded(
+                child: completedProducts.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: completedProducts.length,
+                        itemBuilder: (context, index) {
+                          return _ProductCard(
+                            image: completedProducts[index]['image'],
+                            title: completedProducts[index]['title'],
+                            price: completedProducts[index]['price'],
+                            status: 'Completed',
+                          );
+                        },
+                      )
+                    : Center(child: Text('No completed orders.')),
+              ),
             ],
           ),
-          
-          Expanded(
-            child: completedProducts.isNotEmpty
-                ? ListView.builder(
-                    itemCount: completedProducts.length,
-                    itemBuilder: (context, index) {
-                      return _ProductCard(
-                        image: completedProducts[index]['image'],
-                        title: completedProducts[index]['title'],
-                        price: completedProducts[index]['price'],
-                        status: 'Completed', 
-                      );
-                    },
-                  )
-                : Center(child: Text('No completed orders.')), 
-          ),
-        ],
-      ),
-    );
+        ),
+      );
   }
 
   Widget _buildNavigationButton(String label, Widget page, BuildContext context) {
