@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LavenderDetails extends StatefulWidget {
-  const LavenderDetails({super.key});
+class TulipDetails extends StatefulWidget {
+  const TulipDetails({super.key});
 
   @override
-  _LavenderDetails createState() => _LavenderDetails();
+  _TulipDetails createState() => _TulipDetails();
 }
 
-class _LavenderDetails extends State<LavenderDetails> {
+class _TulipDetails extends State<TulipDetails> {
   // List of colors with corresponding display color and name
   List<Map<String, dynamic>> colors = [
     {'name': 'Red', 'color': Colors.red},
@@ -38,7 +38,7 @@ class _LavenderDetails extends State<LavenderDetails> {
             Navigator.pop(context);
           },
         ),
-        title: const Text('Lavender'),
+        title: const Text('Tulip'),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -60,7 +60,7 @@ class _LavenderDetails extends State<LavenderDetails> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/icon/product/fillers/lavender.png',
+                    'assets/icon/product/flowers/tulip.png',
                     width: 360,
                     height: 350,
                     fit: BoxFit.cover,
@@ -69,14 +69,14 @@ class _LavenderDetails extends State<LavenderDetails> {
               ),
               const SizedBox(height: 16),
               const Text(
-                'Lavender',
+                'Tulip',
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               const Row(
                 children: [
                   Text(
-                    '₱45',
+                    '₱65',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -85,7 +85,7 @@ class _LavenderDetails extends State<LavenderDetails> {
                   ),
                   SizedBox(width: 4),
                   Text(
-                    'for 1 stem',
+                    'Per stem',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,
@@ -96,9 +96,9 @@ class _LavenderDetails extends State<LavenderDetails> {
               const SizedBox(height: 8),
               const Row(
                 children: [
-                  TagWidget('Lavender'),
+                  TagWidget('Tulip'),
                   SizedBox(width: 7),
-                  TagWidget('Filler'),
+                  TagWidget('Stem'),
                   SizedBox(width: 7),
                   TagWidget('Pre-order'),
                 ],

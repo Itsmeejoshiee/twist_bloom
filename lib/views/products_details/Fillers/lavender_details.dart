@@ -24,7 +24,7 @@ class _LavenderDetails extends State<LavenderDetails> {
     {'name': 'White', 'color': Colors.white},
   ];
 
-  String selectedColorName = 'Red'; // Default selected color
+  String selectedColorName = 'Violet'; // Default selected color
   int quantity = 1;
 
   @override
@@ -85,7 +85,7 @@ class _LavenderDetails extends State<LavenderDetails> {
                   ),
                   SizedBox(width: 4),
                   Text(
-                    'for 1 stem',
+                    'Per stem',
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.black,

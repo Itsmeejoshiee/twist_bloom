@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/views/products_details/Flowers/gerbera_details.dart';
+import 'package:twist_bloom/views/products_details/Flowers/lily_details.dart';
+import 'package:twist_bloom/views/products_details/Flowers/poppy_details.dart';
+import 'package:twist_bloom/views/products_details/Flowers/rose_details.dart';
+import 'package:twist_bloom/views/products_details/Flowers/sunflower_details.dart';
+import 'package:twist_bloom/views/products_details/Flowers/tulip_details.dart';
 import 'package:twist_bloom/views/promo_subpages/promo_cart.dart';
 import '../../widgets/product_ontap.dart';
-import '../products_details/lavender_details.dart';
 import 'promo_step2_page.dart';
-import 'package:twist_bloom/widgets/product.dart';
 
 class PromoStep1Page extends StatefulWidget {
   const PromoStep1Page({super.key});
@@ -26,7 +30,7 @@ class _PromoStep1Page extends State<PromoStep1Page> {
     },
     {
       'imageUrl': 'assets/icon/product/flowers/poppy.png',
-      'title': 'Poppy (2 Stems)',
+      'title': 'Poppy',
       'price': 45.0,
     },
     {
@@ -41,7 +45,7 @@ class _PromoStep1Page extends State<PromoStep1Page> {
     },
     {
       'imageUrl': 'assets/icon/product/flowers/gerbera.png',
-      'title': 'Gerbera',
+      'title': 'Gerbera Daisy',
       'price': 70.0,
     },
   ];
@@ -130,13 +134,37 @@ class _PromoStep1Page extends State<PromoStep1Page> {
                               case 'Tulip':
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => LavenderDetails()),
+                                  MaterialPageRoute(builder: (context) => const TulipDetails()),
                                 );
                                 break;
                               case 'Sunflower':
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => LavenderDetails()), // Replace with actual details page
+                                  MaterialPageRoute(builder: (context) => const SunflowerDetails()), // Replace with actual details page
+                                );
+                                break;
+                              case 'Rose':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const RoseDetails()), // Replace with actual details page
+                                );
+                                break;
+                              case 'Poppy':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const PoppyDetails()), // Replace with actual details page
+                                );
+                                break;
+                              case 'Lily':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const LilyDetails()), // Replace with actual details page
+                                );
+                                break;
+                              case 'Gerbera Daisy':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const GerberaDetails()), // Replace with actual details page
                                 );
                                 break;
                             // Add more cases for other products as needed

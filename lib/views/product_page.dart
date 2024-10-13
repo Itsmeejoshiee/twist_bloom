@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/views/products_details/lavender_details.dart';
+import 'package:twist_bloom/views/products_details/Fillers/lavender_details.dart';
 import 'package:twist_bloom/widgets/product_ontap.dart';
 import '../widgets/gradient_background.dart';
+import 'products_details/Fillers/baby_breath_details.dart';
+import 'products_details/Fillers/eucalyptus_details.dart';
+import 'products_details/Fillers/leather_fern_details.dart';
+import 'products_details/Fillers/wax_flower_details.dart';
+import 'products_details/Flowers/gerbera_details.dart';
+import 'products_details/Flowers/lily_details.dart';
+import 'products_details/Flowers/poppy_details.dart';
+import 'products_details/Flowers/rose_details.dart';
+import 'products_details/Flowers/sunflower_details.dart';
+import 'products_details/Flowers/tulip_details.dart';
 
 class AllProductsPage extends StatefulWidget {
   const AllProductsPage({super.key});
@@ -24,7 +34,7 @@ class _AllProductsPageState extends State<AllProductsPage> {
     },
     {
       'imageUrl': 'assets/icon/product/flowers/poppy.png',
-      'title': 'Poppy (2 Stems)',
+      'title': 'Poppy',
       'price': 45.0,
     },
     {
@@ -39,8 +49,33 @@ class _AllProductsPageState extends State<AllProductsPage> {
     },
     {
       'imageUrl': 'assets/icon/product/flowers/gerbera.png',
-      'title': 'Gerbera',
+      'title': 'Gerbera Daisy',
       'price': 70.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/fillers/lavender.png',
+      'title': 'Lavender',
+      'price': 45.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/fillers/eucalyptus.png',
+      'title': 'Eucalyptus',
+      'price': 30.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/fillers/leather_fern.png',
+      'title': 'Leather Fern',
+      'price': 45.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/fillers/baby_breath.png',
+      'title': "Baby's Breath",
+      'price': 35.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/fillers/waxflower.png',
+      'title': 'Waxflower',
+      'price': 35.0,
     },
   ];
 
@@ -102,13 +137,67 @@ class _AllProductsPageState extends State<AllProductsPage> {
                           case 'Tulip':
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => LavenderDetails()),
+                              MaterialPageRoute(builder: (context) => const TulipDetails()),
                             );
                             break;
                           case 'Sunflower':
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => LavenderDetails()), // Replace with actual details page
+                              MaterialPageRoute(builder: (context) => const SunflowerDetails()), // Replace with actual details page
+                            );
+                            break;
+                          case 'Rose':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const RoseDetails()), // Replace with actual details page
+                            );
+                            break;
+                          case 'Poppy':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const PoppyDetails()), // Replace with actual details page
+                            );
+                            break;
+                          case 'Lily':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LilyDetails()), // Replace with actual details page
+                            );
+                            break;
+                          case 'Gerbera Daisy':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const GerberaDetails()), // Replace with actual details page
+                            );
+                            break;
+                          case 'Lavender':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LavenderDetails()),
+                            );
+                            break;
+                          case 'Eucalyptus':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const EucalyptusDetails()),
+                            );
+                            break;
+                          case 'Leather Fern':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LeatherFernDetails()),
+                            );
+                            break;
+                          case "Baby's Breath":
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const BabyBreathDetails()),
+                            );
+                            break;
+                          case 'Wax Flower':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const WaxFlowerDetails()),
                             );
                             break;
                         // Add more cases for other products as needed

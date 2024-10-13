@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/views/products_details/Fillers/baby_breath_details.dart';
+import 'package:twist_bloom/views/products_details/Fillers/eucalyptus_details.dart';
+import 'package:twist_bloom/views/products_details/Fillers/leather_fern_details.dart';
+import 'package:twist_bloom/views/products_details/Fillers/wax_flower_details.dart';
 import 'package:twist_bloom/widgets/product.dart';
 import '../../widgets/product_ontap.dart';
-import '../products_details/lavender_details.dart';
+import '../products_details/Fillers/lavender_details.dart';
 import 'promo_step3_page.dart';
 import 'promo_cart.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
@@ -32,12 +36,12 @@ class _PromoStep2Page extends State<PromoStep2Page> {
     },
     {
       'imageUrl': 'assets/icon/product/fillers/baby_breath.png',
-      'title': "Baby's Breath (2 Stems)",
+      'title': "Baby's Breath",
       'price': 35.0,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/waxflower.png',
-      'title': 'Waxflower (2 Stems)',
+      'title': 'Waxflower',
       'price': 35.0,
     },
   ];
@@ -134,13 +138,31 @@ class _PromoStep2Page extends State<PromoStep2Page> {
                               case 'Lavender':
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => LavenderDetails()),
+                                  MaterialPageRoute(builder: (context) => const LavenderDetails()),
                                 );
                                 break;
                               case 'Eucalyptus':
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => LavenderDetails()),
+                                  MaterialPageRoute(builder: (context) => const EucalyptusDetails()),
+                                );
+                                break;
+                              case 'Leather Fern':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const LeatherFernDetails()),
+                                );
+                                break;
+                              case "Baby's Breath":
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const BabyBreathDetails()),
+                                );
+                                break;
+                              case 'Wax Flower':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const WaxFlowerDetails()),
                                 );
                                 break;
                             // Add more cases for other products as needed

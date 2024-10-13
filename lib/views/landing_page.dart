@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/views/products_details/lavender_details.dart';
+import 'package:twist_bloom/views/products_details/Fillers/lavender_details.dart';
 import 'dart:async';
 import 'promo_page.dart';
 import 'settings_page.dart';
@@ -9,7 +9,7 @@ import '../widgets/bottom_navbar.dart';
 import '../widgets/search_widget.dart';
 import '../widgets/product_ontap.dart';
 import 'principal_pages.dart';
-import 'package:twist_bloom/views/products_details/lavender_details.dart';
+import 'package:twist_bloom/views/products_details/Fillers/lavender_details.dart';
 
 void main() {
   runApp(const HomePage());
