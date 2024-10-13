@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widgets/product.dart';
+import 'package:twist_bloom/views/products_details/lavender_details.dart';
+import 'package:twist_bloom/widgets/product_ontap.dart';
 import '../widgets/gradient_background.dart';
 
 class AllProductsPage extends StatefulWidget {
@@ -12,24 +13,34 @@ class AllProductsPage extends StatefulWidget {
 class _AllProductsPageState extends State<AllProductsPage> {
   List<Map<String, dynamic>> products = [
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
-      'title': 'Product 1',
-      'price': 69.99,
+      'imageUrl': 'assets/icon/product/flowers/tulip.png',
+      'title': 'Tulip',
+      'price': 65.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
-      'title': 'Product 2',
-      'price': 29.99,
+      'imageUrl': 'assets/icon/product/flowers/sunflower.png',
+      'title': 'Sunflower',
+      'price': 75.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product1.jpg',
-      'title': 'Product 1',
-      'price': 49.99,
+      'imageUrl': 'assets/icon/product/flowers/poppy.png',
+      'title': 'Poppy (2 Stems)',
+      'price': 45.0,
     },
     {
-      'imageUrl': 'assets/icon/product/product2.jpg',
-      'title': 'Product 2',
-      'price': 59.99,
+      'imageUrl': 'assets/icon/product/flowers/rose.png',
+      'title': 'Rose',
+      'price': 70.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/flowers/lily.png',
+      'title': 'Lily',
+      'price': 65.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/flowers/gerbera.png',
+      'title': 'Gerbera',
+      'price': 70.0,
     },
   ];
 
@@ -81,10 +92,31 @@ class _AllProductsPageState extends State<AllProductsPage> {
                   ),
                   itemCount: filteredProducts.length,
                   itemBuilder: (context, index) {
-                    return ProductCard(
+                    return ProductCardOnTap(
                       imageUrl: filteredProducts[index]['imageUrl'],
                       title: filteredProducts[index]['title'],
                       price: filteredProducts[index]['price'],
+                      onTap: () {
+                        // Add navigation based on the title of the product
+                        switch (filteredProducts[index]['title']) {
+                          case 'Tulip':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => LavenderDetails()),
+                            );
+                            break;
+                          case 'Sunflower':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => LavenderDetails()), // Replace with actual details page
+                            );
+                            break;
+                        // Add more cases for other products as needed
+                          default:
+                          // Handle default case or show an error message
+                            break;
+                        }
+                      },
                     );
                   },
                 ),

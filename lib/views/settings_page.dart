@@ -21,6 +21,7 @@ class SettingsPage extends StatelessWidget {
         extendBodyBehindAppBar: false,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          surfaceTintColor: Colors.transparent,
           backgroundColor: Colors.transparent,
           title: Text('Settings'),
         ),

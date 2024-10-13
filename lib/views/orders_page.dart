@@ -193,7 +193,7 @@ class OrdersPage extends StatelessWidget {
   Widget _buildPreOrderProduct() {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: const Color(0xFFFF92B2),
+      color: const Color(0xFFFF92B2).withOpacity(0.35),
       elevation: 0,
       child: Stack(
         children: [

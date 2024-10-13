@@ -9,28 +9,28 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  bool _isEditing = false; // Flag to check if in editing mode
-  List<bool> _selectedProducts = List.generate(10, (index) => false); // Dummy product selection state
+  bool _isEditing = false;
+  List<bool> _selectedProducts = List.generate(10, (index) => false);
   List<Map<String, dynamic>> _products = [
-    {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 1', 'price': 10.0, 'variations': ['Size S', 'Size M', 'Size L']},
-    {'image': 'assets/icon/product/product2.jpg', 'title': 'Product 2', 'price': 15.0, 'variations': ['Color Red', 'Color Blue']},
-    {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 3', 'price': 20.0, 'variations': ['Size M', 'Size L', 'Size XL']},
-    // Add more products as needed
+    {'image': 'assets/icon/product/product1.jpg', 'title': 'Tulip', 'price': 65.0, 'variations': ['Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White']},
+    {'image': 'assets/icon/product/product2.jpg', 'title': 'Sunflower', 'price': 75.0, 'variations': ['Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White']},
+    {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 3', 'price': 260.0, 'variations': ['Not applicable']},
   ];
-  List<int> _quantities = List.generate(10, (index) => 1); // Dummy quantity state
+  List<int> _quantities = List.generate(10, (index) => 1);
 
   @override
   Widget build(BuildContext context) {
     return GradientBackground(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Cart'),
-          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: const Color(0xFFFFFCED),
+          title: const Text('Shopping Cart'),
           actions: [
             TextButton(
               onPressed: () {
                 setState(() {
-                  _isEditing = !_isEditing; // Toggle editing mode
+                  _isEditing = !_isEditing;
                 });
               },
               child: Text(
@@ -39,9 +39,19 @@ class _CartPageState extends State<CartPage> {
               ),
             ),
           ],
-          elevation: 4, // Shadow for the AppBar
+          elevation: 4,
         ),
         body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment(-0.4, 1),
+              end: Alignment(0.4, -1),
+              colors: [
+                Color.fromRGBO(224, 209, 158, 0.14),
+                Color.fromRGBO(255, 252, 237, 1.0),
+              ],
+            ),
+          ),
           child: Stack(
             children: [
               Expanded(
@@ -122,7 +132,7 @@ class _CartPageState extends State<CartPage> {
                               ),
                           ],
                         ),
-                        const Divider(thickness: 1, color: Colors.grey), // Spacer line
+                        const Divider(thickness: 1, color: Colors.grey),
                       ],
                     );
                   },
@@ -152,7 +162,6 @@ class _CartPageState extends State<CartPage> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  // Select all products
                   for (int i = 0; i < _selectedProducts.length; i++) {
                     _selectedProducts[i] = true;
                   }
@@ -163,10 +172,9 @@ class _CartPageState extends State<CartPage> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  // Delete selected products
                   _products.removeWhere((product) => _selectedProducts[_products.indexOf(product)]);
                   _selectedProducts = List.generate(_products.length, (index) => false);
-                  _quantities = List.generate(_products.length, (index) => 1); // Reset quantities
+                  _quantities = List.generate(_products.length, (index) => 1);
                 });
               },
               child: const Text(
@@ -182,6 +190,12 @@ class _CartPageState extends State<CartPage> {
 
   // Checkout Mode Navigation Bar
   Widget _buildCheckoutNavBar() {
+    final totalPrice = _products.asMap().entries.fold(0.0, (sum, entry) {
+      final index = entry.key;
+      final product = entry.value;
+      return sum + (product['price'] * _quantities[index]);
+    });
+
     return Positioned(
       bottom: 0,
       left: 0,
@@ -190,13 +204,33 @@ class _CartPageState extends State<CartPage> {
         color: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Row(
+              children: [
+                Checkbox(
+                  value: _selectedProducts.every((selected) => selected),
+                  onChanged: (bool? value) {
+                    setState(() {
+                      _selectedProducts = List.generate(_selectedProducts.length, (index) => value ?? false);
+                    });
+                  },
+                ),
+                const Text('ALL'),
+              ],
+            ),
+            Text('Total: ₱${totalPrice.toStringAsFixed(2)}'),
             ElevatedButton(
               onPressed: () {
                 // Checkout logic
               },
-              child: const Text('Checkout'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFFF92B2),
+              ),
+              child: const Text(
+                'Checkout',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),

@@ -1,13 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/views/products_details/lavender_details.dart';
 import 'dart:async';
 import 'promo_page.dart';
 import 'settings_page.dart';
 import 'account_page.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/search_widget.dart';
-import '../widgets/product.dart';
+import '../widgets/product_ontap.dart';
 import 'principal_pages.dart';
+import 'package:twist_bloom/views/products_details/lavender_details.dart';
 
 void main() {
   runApp(const HomePage());
@@ -384,10 +386,37 @@ class FeaturedProductsGrid extends StatelessWidget {
               childAspectRatio: 3.16 / 4,
             ),
             itemBuilder: (context, index) {
-              return ProductCard(
-                imageUrl: products[index]['imageUrl'],
-                title: products[index]['title'],
-                price: products[index]['price'],
+              final product = products[index];
+
+              return ProductCardOnTap(
+                imageUrl: product['imageUrl'],
+                title: product['title'],
+                price: product['price'],
+                onTap: () {
+                  // Define different navigation based on index or product property
+                  if (index == 0) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LavenderDetails(), // Navigate to page 1
+                      ),
+                    );
+                  } else if (index == 1) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LavenderDetails(), // Navigate to page 2
+                      ),
+                    );
+                  } else if (product['title'] == 'Product 3') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LavenderDetails(), // Navigate to page 3
+                      ),
+                    );
+                  }
+                },
               );
             },
           ),

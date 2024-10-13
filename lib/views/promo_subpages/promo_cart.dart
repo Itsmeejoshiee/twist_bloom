@@ -24,29 +24,41 @@ class _PromoCartPageState extends State<PromoCartPage> {
     return GradientBackground(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Color(0xFFFEFAEB), // Make app bar transparent
             title: const Text('Basket'),
             elevation: 0,
           ),
-          body: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.all(8.0),
-                  children: [
-                    _buildCategory('Flower'),
-                    _buildProductList('Flower'),
-                    const SizedBox(height: 10),
-                    _buildCategory('Fillers'),
-                    _buildProductList('Fillers'),
-                    const SizedBox(height: 10),
-                    _buildCategory('Wrapper'),
-                    _buildProductList('Wrapper'),
-                  ],
-                ),
+          body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment(-0.4, 1),
+                end: Alignment(0.4, -1),
+                colors: [
+                  Color.fromRGBO(224, 209, 158, 0.14),
+                  Color.fromRGBO(255, 252, 237, 1.0),
+                ],
               ),
-              _buildCheckoutNavBar(),
-            ],
+            ),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.all(8.0),
+                    children: [
+                      _buildCategory('Flower'),
+                      _buildProductList('Flower'),
+                      const SizedBox(height: 10),
+                      _buildCategory('Fillers'),
+                      _buildProductList('Fillers'),
+                      const SizedBox(height: 10),
+                      _buildCategory('Wrapper'),
+                      _buildProductList('Wrapper'),
+                    ],
+                  ),
+                ),
+                _buildCheckoutNavBar(),
+              ],
+            ),
           ),
       ),
     );

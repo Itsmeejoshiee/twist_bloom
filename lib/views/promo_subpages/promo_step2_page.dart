@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/product.dart';
+import '../../widgets/product_ontap.dart';
+import '../products_details/lavender_details.dart';
 import 'promo_step3_page.dart';
 import 'promo_cart.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
@@ -56,34 +58,43 @@ class _PromoStep2Page extends State<PromoStep2Page> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientBackground(
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('MIX & MATCH'),
-            backgroundColor: Colors.transparent, // Make app bar transparent
-            elevation: 0, // Remove shadow
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            actions: [
-              IconButton(
-                icon: Image.asset('assets/icon/filter.png'),
-                onPressed: () {
-                  filterProducts();
-                },
-              ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('MIX & MATCH'),
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: Color(0xFFFEFAEB),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        actions: [
+          IconButton(
+            icon: Image.asset('assets/icon/filter.png'),
+            onPressed: () {
+              filterProducts();
+            },
+          ),
+        ],
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(-0.4, 1),
+            end: Alignment(0.4, -1),
+            colors: [
+              Color.fromRGBO(224, 209, 158, 0.14),
+              Color.fromRGBO(255, 252, 237, 1.0),
             ],
           ),
-        body: Container(
-          child: Stack(
+        ),
+        child: Stack(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Banner image at the top
                   Image.asset(
                     'assets/promo_background.png',
                     height: 120.0,
@@ -110,14 +121,34 @@ class _PromoStep2Page extends State<PromoStep2Page> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
-                        childAspectRatio: 3.16 / 4, // Aspect ratio similar to image
+                        childAspectRatio: 3.16 / 4,
                       ),
                       itemCount: filteredProducts.length,
                       itemBuilder: (context, index) {
-                        return ProductCard(
+                        return ProductCardOnTap(
                           imageUrl: filteredProducts[index]['imageUrl'],
                           title: filteredProducts[index]['title'],
                           price: filteredProducts[index]['price'],
+                          onTap: () {
+                            switch (filteredProducts[index]['title']) {
+                              case 'Lavender':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => LavenderDetails()),
+                                );
+                                break;
+                              case 'Eucalyptus':
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => LavenderDetails()),
+                                );
+                                break;
+                            // Add more cases for other products as needed
+                              default:
+                              // Handle default case or show an error message
+                                break;
+                            }
+                          },
                         );
                       },
                     ),
@@ -125,7 +156,6 @@ class _PromoStep2Page extends State<PromoStep2Page> {
                 ],
               ),
             ),
-            // Positioned button at the bottom center
             Positioned(
               bottom: 16,
               left: 0,
@@ -140,19 +170,19 @@ class _PromoStep2Page extends State<PromoStep2Page> {
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(horizontal: 85, vertical: 16.0),
-                    backgroundColor: const Color(0xFFFF92B2), // Customize your color here
+                    backgroundColor: const Color(0xFFFF92B2),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                   ),
                   child: const Row(
-                    mainAxisSize: MainAxisSize.min, // Ensures the Row takes up minimal space
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(
-                        Icons.shopping_cart, // Basket icon
-                        color: Colors.white,    // Icon color
+                        Icons.shopping_cart,
+                        color: Colors.white,
                       ),
-                      SizedBox(width: 8),        // Space between icon and text
+                      SizedBox(width: 8),
                       Text(
                         'Check Basket',
                         style: TextStyle(color: Colors.white, fontSize: 16),
@@ -163,18 +193,19 @@ class _PromoStep2Page extends State<PromoStep2Page> {
               ),
             ),
           ],
-        ),),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PromoStep3Page()),
-            );
-          },
-          child: const Icon(Icons.arrow_forward, color: Colors.white),
-          backgroundColor: const Color(0xFFFF92B2),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PromoStep3Page()),
+          );
+        },
+        child: const Icon(Icons.arrow_forward, color: Colors.white),
+        backgroundColor: const Color(0xFFFF92B2),
       ),
     );
   }
+
 }

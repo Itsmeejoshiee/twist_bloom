@@ -73,65 +73,78 @@ class _PromoStep3Page extends State<PromoStep3Page> {
         child: Scaffold(
           appBar: AppBar(
             title: const Text('MIX & MATCH'),
-            backgroundColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
+            backgroundColor: Color(0xFFFEFAEB), // Make app bar transparent
             elevation: 0,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.black),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Banner image at the top
-              Image.asset(
-                'assets/promo_background.png',
-                height: 120.0,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(height: 16.0),
-              const Text(
-                'Step 3: Pick your Main Wrapper',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 16.0),
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 3.16 / 4,
-                  ),
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    final isSelected = selectedProduct == product;
-                    return GestureDetector(
-                      onTap: () => selectProduct(product),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: isSelected ? Colors.pink[100] : Colors.white, // Highlight with pink
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            color: isSelected ? Colors.pink : Colors.grey,
-                            width: 2,
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment(-0.4, 1),
+              end: Alignment(0.4, -1),
+              colors: [
+                Color.fromRGBO(224, 209, 158, 0.14),
+                Color.fromRGBO(255, 252, 237, 1.0),
+              ],
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Banner image at the top
+                Image.asset(
+                  'assets/promo_background.png',
+                  height: 120.0,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(height: 16.0),
+                const Text(
+                  'Step 3: Pick your Main Wrapper',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 16.0),
+                Expanded(
+                  child: GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 3.16 / 4,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final product = products[index];
+                      final isSelected = selectedProduct == product;
+                      return GestureDetector(
+                        onTap: () => selectProduct(product),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: isSelected ? Colors.pink[100] : Colors.white, // Highlight with pink
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: isSelected ? Colors.pink : Colors.grey,
+                              width: 2,
+                            ),
+                          ),
+                          child: ProductCard(
+                            imageUrl: product['imageUrl'],
+                            title: product['title'],
+                            price: product['price'],
                           ),
                         ),
-                        child: ProductCard(
-                          imageUrl: product['imageUrl'],
-                          title: product['title'],
-                          price: product['price'],
-                        ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
