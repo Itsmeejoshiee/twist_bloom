@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class PromoCartPage extends StatefulWidget {
-  const PromoCartPage({Key? key, required Map<String, dynamic> selectedProduct}) : super(key: key);
+  const PromoCartPage({super.key, required Map<String, dynamic> selectedProduct});
 
   @override
   _PromoCartPageState createState() => _PromoCartPageState();
 }
 
 class _PromoCartPageState extends State<PromoCartPage> {
-  bool _isEditing = false;
+  final bool _isEditing = false;
   List<bool> _selectedProducts = List.generate(10, (index) => false); // Dummy product selection state
-  List<Map<String, dynamic>> _products = [
+  final List<Map<String, dynamic>> _products = [
     {'image': 'assets/icon/product/product1.jpg', 'title': 'Poppy', 'description': 'Red', 'price': 45.00, 'category': 'Flower'},
     {'image': 'assets/icon/product/product1.jpg', 'title': 'Lavender', 'description': 'Green', 'price': 45.00, 'category': 'Fillers'},
     {'image': 'assets/icon/product/product1.jpg', 'title': 'Navy Blue', 'description': '', 'price': 25.00, 'category': 'Wrapper'},
     // Add more products as needed
   ];
-  List<int> _quantities = List.generate(10, (index) => 1); // Dummy quantity state
+  final List<int> _quantities = List.generate(10, (index) => 1); // Dummy quantity state
 
   @override
   Widget build(BuildContext context) {

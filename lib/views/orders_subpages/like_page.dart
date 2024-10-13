@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/Views/account_page.dart';
 
 class LikesPage extends StatefulWidget {
-  const LikesPage({Key? key}) : super(key: key);
+  const LikesPage({super.key});
 
   @override
   _LikesPageState createState() => _LikesPageState();
@@ -12,7 +12,7 @@ class _LikesPageState extends State<LikesPage> {
   int _likeCount = 0; // Counter for likes
   bool _isEditing = false; // Flag to check if in editing mode
   List<bool> _selectedProducts = List.generate(10, (index) => false); // Dummy product selection state
-  List<Map<String, dynamic>> _products = [
+  final List<Map<String, dynamic>> _products = [
     {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 1', 'price': 10.0, 'rating': 4.5},
     {'image': 'assets/icon/product/product2.jpg', 'title': 'Product 2', 'price': 15.0, 'rating': 4.0},
     {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 3', 'price': 20.0, 'rating': 3.5},
@@ -148,7 +148,7 @@ class pc extends StatelessWidget {
   final VoidCallback onSelectNow;
 
   const pc({
-    Key? key,
+    super.key,
     required this.image,
     required this.title,
     required this.price,
@@ -157,11 +157,11 @@ class pc extends StatelessWidget {
     required this.isEditing,
     required this.onSelect,
     required this.onSelectNow,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 151,
       height: 213,
       child: Card(
@@ -242,7 +242,7 @@ class pc extends StatelessWidget {
                 onPressed: onSelectNow,
                 child: Text(
                   isEditing ? (isSelected ? 'Selected' : 'Select') : 'Add to Cart',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14, // Adjusted font size
                     color: Colors.white, // Ensure text color contrasts with button color
                   ),

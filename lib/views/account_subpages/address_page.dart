@@ -3,6 +3,8 @@ import '../account_page.dart';
 import 'add_edit_address.dart';
 
 class AddressPage extends StatefulWidget {
+  const AddressPage({super.key});
+
   @override
   _AddressPageState createState() => _AddressPageState();
 }
@@ -17,9 +19,9 @@ class _AddressPageState extends State<AddressPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Address'),
+        title: const Text('Address'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -30,14 +32,14 @@ class _AddressPageState extends State<AddressPage> {
       body: GradientBackground(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (regionCityDistrict != null) ...[
                   Container(
-                    margin: EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
-                    padding: EdgeInsets.all(16),
+                    margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -46,7 +48,7 @@ class _AddressPageState extends State<AddressPage> {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 4,
                           blurRadius: 5,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
@@ -80,14 +82,14 @@ class _AddressPageState extends State<AddressPage> {
                                 ),
                               );
                             },
-                            child: Text('Edit'),
+                            child: const Text('Edit'),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ],
-                Spacer(),
+                const Spacer(),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -107,15 +109,15 @@ class _AddressPageState extends State<AddressPage> {
                       ),
                     );
                   },
-                  child: Text('Add Address'),
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15), backgroundColor: Color.fromRGBO(255, 182, 193, 1),
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15), backgroundColor: const Color.fromRGBO(255, 182, 193, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ), // Button color
                   ),
+                  child: Text('Add Address'),
                 ),
-                SizedBox(height: 20), // Space between button and bottom
+                const SizedBox(height: 20), // Space between button and bottom
               ],
             ),
           ),

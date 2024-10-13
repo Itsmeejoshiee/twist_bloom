@@ -9,7 +9,7 @@ void main() {
 void _navigateToAuthPage(BuildContext context) {
   Navigator.of(context).push(
     PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => SignInPage(),
+      pageBuilder: (context, animation, secondaryAnimation) => const SignInPage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
@@ -27,19 +27,19 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 2), () => _navigateToAuthPage(context));
+    Timer(const Duration(seconds: 2), () => _navigateToAuthPage(context));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment(-0.4, 1),
               end: Alignment(0.4, -1),
               colors: [Color.fromRGBO(224, 209, 158, 0.14), Color.fromRGBO(255, 252, 237, 1.0)],
             ),
           ),
-          child: Center(
+          child: const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

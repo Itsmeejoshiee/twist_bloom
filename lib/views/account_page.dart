@@ -36,6 +36,8 @@ class GradientBackground extends StatelessWidget {
 }
 
 class AccountPage extends StatelessWidget {
+  const AccountPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

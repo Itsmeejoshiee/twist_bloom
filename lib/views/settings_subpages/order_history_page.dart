@@ -4,6 +4,8 @@ import 'package:timeline_tile/timeline_tile.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class OrderHistoryPage extends StatelessWidget {
+  const OrderHistoryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -11,9 +13,9 @@ class OrderHistoryPage extends StatelessWidget {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Order History'),
+          title: const Text('Order History'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -32,7 +34,7 @@ class OrderHistoryPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
+                  const ListTile(
                     title: Text('Order Tracking'),
                   ),
                   // Add Timeline Tile here
@@ -40,36 +42,36 @@ class OrderHistoryPage extends StatelessWidget {
                     isFirst: true,
                     alignment: TimelineAlign.manual,
                     lineXY: 0.25,
-                    startChild: Column(
+                    startChild: const Column(
                       children: [
                         Text('September 1'),
                         Text('7:00 AM'),
                       ],
                     ),
-                    endChild: Text('Order Packed'),
-                    beforeLineStyle: LineStyle(color: Colors.black),
-                    indicatorStyle: IndicatorStyle(color: Colors.black),
+                    endChild: const Text('Order Packed'),
+                    beforeLineStyle: const LineStyle(color: Colors.black),
+                    indicatorStyle: const IndicatorStyle(color: Colors.black),
                   ),
                   TimelineTile(
                     alignment: TimelineAlign.manual,
                     lineXY: 0.25,
-                    startChild: Column(
+                    startChild: const Column(
                       children: [
                         Text('September 2'),
                         Text('9:00 AM'),
                       ],
                     ),
-                    endChild: Text('Order Shipped'),
-                    beforeLineStyle: LineStyle(color: Colors.black),
-                    indicatorStyle: IndicatorStyle(color: Colors.black),
+                    endChild: const Text('Order Shipped'),
+                    beforeLineStyle: const LineStyle(color: Colors.black),
+                    indicatorStyle: const IndicatorStyle(color: Colors.black),
                   ),
                   // Add additional Timeline Tile here
 
-                  SizedBox(height: 25),
-                  ListTile(
+                  const SizedBox(height: 25),
+                  const ListTile(
                     title: Text('Order History'),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -77,7 +79,7 @@ class OrderHistoryPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -86,8 +88,8 @@ class OrderHistoryPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
-                  Container(
+                  const SizedBox(height: 20),
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -95,7 +97,7 @@ class OrderHistoryPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -104,7 +106,7 @@ class OrderHistoryPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),

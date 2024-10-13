@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class CurrencyPage extends StatelessWidget {
+  const CurrencyPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,9 +12,9 @@ class CurrencyPage extends StatelessWidget {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Currency'),
+          title: const Text('Currency'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -31,7 +33,7 @@ class CurrencyPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
+                  const ListTile(
                     title: Text(
                       'Preferred Currency',
                       style: TextStyle(
@@ -41,8 +43,8 @@ class CurrencyPage extends StatelessWidget {
                     ),
                     subtitle: Text('Philippine Peso (Php)'),
                   ),
-                  SizedBox(height: 40),
-                  ListTile(
+                  const SizedBox(height: 40),
+                  const ListTile(
                     title: Text(
                       'Transaction History',
                       style: TextStyle(
@@ -51,7 +53,7 @@ class CurrencyPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -59,7 +61,7 @@ class CurrencyPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -68,8 +70,8 @@ class CurrencyPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Container(
+                  const SizedBox(height: 10),
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -77,7 +79,7 @@ class CurrencyPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -86,8 +88,8 @@ class CurrencyPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Container(
+                  const SizedBox(height: 10),
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -95,7 +97,7 @@ class CurrencyPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',

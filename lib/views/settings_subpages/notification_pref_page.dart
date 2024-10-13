@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class NotificationPreferencePage extends StatefulWidget {
+  const NotificationPreferencePage({super.key});
+
   @override
   _NotificationPreferencePageState createState() =>
       _NotificationPreferencePageState();
@@ -38,9 +40,9 @@ class _NotificationPreferencePageState
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('Notification Preference'),
+        title: const Text('Notification Preference'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -59,14 +61,14 @@ class _NotificationPreferencePageState
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ListTile(
+                const ListTile(
                     title: Text(
                       'Order Notifications',
                       style: TextStyle(fontFamily: 'Poppins', fontSize: 20),
                     )),
                 // Radio button for 'By Order'
                 ListTile(
-                  title: Text('By Order',
+                  title: const Text('By Order',
                       style: TextStyle(fontFamily: 'Poppins', fontSize: 15)),
                   leading: Radio<String>(
                     value: 'By Order',
@@ -81,7 +83,7 @@ class _NotificationPreferencePageState
                 ),
                 // Radio button for 'By Time'
                 ListTile(
-                  title: Text('By Time',
+                  title: const Text('By Time',
                       style: TextStyle(fontFamily: 'Poppins', fontSize: 15)),
                   leading: Radio<String>(
                     value: 'By Time',
@@ -94,7 +96,7 @@ class _NotificationPreferencePageState
                     },
                   ),
                 ),
-                ListTile(
+                const ListTile(
                     title: Text('Notification Volume',
                         style: TextStyle(fontFamily: 'Poppins', fontSize: 20))),
                 Slider(
@@ -110,7 +112,7 @@ class _NotificationPreferencePageState
                 ),
 
                 ListTile(
-                  title: Text('Lockscreen Notifications',
+                  title: const Text('Lockscreen Notifications',
                       style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
                   trailing: Switch(
                     onChanged: _toggleLockScreen,
@@ -119,7 +121,7 @@ class _NotificationPreferencePageState
                   ),
                 ),
                 ListTile(
-                  title: Text('Do Not Disturb',
+                  title: const Text('Do Not Disturb',
                       style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
                   trailing: Switch(
                     onChanged: _toggleDoNotDisturb,

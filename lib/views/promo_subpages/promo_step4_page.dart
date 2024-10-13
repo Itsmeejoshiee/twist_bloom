@@ -79,13 +79,13 @@ class _PromoStep4Page extends State<PromoStep4Page> {
               ),
               const SizedBox(height: 16.0),
               RichText(
-                text: TextSpan(
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+                text: const TextSpan(
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                   children: <TextSpan>[
-                    const TextSpan(text: 'Step 4: Pick your Accent '),
+                    TextSpan(text: 'Step 4: Pick your Accent '),
                     TextSpan(
                       text: '(Up to 2)',
-                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
                     ),
                   ],
                 ),
@@ -154,7 +154,7 @@ class _PromoStep4Page extends State<PromoStep4Page> {
                     ? () {
                   Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PromoStep5Page(selectedProduct: {},))
+                      MaterialPageRoute(builder: (context) => const PromoStep5Page(selectedProduct: {},))
                   );
                 }
                     : null, // Disable button if no product is selected

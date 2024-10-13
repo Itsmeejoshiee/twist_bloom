@@ -125,7 +125,6 @@ class _SignInPageState extends State<SignInPage> {
                               builder: (context) => const HomePage(),
                             ));
                           },
-                          child: Text("Register"),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFFF92B2),
                             foregroundColor: Colors.black,
@@ -135,6 +134,7 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                             elevation: 4,
                           ),
+                          child: Text("Register"),
                         ),
                       ),
                       SizedBox(height: 16),

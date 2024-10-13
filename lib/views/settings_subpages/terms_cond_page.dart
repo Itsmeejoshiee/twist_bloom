@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class TermsAndConditionsPage extends StatelessWidget {
+  const TermsAndConditionsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,16 +12,16 @@ class TermsAndConditionsPage extends StatelessWidget {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Center(child: Text('Terms & Conditions')),
+          title: const Center(child: Text('Terms & Conditions')),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.search),
+              icon: const Icon(Icons.search),
               onPressed: () {
                 // Implement search functionality here
               },
@@ -40,8 +42,8 @@ class TermsAndConditionsPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(
-                    title: Text('General Terms & Conditions'),
-                    subtitle: Container(
+                    title: const Text('General Terms & Conditions'),
+                    subtitle: SizedBox(
                       width: 274,
                       child: Card(
                         color: Colors.grey[200],
@@ -49,7 +51,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Column(
+                        child: const Column(
                           children: [
                             Text(
                               'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque. Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque. Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque. Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque. Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa scelerisque elementum penatibus scelerisque.',

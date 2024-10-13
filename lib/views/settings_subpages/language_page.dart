@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class LanguagePage extends StatelessWidget {
+  const LanguagePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,9 +12,9 @@ class LanguagePage extends StatelessWidget {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Language'),
+          title: const Text('Language'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -28,7 +30,7 @@ class LanguagePage extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10), // Rounded corners
               ),
-              child: Column(
+              child: const Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ListTile(

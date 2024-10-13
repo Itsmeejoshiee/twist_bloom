@@ -4,6 +4,8 @@ import 'landing_page.dart';
 import '../widgets/gradient_background.dart';
 
 class PromoScreen extends StatelessWidget {
+  const PromoScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +24,7 @@ class PromoScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => MainScreen()),
+                          MaterialPageRoute(builder: (context) => const MainScreen()),
                         );
                       },
                     ),
@@ -86,7 +88,7 @@ class PromoScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PromoStep1Page()),
+                        MaterialPageRoute(builder: (context) => const PromoStep1Page()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

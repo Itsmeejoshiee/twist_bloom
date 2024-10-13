@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class ShippingPrefPage extends StatelessWidget {
+  const ShippingPrefPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,9 +12,9 @@ class ShippingPrefPage extends StatelessWidget {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Shipping Preference'),
+          title: const Text('Shipping Preference'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -31,44 +33,44 @@ class ShippingPrefPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
+                  const ListTile(
                     title: Text('Shipping Address'),
                   ),
-                  Text('Region/City/District'),
-                  Container(
+                  const Text('Region/City/District'),
+                  SizedBox(
                     width: 274,
                     child: Card(
                       elevation: 4,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(''), // Placeholder for address input
                         ],
                       ),
                     ),
                   ),
-                  Text('Street/Building Name'),
-                  Container(
+                  const Text('Street/Building Name'),
+                  SizedBox(
                     width: 274,
                     child: Card(
                       elevation: 4,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(''), // Placeholder for address input
                         ],
                       ),
                     ),
                   ),
-                  ListTile(
+                  const ListTile(
                     title: Text('Delivery'),
                     subtitle: Text('Standard Shipping'),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                 ],
               ),
             ),

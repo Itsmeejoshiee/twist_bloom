@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class SecurityPage extends StatelessWidget {
+  const SecurityPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,9 +12,9 @@ class SecurityPage extends StatelessWidget {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Account Security'),
+          title: const Text('Account Security'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -31,10 +33,10 @@ class SecurityPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
+                  const ListTile(
                     title: Text('Two Factor Authentication'),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -42,7 +44,7 @@ class SecurityPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text('Phone Number'),
                           Text('09123456789'),
@@ -50,8 +52,8 @@ class SecurityPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Container(
+                  const SizedBox(height: 10),
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -59,7 +61,7 @@ class SecurityPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text('Email Address'),
                           Text('spo1jkc@gmail.com'),
@@ -67,17 +69,17 @@ class SecurityPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ListTile(
+                  const ListTile(
                     title: Text('Password'),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       elevation: 4,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text('Current Password'),
                           Text('********'),
@@ -85,14 +87,14 @@ class SecurityPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       elevation: 4,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text('Change Password'),
                           Text(''),
@@ -100,10 +102,10 @@ class SecurityPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ListTile(
+                  const ListTile(
                     title: Text('Login History'),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -111,7 +113,7 @@ class SecurityPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -120,8 +122,8 @@ class SecurityPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Container(
+                  const SizedBox(height: 10),
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -129,7 +131,7 @@ class SecurityPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -138,7 +140,7 @@ class SecurityPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 40),
+                  const SizedBox(height: 40),
                 ],
               ),
             ),

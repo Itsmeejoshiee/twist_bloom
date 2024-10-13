@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key}) : super(key: key);
+  const CartPage({super.key});
 
   @override
   _CartPageState createState() => _CartPageState();
@@ -11,7 +11,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool _isEditing = false; // Flag to check if in editing mode
   List<bool> _selectedProducts = List.generate(10, (index) => false); // Dummy product selection state
-  List<Map<String, dynamic>> _products = [
+  final List<Map<String, dynamic>> _products = [
     {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 1', 'price': 10.0, 'variations': ['Size S', 'Size M', 'Size L']},
     {'image': 'assets/icon/product/product2.jpg', 'title': 'Product 2', 'price': 15.0, 'variations': ['Color Red', 'Color Blue']},
     {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 3', 'price': 20.0, 'variations': ['Size M', 'Size L', 'Size XL']},

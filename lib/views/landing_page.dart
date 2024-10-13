@@ -71,7 +71,7 @@ class _MainScreenState extends State<MainScreen> {
               },
             ),
           ),
-          Positioned(
+          const Positioned(
             top: 20,
             right: 10,
             child: SearchWidget(),
@@ -105,9 +105,9 @@ class HomePageContent extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.only(top: 90),
         children: [
-          ElevatedPromoWidget(),
+          const ElevatedPromoWidget(),
           LatestProductsSlideshow(),
-          FeaturedProductsGrid(),
+          const FeaturedProductsGrid(),
         ],
       ),
     );
@@ -146,13 +146,13 @@ class ElevatedPromoWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.40), // Optional overlay for readability
                 ),
-                child: Row(
+                child: const Row(
                   children: [
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
                             'Latest Promo!',
                             style: TextStyle(
@@ -171,7 +171,7 @@ class ElevatedPromoWidget extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Icon(
+                    Icon(
                       Icons.local_offer,
                       size: 40,
                       color: Colors.red,
@@ -188,6 +188,8 @@ class ElevatedPromoWidget extends StatelessWidget {
 }
 
 class LatestProductsSlideshow extends StatefulWidget {
+  const LatestProductsSlideshow({super.key});
+
   @override
   _LatestProductsSlideshowState createState() =>
       _LatestProductsSlideshowState();
@@ -196,7 +198,7 @@ class LatestProductsSlideshow extends StatefulWidget {
 class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
   final PageController _pageController = PageController(viewportFraction: 0.8);
   int _currentPage = 0;
-  final Duration _scrollDuration = Duration(seconds: 3);
+  final Duration _scrollDuration = const Duration(seconds: 3);
   final List<Map<String, dynamic>> slideshowProducts = [
     {
       'imageUrl': 'assets/icon/product/sample_bouquets/lily_pretty.png',
@@ -230,7 +232,7 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
         }
         _pageController.animateToPage(
           _currentPage,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeInOut,
         );
         _autoScroll();
@@ -251,7 +253,7 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'LATEST',
             style: TextStyle(
               fontSize: 18,
@@ -278,7 +280,7 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: GridView.builder(
                     padding: EdgeInsets.zero,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 8.0,
                       mainAxisSpacing: 8.0,

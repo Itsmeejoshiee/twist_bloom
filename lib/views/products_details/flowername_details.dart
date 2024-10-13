@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FlowerNameDetails extends StatelessWidget {
   final String flowerName;
 
-  const FlowerNameDetails({Key? key, required this.flowerName}) : super(key: key);
+  const FlowerNameDetails({super.key, required this.flowerName});
 
   @override
   Widget build(BuildContext context) {

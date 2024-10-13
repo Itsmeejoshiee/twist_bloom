@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'orders_subpages/shopping_cart.dart';
 import 'orders_subpages/like_page.dart';
-import '../widgets/gradient_background.dart';
+import 'orders_subpages/to_pay.dart';
+import 'orders_subpages/to_rate.dart';
+import 'orders_subpages/to_receive.dart';
+import 'orders_subpages/to_ship.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
@@ -10,9 +13,18 @@ class OrdersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: GradientBackground(
-        child:Container(
+      body: Container(
         height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(-0.4, 1),
+            end: Alignment(0.4, -1),
+            colors: [
+              Color.fromRGBO(224, 209, 158, 0.14),
+              Color.fromRGBO(255, 252, 237, 1.0),
+            ],
+          ),
+        ),
         child: SingleChildScrollView(
           padding: const EdgeInsets.fromLTRB(16, 64, 16, 16),
           child: Column(
@@ -20,13 +32,13 @@ class OrdersPage extends StatelessWidget {
             children: [
               _buildMyActivitiesSection(context),
               _buildSeparator(),
-              _buildMyPurchasesSection(),
+              _buildMyPurchasesSection(context),  // Pass context here
               _buildSeparator(),
               _buildMyPreOrdersSection(),
             ],
           ),
         ),
-      ),),
+      ),
     );
   }
 
@@ -56,7 +68,7 @@ class OrdersPage extends StatelessWidget {
               children: [
                 _buildCustomIconButton(
                   'assets/icon/cart.png',
-                  'My Shopping Cart',
+                  'My Shipping Cart',
                       () {
                     Navigator.push(
                       context,
@@ -83,9 +95,7 @@ class OrdersPage extends StatelessWidget {
     );
   }
 
-  Widget _buildMyPurchasesSection() {
-    const double buttonTextSize = 16.0;
-
+  Widget _buildMyPurchasesSection(BuildContext context) { // Accept context
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -100,13 +110,10 @@ class OrdersPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildCustomVerticalIconButton('assets/icon/pay.png', 'To Pay'),
-                _buildCustomVerticalIconButton(
-                    'assets/icon/ship.png', 'To Ship'),
-                _buildCustomVerticalIconButton(
-                    'assets/icon/receive.png', 'To Receive'),
-                _buildCustomVerticalIconButton(
-                    'assets/icon/rate.png', 'To Rate'),
+                _buildNavigationButton('assets/icon/pay.png', 'To Pay', ToPayPage(paidProducts: [],), context),
+                _buildNavigationButton('assets/icon/ship.png', 'To Ship', ToShipPage(paidProducts: [],), context),
+                _buildNavigationButton('assets/icon/receive.png', 'To Receive', ToReceivePage(shippedProducts: [],), context),
+                _buildNavigationButton('assets/icon/rate.png', 'To Rate', ToRatePage(completedProducts: [],), context),
               ],
             ),
             const SizedBox(height: 16),
@@ -119,7 +126,7 @@ class OrdersPage extends StatelessWidget {
                       onPressed: () {},
                       style: TextButton.styleFrom(
                         foregroundColor: Colors.blue,
-                        textStyle: TextStyle(fontSize: 14),
+                        textStyle: const TextStyle(fontSize: 14),
                       ),
                       child: const Text('View Purchase History  >'),
                     ),
@@ -129,6 +136,24 @@ class OrdersPage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildNavigationButton(String imagePath, String label, Widget page, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => page),  // Navigate to respective page
+        );
+      },
+      child: Column(
+        children: [
+          Image.asset(imagePath, height: 48),
+          const SizedBox(height: 8),
+          Text(label),
+        ],
       ),
     );
   }
@@ -160,22 +185,12 @@ class OrdersPage extends StatelessWidget {
     return OutlinedButton.icon(
       onPressed: onPressed,
       icon: _buildResizedImage(imagePath, 24, 24),
-      label: Text(label, style: TextStyle(color: const Color(0xFF000000))),
+      label: Text(label, style: const TextStyle(color: Color(0xFF000000))),
       style: OutlinedButton.styleFrom(
-        side: BorderSide(color: const Color(0xFFFF92B2), width: 1),
+        side: const BorderSide(color: Color(0xFFFF92B2), width: 1),
         backgroundColor: Colors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       ),
-    );
-  }
-
-  Widget _buildCustomVerticalIconButton(String imagePath, String label) {
-    return Column(
-      children: [
-        _buildResizedImage(imagePath, 48, 48),
-        const SizedBox(height: 8),
-        Text(label),
-      ],
     );
   }
 
@@ -217,22 +232,22 @@ class OrdersPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 16),
-                Expanded(
+                const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Poppies and Rose Bouquet',
+                      Text('Poppies and Rose Bouquet',
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 4),
-                      const Text('P150',
+                      SizedBox(height: 4),
+                      Text('P150',
                           style: TextStyle(
                               fontSize: 14, fontWeight: FontWeight.bold)),
-                      const SizedBox(height: 4),
-                      const Text('On September 21, 2024',
+                      SizedBox(height: 4),
+                      Text('On September 21, 2024',
                           style: TextStyle(fontSize: 10)),
-                      const SizedBox(height: 4),
-                      const Text('For Delivery',
+                      SizedBox(height: 4),
+                      Text('For Delivery',
                           style: TextStyle(fontSize: 10)),
                     ],
                   ),
@@ -248,19 +263,19 @@ class OrdersPage extends StatelessWidget {
               height: 21,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text('Confirm'),
                 style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                   foregroundColor:
-                  WidgetStateProperty.all<Color>(Color(0xFFFF92B2)),
-                  elevation: WidgetStateProperty.all<double>(0),
-                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                  MaterialStateProperty.all<Color>(const Color(0xFFFF92B2)),
+                  elevation: MaterialStateProperty.all<double>(0),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
                   ),
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
+                  padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
                       EdgeInsets.zero),
                 ),
+                child: const Text('Confirm'),
               ),
             ),
           ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class AppVerPage extends StatefulWidget {
+  const AppVerPage({super.key});
+
   @override
   _AppVerPageState createState() => _AppVerPageState();
 }
@@ -24,9 +26,9 @@ class _AppVerPageState extends State<AppVerPage> {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('App Version'),
+          title: const Text('App Version'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -45,17 +47,17 @@ class _AppVerPageState extends State<AppVerPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  ListTile(
+                  const ListTile(
                     title: Text('App Update'),
                     subtitle: Text('Your app is up to date.'),
                   ),
-                  ListTile(
+                  const ListTile(
                     title: Text('Version'),
                     subtitle: Text('Twist & Bloom App Version 1.0.0'),
                   ),
                   ListTile(
-                    title: Text('Auto update over Wi-Fi'),
-                    subtitle: Text(
+                    title: const Text('Auto update over Wi-Fi'),
+                    subtitle: const Text(
                         'Update app automatically when connected to Wi-Fi Network'),
                     trailing: Switch(
                       onChanged: _toggleAutoUpdate,
@@ -64,8 +66,8 @@ class _AppVerPageState extends State<AppVerPage> {
                     ),
                   ),
                   ListTile(
-                    title: Text('Latest Update'),
-                    subtitle: Container(
+                    title: const Text('Latest Update'),
+                    subtitle: SizedBox(
                       width: 274,
                       child: Card(
                         color: Colors.grey[200],
@@ -73,7 +75,7 @@ class _AppVerPageState extends State<AppVerPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Column(
+                        child: const Column(
                           children: [
                             Text(
                                 'Last update was installed on September 1, 2024 at 6:12pm')
@@ -82,7 +84,7 @@ class _AppVerPageState extends State<AppVerPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

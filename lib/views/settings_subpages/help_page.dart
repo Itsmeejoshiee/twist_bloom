@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class HelpPage extends StatelessWidget {
+  const HelpPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -10,9 +12,9 @@ class HelpPage extends StatelessWidget {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: Text('Help & Support'),
+          title: const Text('Help & Support'),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -31,10 +33,10 @@ class HelpPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Center(
+                  const Center(
                     child: Text('FAQ'),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -42,7 +44,7 @@ class HelpPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -51,7 +53,7 @@ class HelpPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -59,7 +61,7 @@ class HelpPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -68,7 +70,7 @@ class HelpPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -76,7 +78,7 @@ class HelpPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -85,10 +87,10 @@ class HelpPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ListTile(
+                  const ListTile(
                     title: Text('About us'),
                   ),
-                  Container(
+                  SizedBox(
                     width: 274,
                     child: Card(
                       color: Colors.grey[200],
@@ -96,7 +98,7 @@ class HelpPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Column(
+                      child: const Column(
                         children: [
                           Text(
                             'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
@@ -105,15 +107,15 @@ class HelpPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
-                      Placeholder();
+                      const Placeholder();
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.grey[300],
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                         horizontal: 20.0,
                         vertical: 10.0,
                       ),
@@ -121,7 +123,7 @@ class HelpPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
-                    child: Text('Contact us'),
+                    child: const Text('Contact us'),
                   ),
                 ],
               ),
