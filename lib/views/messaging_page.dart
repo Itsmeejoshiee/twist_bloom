@@ -18,76 +18,87 @@ class MessagesAndNotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 40),
-            Row(
-              children: [
-                const SizedBox(height: 30), 
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    
-                  },
-                ),
-                const SizedBox(width: 10), 
-                const Text(
-                  'Messages & Notifications',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 40), 
-            Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment(-0.4, 1),
+            end: Alignment(0.4, -1),
+            colors: [
+              Color.fromRGBO(224, 209, 158, 0.14),
+              Color.fromRGBO(255, 252, 237, 1.0)
+            ],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 40),
+              Row(
                 children: [
-                  const Text(
-                    'Notifications:',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur'),
-                  const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur'),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Messages:',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const MessageScreen()),
-                      );
+                  const SizedBox(height: 30),
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+
                     },
-                    child: const MessageBubble(
-                      content: 'Lorem ipsum dolor amet, consectetur',
-                      hasIcon: true,
-                    ),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const MessageScreen()),
-                      );
-                    },
-                    child: const MessageBubble(
-                      content: 'Lorem ipsum dolor amet, consectetur',
-                      hasIcon: true,
-                    ),
+                  const SizedBox(width: 3),
+                  const Text(
+                    'Messages & Notifications',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text(
+                      'Notifications:',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur'),
+                    const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur'),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Messages:',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const MessageScreen()),
+                        );
+                      },
+                      child: const MessageBubble(
+                        content: 'Lorem ipsum dolor amet, consectetur',
+                        hasIcon: true,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const MessageScreen()),
+                        );
+                      },
+                      child: const MessageBubble(
+                        content: 'Lorem ipsum dolor amet, consectetur',
+                        hasIcon: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
