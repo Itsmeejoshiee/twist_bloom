@@ -243,12 +243,6 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                           ),
                         ],
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.shopping_cart),
-                        onPressed: () {
-                          // Cart logic
-                        },
-                      ),
                       ElevatedButton(
                         onPressed: () {
                           // Handle pre-order logic
@@ -259,7 +253,7 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Pre-order now', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
