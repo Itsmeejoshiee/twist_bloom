@@ -15,7 +15,7 @@ class _EditNamePageState extends State<EditNamePage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('Edit Name',
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 25,
           ),
@@ -40,7 +40,7 @@ class _EditNamePageState extends State<EditNamePage> {
       body: GradientBackground(
         child: Column(
           children: [
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Container(
               margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
               padding: const EdgeInsets.all(16),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/gradient_background.dart';
 
 class MessagesPage extends StatelessWidget {
   const MessagesPage({super.key});
@@ -16,54 +17,56 @@ class MessagesAndNotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFFFFCEF),  // Match background color
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 60),
-            Row(
-              children: [
-                const SizedBox(width: 8),
-                const Text(
-                  'Messages & Notification',
-                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Notifications:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            // Example Notification bubbles
-            const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
-            const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
-            const SizedBox(height: 20),
-            const Text(
-              'Messages:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            // Messages section with profile avatars
-            GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MessageScreen()),
-                );
-              },
-              child: const MessageBubble(
-                content: 'Lorem ipsum dolor amet, consectetur',
-                hasAvatar: true,
-                avatarPath: 'assets/images/avatar1.png',
-                title: 'Twist & Bloom',
+    return GradientBackground(
+        child:Scaffold(
+          backgroundColor: Colors.transparent,
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 60),
+              const Row(
+                children: [
+                  SizedBox(width: 8),
+                  Text(
+                    'Messages & Notification',
+                    style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              const Text(
+                'Notifications:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              // Example Notification bubbles
+              const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
+              const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
+              const SizedBox(height: 20),
+              const Text(
+                'Messages:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              // Messages section with profile avatars
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MessageScreen()),
+                  );
+                },
+                child: const MessageBubble(
+                  content: 'Lorem ipsum dolor amet, consectetur',
+                  hasAvatar: true,
+                  avatarPath: 'assets/images/avatar1.png',
+                  title: 'Twist & Bloom',
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -159,13 +162,13 @@ class _MessageScreenState extends State<MessageScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF92B2),
         elevation: 0,
-        title: Row(
+        title: const Row(
           children: [
             CircleAvatar(
-              backgroundImage: const AssetImage('assets/images/avatar1.png'), // Avatar image
+              backgroundImage: AssetImage('assets/images/avatar1.png'), // Avatar image
             ),
-            const SizedBox(width: 12),
-            const Text(
+            SizedBox(width: 12),
+            Text(
               'Twist & Bloom',
               style: TextStyle(color: Colors.black),
             ),

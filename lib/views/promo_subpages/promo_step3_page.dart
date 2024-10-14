@@ -73,7 +73,7 @@ class _PromoStep3Page extends State<PromoStep3Page> {
       appBar: AppBar(
         title: const Text('MIX & MATCH'),
         surfaceTintColor: Colors.transparent,
-        backgroundColor: Color(0xFFFDFAFA), // Make app bar transparent
+        backgroundColor: const Color(0xFFFDFAFA), // Make app bar transparent
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),

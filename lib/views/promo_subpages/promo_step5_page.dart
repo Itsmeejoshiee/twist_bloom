@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/views/promo_subpages/promo_cart.dart';
 import 'package:twist_bloom/widgets/product.dart';
 import 'promo_step6_page.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
@@ -89,7 +88,7 @@ class _PromoStep5Page extends State<PromoStep5Page> {
       appBar: AppBar(
           title: const Text('MIX & MATCH'),
         surfaceTintColor: Colors.transparent,
-        backgroundColor: Color(0xFFFDFAFA), // Make app bar transparent
+        backgroundColor: const Color(0xFFFDFAFA), // Make app bar transparent
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -111,13 +110,13 @@ class _PromoStep5Page extends State<PromoStep5Page> {
               ),
             const SizedBox(height: 16.0),
             RichText(
-              text: TextSpan(
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
+              text: const TextSpan(
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                 children: <TextSpan>[
-                  const TextSpan(text: 'Step 5: Pick your ribbon '),
+                  TextSpan(text: 'Step 5: Pick your ribbon '),
                   TextSpan(
                     text: '(Up to 2)',
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black),
                   ),
                 ],
               ),
@@ -184,7 +183,7 @@ class _PromoStep5Page extends State<PromoStep5Page> {
             FloatingActionButton(
               backgroundColor: const Color(0xFFFF92B2), // Pink background
               onPressed: selectedProducts.isNotEmpty ? () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => PromoStep6Page(selectedProduct: {},))
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PromoStep6Page(selectedProduct: {},))
                 );
               }: null, // Disable button if no product is selected
                 child: const Icon(

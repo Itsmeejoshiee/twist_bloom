@@ -118,7 +118,7 @@ class _AddressPageState extends State<AddressPage> {
                       borderRadius: BorderRadius.circular(15),
                     ), // Button color
                   ),
-                  child: Text('Add Address'),
+                  child: const Text('Add Address'),
                 ),
                 const SizedBox(height: 20), // Space between button and bottom
               ],

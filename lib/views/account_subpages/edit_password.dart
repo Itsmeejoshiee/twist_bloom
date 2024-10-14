@@ -10,7 +10,7 @@ class EditPasswordPage extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('Edit Password',
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
           ),
@@ -36,7 +36,7 @@ class EditPasswordPage extends StatelessWidget {
       body: GradientBackground(
         child: Column(
           children: [
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             Container(
               margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
               padding: const EdgeInsets.all(16),

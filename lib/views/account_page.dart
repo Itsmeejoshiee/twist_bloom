@@ -18,11 +18,11 @@ class AccountPage extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => MainScreen()),
+              MaterialPageRoute(builder: (context) => const MainScreen()),
             );
           },
         ),
@@ -47,7 +47,7 @@ class AccountPage extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 4,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -55,19 +55,19 @@ class AccountPage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage(
+                      backgroundImage: const AssetImage(
                           'assets/profile_picture.png'),
                       // Profile Picture
                       child: RawMaterialButton(
                         onPressed: () {
                           _showPhotoOptions(context);
                         },
-                        shape: CircleBorder(),
-                        child: Icon(Icons.camera_alt_outlined),
+                        shape: const CircleBorder(),
+                        child: const Icon(Icons.camera_alt_outlined),
                       ),
                     ),
-                    SizedBox(height: 5, width: 318),
-                    Text(
+                    const SizedBox(height: 5, width: 318),
+                    const Text(
                       'John Doe',
                       style: TextStyle(
                           fontSize: 32,
@@ -80,9 +80,8 @@ class AccountPage extends StatelessWidget {
 
               // Second box
               Container(
-                margin: EdgeInsets.only(
-                    top: 12, left: 32, right: 32, bottom: 12),
-                padding: EdgeInsets.all(16),
+                margin: const EdgeInsets.only(top: 12, left: 32, right: 32, bottom: 12),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -91,7 +90,7 @@ class AccountPage extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 4,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -105,11 +104,11 @@ class AccountPage extends StatelessWidget {
                             backgroundColor: Colors.white,
                             shadowColor: Colors.transparent,
                             alignment: Alignment.centerLeft),
-                        icon: Icon(Icons.person, color: Colors.black),
+                        icon: const Icon(Icons.person, color: Colors.black),
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => PersonalInfoPage()),
+                            MaterialPageRoute(builder: (context) => const PersonalInfoPage()),
                           );
                         },
                         label: const Text(
@@ -129,11 +128,11 @@ class AccountPage extends StatelessWidget {
                             backgroundColor: Colors.white,
                             shadowColor: Colors.transparent,
                             alignment: Alignment.centerLeft),
-                        icon: Icon(Icons.security, color: Colors.black),
+                        icon: const Icon(Icons.security, color: Colors.black),
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginAndSecurity()),
+                            MaterialPageRoute(builder: (context) => const LoginAndSecurity()),
                           );
                         },
                         label: const Text(
@@ -151,9 +150,8 @@ class AccountPage extends StatelessWidget {
 
               // Third box
               Container(
-                margin: EdgeInsets.only(
-                    top: 12, left: 32, right: 32, bottom: 12),
-                padding: EdgeInsets.all(16),
+                margin: const EdgeInsets.only(top: 12, left: 32, right: 32, bottom: 12),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -162,7 +160,7 @@ class AccountPage extends StatelessWidget {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 4,
                       blurRadius: 5,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -177,7 +175,7 @@ class AccountPage extends StatelessWidget {
                             backgroundColor: Colors.white,
                             shadowColor: Colors.transparent,
                             alignment: Alignment.centerLeft),
-                        icon: Icon(Icons.delete, color: Colors.black),
+                        icon: const Icon(Icons.delete, color: Colors.black),
                         onPressed: () {
                           _showDeleteAccountDialog(context);
                         },
@@ -200,7 +198,7 @@ class AccountPage extends StatelessWidget {
                             backgroundColor: Colors.white,
                             shadowColor: Colors.transparent,
                             alignment: Alignment.centerLeft),
-                        icon: Icon(Icons.logout, color: Colors.black),
+                        icon: const Icon(Icons.logout, color: Colors.black),
                         onPressed: () {
                           _showLogoutDialog(context);
                         },
@@ -230,27 +228,27 @@ class AccountPage extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(25),
               topRight: Radius.circular(25),
             ),
           ),
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: Icon(Icons.camera_alt),
-                title: Text('Take new photo'),
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Take new photo'),
                 onTap: () {
                   Navigator.pop(context);
                 },
               ),
               ListTile(
-                leading: Icon(Icons.photo_library),
-                title: Text('Choose existing photo'),
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Choose existing photo'),
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -269,16 +267,16 @@ class AccountPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Account'),
+          title: const Text('Delete Account'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Are you sure you want to delete your account?'),
-              SizedBox(height: 20),
+              const Text('Are you sure you want to delete your account?'),
+              const SizedBox(height: 20),
               TextField(
                 controller: passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Enter your password',
                   border: OutlineInputBorder(),
                 ),
@@ -287,24 +285,26 @@ class AccountPage extends StatelessWidget {
           ),
           actions: [
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             TextButton(
-              child: Text('Delete'),
+              child: const Text('Delete'),
               onPressed: () {
                 String password = passwordController.text;
                 if (password.isNotEmpty) {
                   // Proceed with account deletion logic
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Account deleted"),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Account deleted"),
                   ));
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text("Password required"),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Password required"),
                   ));
                 }
               },
@@ -320,21 +320,21 @@ class AccountPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Log Out'),
-          content: Text('Are you sure you want to log out?'),
+          title: const Text('Log Out'),
+          content: const Text('Are you sure you want to log out?'),
           actions: [
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             TextButton(
-              child: Text('Log Out'),
+              child: const Text('Log Out'),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => SignInPage()),
+                  MaterialPageRoute(builder: (context) => const SignInPage()),
                 );
               },
             ),

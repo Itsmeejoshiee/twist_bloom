@@ -15,7 +15,7 @@ class _EditBioPageState extends State<EditBioPage> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('Edit Bio',
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
           ),

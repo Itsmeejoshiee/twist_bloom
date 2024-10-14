@@ -25,6 +25,7 @@ class _LikesPageState extends State<LikesPage> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
+            surfaceTintColor: Colors.transparent,
             backgroundColor: Colors.transparent,
             title: Row(
               children: [
@@ -55,8 +56,7 @@ class _LikesPageState extends State<LikesPage> {
             ],
             elevation: 4, // Shadow for the AppBar
           ),
-          body: Container(
-            child: Stack(
+          body: Stack(
               children: [
                 GridView.builder(
                   padding: const EdgeInsets.all(8.0),
@@ -92,7 +92,6 @@ class _LikesPageState extends State<LikesPage> {
               ],
             ),
         ),
-      ),
     );
   }
 

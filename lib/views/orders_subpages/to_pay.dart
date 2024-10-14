@@ -24,11 +24,11 @@ class ToPayPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildNavigationButton('To Pay', ToPayPage(paidProducts: []), context),
-                  _buildNavigationButton('To Ship', ToShipPage(paidProducts: []), context),
-                  _buildNavigationButton('To Receive', ToReceivePage(shippedProducts: []), context),
-                  _buildNavigationButton('Completed', CompletedPage(completedProducts: []), context),
-                  _buildNavigationButton('To Rate', ToRatePage(completedProducts: []), context),
+                  _buildNavigationButton('To Pay', const ToPayPage(paidProducts: []), context),
+                  _buildNavigationButton('To Ship', const ToShipPage(paidProducts: []), context),
+                  _buildNavigationButton('To Receive', const ToReceivePage(shippedProducts: []), context),
+                  _buildNavigationButton('Completed', const CompletedPage(completedProducts: []), context),
+                  _buildNavigationButton('To Rate', const ToRatePage(completedProducts: []), context),
                 ],
               ),
 

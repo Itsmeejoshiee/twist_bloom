@@ -87,7 +87,7 @@ class ProductSquareCard extends StatelessWidget {
           BoxShadow(
             color: Colors.black.withOpacity(0.2), // Shadow color
             blurRadius: 8.0, // Shadow blur radius
-            offset: Offset(0, 4), // Shadow offset
+            offset: const Offset(0, 4), // Shadow offset
           ),
         ],
         image: DecorationImage(

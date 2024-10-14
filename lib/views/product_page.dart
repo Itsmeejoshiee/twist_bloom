@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/product_ontap.dart';
 import '../widgets/gradient_background.dart';
 import '../views/products_details/product_details.dart';
-import 'account_page.dart';
 
 class AllProductsPage extends StatefulWidget {
   const AllProductsPage({super.key});
@@ -94,20 +93,6 @@ class _AllProductsPageState extends State<AllProductsPage> {
           backgroundColor: Colors.white10,
           title: Row(
             children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.account_circle,
-                  color: Colors.black,
-                  size: 32,
-                ),
-                onPressed: () {
-                  // Navigate to profile page
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const AccountPage()),
-                  );
-                },
-              ),
               const Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(left: 8.0),

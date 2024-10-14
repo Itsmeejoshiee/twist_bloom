@@ -18,7 +18,7 @@ class SettingsPage extends StatelessWidget {
           ),
         ),
         automaticallyImplyLeading: false, // Ensures no default back button
-        actions: [], // Removes action icons (like search)
+        actions: const [], // Removes action icons (like search)
       ),
       body: GradientBackground(
         child: Center(
@@ -34,35 +34,35 @@ class SettingsPage extends StatelessWidget {
                 Flexible( // Use Flexible to handle overflow better
                   child: ListView(
                     shrinkWrap: true, // ListView only uses the space it needs
-                    padding: EdgeInsets.all(8), // spacing around the ListView
+                    padding: const EdgeInsets.all(8), // spacing around the ListView
                     children: [
                       _buildListTile(
                           context,
                           Icons.notifications,
                           'Notification Preference',
-                          NotificationPreferencePage()),
+                          const NotificationPreferencePage()),
                       _buildListTile(
-                          context, Icons.language, 'Language', LanguagePage()),
+                          context, Icons.language, 'Language', const LanguagePage()),
                       _buildListTile(context, Icons.currency_exchange,
-                          'Currency', CurrencyPage()),
+                          'Currency', const CurrencyPage()),
                       _buildListTile(context, Icons.privacy_tip,
-                          'Privacy Settings', PrivacySettingsPage()),
+                          'Privacy Settings', const PrivacySettingsPage()),
                       _buildListTile(context, Icons.security,
-                          'Account Security', SecurityPage()),
+                          'Account Security', const SecurityPage()),
                       _buildListTile(context, Icons.local_shipping,
-                          'Shipping Preferences', ShippingPrefPage()),
+                          'Shipping Preferences', const ShippingPrefPage()),
                       _buildListTile(context, Icons.history, 'Order History',
-                          OrderHistoryPage()),
+                          const OrderHistoryPage()),
                       _buildListTile(
-                          context, Icons.help, 'Help & Support', HelpPage()),
+                          context, Icons.help, 'Help & Support', const HelpPage()),
                       _buildListTile(
-                          context, Icons.info, 'App Version', AppVerPage()),
+                          context, Icons.info, 'App Version', const AppVerPage()),
                       _buildListTile(context, Icons.article,
-                          'Terms & Conditions', TermsAndConditionsPage()),
+                          'Terms & Conditions', const TermsAndConditionsPage()),
                       _buildListTile(
-                          context, Icons.feedback, 'Feedback', FeedBackPage()),
+                          context, Icons.feedback, 'Feedback', const FeedBackPage()),
                       _buildListTile(
-                          context, Icons.sync, 'Data Sync', DataSyncPage()),
+                          context, Icons.sync, 'Data Sync', const DataSyncPage()),
                     ],
                   ),
                 ),

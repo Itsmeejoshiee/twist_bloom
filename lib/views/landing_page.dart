@@ -69,7 +69,7 @@ class _MainScreenState extends State<MainScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AccountPage()),
+                    MaterialPageRoute(builder: (context) => const AccountPage()),
                   );
                 },
               ),
@@ -117,7 +117,7 @@ class ElevatedPromoWidget extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PromoScreen()),
+          MaterialPageRoute(builder: (context) => const PromoScreen()),
         );
       },
       child: Padding(
@@ -258,7 +258,7 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          Text(
+          const Text(
             'LATEST',
             style: TextStyle(
               fontSize: 18,
@@ -285,7 +285,7 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: GridView.builder(
                     padding: EdgeInsets.zero,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 8.0,
                       mainAxisSpacing: 8.0,

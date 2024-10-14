@@ -24,7 +24,7 @@ class _PromoCartPageState extends State<PromoCartPage> {
     return GradientBackground(
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xFFFDFAFA), // Make app bar transparent
+            backgroundColor: const Color(0xFFFDFAFA), // Make app bar transparent
             title: const Text('Basket'),
             elevation: 0,
           ),

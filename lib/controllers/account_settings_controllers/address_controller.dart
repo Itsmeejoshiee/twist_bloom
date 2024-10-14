@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/address_model.dart';
+import '../../models/address_model.dart';
 
 class AddressController {
   final List<AddressModel> _addresses = [];

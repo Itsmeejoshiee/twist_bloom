@@ -6,7 +6,6 @@ import 'orders_subpages/to_pay.dart';
 import 'orders_subpages/to_rate.dart';
 import 'orders_subpages/to_receive.dart';
 import 'orders_subpages/to_ship.dart';
-import 'package:twist_bloom/views/orders_subpages/completed.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
@@ -110,25 +109,25 @@ class OrdersPage extends StatelessWidget {
               _buildNavigationButton(
                 'assets/icon/pay.png',
                 'To Pay',
-                ToPayPage(paidProducts: []),
+                const ToPayPage(paidProducts: []),
                 context,
               ),
               _buildNavigationButton(
                 'assets/icon/ship.png',
                 'To Ship',
-                ToShipPage(paidProducts: []),
+                const ToShipPage(paidProducts: []),
                 context,
               ),
               _buildNavigationButton(
                 'assets/icon/receive.png',
                 'To Receive',
-                ToReceivePage(shippedProducts: []),
+                const ToReceivePage(shippedProducts: []),
                 context,
               ),
               _buildNavigationButton(
                 'assets/icon/rate.png',
                 'To Rate',
-                ToRatePage(completedProducts: []),
+                const ToRatePage(completedProducts: []),
                 context,
               ),
             ],

@@ -5,7 +5,7 @@ import 'edit_name.dart';
 import 'edit_phone_num.dart';
 import 'address_page.dart';
 
-void _showBirthdayPicker(BuildContext context) async { // Birthday pop up
+void _showBirthdayPicker(BuildContext context) async {
   DateTime? selectedDate = await showDatePicker(
     context: context,
     initialDate: DateTime.now(),
@@ -13,7 +13,7 @@ void _showBirthdayPicker(BuildContext context) async { // Birthday pop up
     lastDate: DateTime(2100),
     builder: (BuildContext context, Widget? child) {
       return Theme(
-        data: ThemeData.light(), // You can change to ThemeData.dark() for a dark mode picker
+        data: ThemeData.light(),
         child: child!,
       );
     },
@@ -67,12 +67,12 @@ class PersonalInfoPage extends StatelessWidget {
                     _buildInfoButton(context, 'Name', () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EditNamePage()));
+                          MaterialPageRoute(builder: (context) => const EditNamePage()));
                     }),
                     _buildInfoButton(context, 'Bio', () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EditBioPage()));
+                          MaterialPageRoute(builder: (context) => const EditBioPage()));
                     }),
                     _buildInfoButton(context, 'Gender', () {
                       _showGenderSelect(context);
@@ -105,12 +105,12 @@ class PersonalInfoPage extends StatelessWidget {
                     _buildInfoButton(context, 'Phone', () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => EditPhonePage()));
+                          MaterialPageRoute(builder: (context) => const EditPhonePage()));
                     }),
                     _buildInfoButton(context, 'Address', () {
                       Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AddressPage()));
+                          MaterialPageRoute(builder: (context) => const AddressPage()));
                     }
                     ),
                   ],

@@ -185,7 +185,7 @@ class _PromoStep1Page extends State<PromoStep1Page> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PromoCartPage(selectedProduct: {})),
+                      MaterialPageRoute(builder: (context) => const PromoCartPage(selectedProduct: {})),
                     );
                   },
                   style: ElevatedButton.styleFrom(
@@ -219,11 +219,11 @@ class _PromoStep1Page extends State<PromoStep1Page> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PromoStep2Page()),
+            MaterialPageRoute(builder: (context) => const PromoStep2Page()),
           );
         },
-        child: const Icon(Icons.arrow_forward, color: Colors.white),
         backgroundColor: const Color(0xFFFF92B2),
+        child: const Icon(Icons.arrow_forward, color: Colors.white),
       ),
     );
   }
