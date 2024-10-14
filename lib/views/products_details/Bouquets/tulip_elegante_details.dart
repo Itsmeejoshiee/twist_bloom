@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../../widgets/gradient_background.dart';
 
-class LilyPrettyDetails extends StatefulWidget {
-  const LilyPrettyDetails({super.key});
+class TulipEleganteDetails extends StatefulWidget {
+  const TulipEleganteDetails({super.key});
 
   @override
-  _LilyPrettyDetails createState() => _LilyPrettyDetails();
+  _TulipEleganteDetails createState() => _TulipEleganteDetails();
 }
 
-class _LilyPrettyDetails extends State<LilyPrettyDetails> {
+class _TulipEleganteDetails extends State<TulipEleganteDetails> {
   int quantity = 1;
 
   @override
@@ -23,7 +23,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
             Navigator.pop(context);
           },
         ),
-        title: const Text("Lily Pretty Bouquets"),
+        title: const Text("Tulip Elegante Bouquets"),
       ),
       body: GradientBackground(
         child: Padding(
@@ -35,7 +35,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/icon/product/bouquets/FeaturedProduct1.png',
+                    'assets/icon/product/bouquets/FeaturedProduct2.png',
                     width: 360,
                     height: 350,
                     fit: BoxFit.cover,
@@ -44,14 +44,14 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
               ),
               const SizedBox(height: 16),
               const Text(
-                "Lily Pretty Bouquets",
+                "Tulip Elegante Bouquets",
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
               const Row(
                 children: [
                   Text(
-                    '₱200',
+                    '₱260',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -64,7 +64,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
               const SizedBox(height: 8),
               const Row(
                 children: [
-                  TagWidget("Lily"),
+                  TagWidget("Tulips"),
                   SizedBox(width: 7),
                   TagWidget('Bouquets'),
                   SizedBox(width: 7),

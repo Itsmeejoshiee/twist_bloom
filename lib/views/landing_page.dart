@@ -2,11 +2,12 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'dart:async';
+import '../widgets/product_ontap.dart';
 import 'promo_page.dart';
 import '../widgets/bottom_navbar.dart';
 import '../widgets/search_widget.dart';
-import '../widgets/product.dart';
 import 'principal_classes.dart';
+import 'package:twist_bloom/views/products_details/Bouquets/lily_pretty_details.dart';
 
 void main() {
   runApp(const HomePage());
@@ -257,7 +258,7 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'LATEST',
             style: TextStyle(
               fontSize: 18,
@@ -278,14 +279,13 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
               itemBuilder: (context, pageIndex) {
                 final startIndex = pageIndex * 2;
                 final endIndex =
-                    (startIndex + 2).clamp(0, slideshowProducts.length);
+                (startIndex + 2).clamp(0, slideshowProducts.length);
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: GridView.builder(
                     padding: EdgeInsets.zero,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 8.0,
                       mainAxisSpacing: 8.0,
@@ -300,30 +300,30 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
                         opacity: isCurrentPage ? 1.0 : 0.5,
                         child: isCurrentPage
                             ? Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  color: Colors.transparent,
-                                ),
-                                child: ProductSquareCard(
-                                  imageUrl: product['imageUrl'],
-                                ),
-                              )
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            color: Colors.transparent,
+                          ),
+                          child: ProductSquareCard(
+                            imageUrl: product['imageUrl'],
+                          ),
+                        )
                             : ClipRRect(
+                          borderRadius: BorderRadius.circular(8.0),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(
+                                sigmaX: 5.0, sigmaY: 5.0),
+                            child: Container(
+                              decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: BackdropFilter(
-                                  filter: ImageFilter.blur(
-                                      sigmaX: 5.0, sigmaY: 5.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      color: Colors.black.withOpacity(0.1),
-                                    ),
-                                    child: ProductSquareCard(
-                                      imageUrl: product['imageUrl'],
-                                    ),
-                                  ),
-                                ),
+                                color: Colors.black.withOpacity(0.1),
                               ),
+                              child: ProductSquareCard(
+                                imageUrl: product['imageUrl'],
+                              ),
+                            ),
+                          ),
+                        ),
                       );
                     },
                   ),
@@ -346,27 +346,27 @@ class FeaturedProductsGrid extends StatelessWidget {
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct1.png',
         'title': 'Lily Pretty',
-        'price': 200.0,
+        'price': 19.99,
       },
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct2.png',
         'title': 'Tulip Elegante',
-        'price': 250.0,
+        'price': 29.99,
       },
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct3.png',
-        'title': 'Lavender Dream',
-        'price': 280.0,
+        'title': 'Lavender Lover',
+        'price': 39.99,
       },
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct4.png',
-        'title': 'Sunshine Glory',
-        'price': 200.0,
+        'title': 'Sunshine Wonder',
+        'price': 49.99,
       },
     ];
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 2, 16, 16),
+      padding: const EdgeInsets.fromLTRB(16, 1, 16, 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -391,10 +391,44 @@ class FeaturedProductsGrid extends StatelessWidget {
               childAspectRatio: 3.16 / 4,
             ),
             itemBuilder: (context, index) {
-              return ProductCard(
-                imageUrl: products[index]['imageUrl'],
-                title: products[index]['title'],
-                price: products[index]['price'],
+              final product = products[index];
+
+              return ProductCardOnTap(
+                imageUrl: product['imageUrl'],
+                title: product['title'],
+                price: product['price'],
+                onTap: () {
+                  // Define different navigation based on index or product property
+                  if (index == 0) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LilyPrettyDetails(), // Navigate to page 1
+                      ),
+                    );
+                  } else if (index == 1) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LilyPrettyDetails(), // Navigate to page 2
+                      ),
+                    );
+                  } else if (index == 2) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LilyPrettyDetails(), // Navigate to page 2
+                      ),
+                    );
+                  }  else if (product['title'] == 'Product 3') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const LilyPrettyDetails(), // Navigate to page 3
+                      ),
+                    );
+                  }
+                },
               );
             },
           ),

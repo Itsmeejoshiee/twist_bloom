@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../../widgets/gradient_background.dart';
 
-class LilyPrettyDetails extends StatefulWidget {
-  const LilyPrettyDetails({super.key});
+class SunshineWonderDetails extends StatefulWidget {
+  const SunshineWonderDetails({super.key});
 
   @override
-  _LilyPrettyDetails createState() => _LilyPrettyDetails();
+  _SunshineWonderDetails createState() => _SunshineWonderDetails();
 }
 
-class _LilyPrettyDetails extends State<LilyPrettyDetails> {
+class _SunshineWonderDetails extends State<SunshineWonderDetails> {
   int quantity = 1;
 
   @override
@@ -23,7 +23,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
             Navigator.pop(context);
           },
         ),
-        title: const Text("Lily Pretty Bouquets"),
+        title: const Text("Sunshine Wonder Bouquets"),
       ),
       body: GradientBackground(
         child: Padding(
@@ -35,7 +35,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/icon/product/bouquets/FeaturedProduct1.png',
+                    'assets/icon/product/bouquets/FeaturedProduct4.png',
                     width: 360,
                     height: 350,
                     fit: BoxFit.cover,
@@ -44,7 +44,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
               ),
               const SizedBox(height: 16),
               const Text(
-                "Lily Pretty Bouquets",
+                "Sunshine Wonder Bouquets",
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
@@ -64,7 +64,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
               const SizedBox(height: 8),
               const Row(
                 children: [
-                  TagWidget("Lily"),
+                  TagWidget("Sunflower"),
                   SizedBox(width: 7),
                   TagWidget('Bouquets'),
                   SizedBox(width: 7),

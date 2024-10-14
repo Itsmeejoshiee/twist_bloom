@@ -3,7 +3,6 @@ import 'package:twist_bloom/views/products_details/Fillers/baby_breath_details.d
 import 'package:twist_bloom/views/products_details/Fillers/eucalyptus_details.dart';
 import 'package:twist_bloom/views/products_details/Fillers/leather_fern_details.dart';
 import 'package:twist_bloom/views/products_details/Fillers/wax_flower_details.dart';
-import 'package:twist_bloom/widgets/product.dart';
 import '../../widgets/product_ontap.dart';
 import '../products_details/Fillers/lavender_details.dart';
 import 'promo_step3_page.dart';
@@ -41,7 +40,7 @@ class _PromoStep2Page extends State<PromoStep2Page> {
     },
     {
       'imageUrl': 'assets/icon/product/fillers/waxflower.png',
-      'title': 'Waxflower',
+      'title': 'Wax Flower',
       'price': 35.0,
     },
   ];
@@ -165,6 +164,11 @@ class _PromoStep2Page extends State<PromoStep2Page> {
                       },
                     ),
                   ),
+                  //PAAYOS NALANG NETO ETO YUNG CONTAINER NA PARANG LINE SA TAASN NG CHECK BASKET BUTTON
+                  const Opacity(
+                    opacity: 0.0,  // Makes it invisible
+                    child: SizedBox(height: 70.0),
+                  )
                 ],
               ),
             ),

@@ -168,6 +168,10 @@ class _PromoStep1Page extends State<PromoStep1Page> {
                       },
                     ),
                   ),
+                  const Opacity(
+                    opacity: 0.0,  // Makes it invisible
+                    child: SizedBox(height: 70.0),
+                  )
                 ],
               ),
             ),

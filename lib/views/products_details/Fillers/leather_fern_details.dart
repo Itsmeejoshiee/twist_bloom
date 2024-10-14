@@ -52,7 +52,7 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/icon/product/fillers/leather_ern.png',
+                    'assets/icon/product/fillers/leather_fern.png',
                     width: 360,
                     height: 350,
                     fit: BoxFit.cover,
