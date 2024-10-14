@@ -9,10 +9,14 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
-      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Text('Settings'),
+        backgroundColor: const Color(0xFFFDFAFA), // Make app bar transparent
+        title: const Text('Settings',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         automaticallyImplyLeading: false, // Ensures no default back button
         actions: [], // Removes action icons (like search)
       ),

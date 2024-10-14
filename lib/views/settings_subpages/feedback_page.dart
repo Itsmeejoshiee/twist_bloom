@@ -23,23 +23,30 @@ class FeedBackPage extends StatelessWidget {
           elevation: 0,
         ),
         body: GradientBackground(
-          child: Center(
-            child: Card(
-              margin: const EdgeInsets.all(10),
-              elevation: 4, // To give shadow effect
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10), // Rounded corners
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ListTile(
-                    title: const Text('Feedback'),
-                    subtitle: TextFormField(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: kToolbarHeight + 30), // Add space for AppBar height and extra padding
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Card(
+                  margin: const EdgeInsets.all(10),
+                  elevation: 4, // To give shadow effect
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
                   ),
-                ],
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ListTile(
+                        title: const Text('Feedback'),
+                        subtitle: TextFormField(),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

@@ -17,87 +17,53 @@ class MessagesAndNotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(-0.4, 1),
-            end: Alignment(0.4, -1),
-            colors: [
-              Color.fromRGBO(224, 209, 158, 0.14),
-              Color.fromRGBO(255, 252, 237, 1.0)
-            ],
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 76),
-              Row(
-                children: [
-                  const SizedBox(height: 30),
-                  IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-
-                    },
-                  ),
-                  const SizedBox(width: 3),
-                  const Text(
-                    'Messages & Notifications',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text(
-                      'Notifications:',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur'),
-                    const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur'),
-                    const SizedBox(height: 20),
-                    const Text(
-                      'Messages:',
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 8),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const MessageScreen()),
-                        );
-                      },
-                      child: const MessageBubble(
-                        content: 'Lorem ipsum dolor amet, consectetur',
-                        hasIcon: true,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const MessageScreen()),
-                        );
-                      },
-                      child: const MessageBubble(
-                        content: 'Lorem ipsum dolor amet, consectetur',
-                        hasIcon: true,
-                      ),
-                    ),
-                  ],
+      backgroundColor: const Color(0xFFFFFCEF),  // Match background color
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 60),
+            Row(
+              children: [
+                const SizedBox(width: 8),
+                const Text(
+                  'Messages & Notification',
+                  style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
                 ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Notifications:',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            // Example Notification bubbles
+            const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
+            const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
+            const SizedBox(height: 20),
+            const Text(
+              'Messages:',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            // Messages section with profile avatars
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MessageScreen()),
+                );
+              },
+              child: const MessageBubble(
+                content: 'Lorem ipsum dolor amet, consectetur',
+                hasAvatar: true,
+                avatarPath: 'assets/images/avatar1.png',
+                title: 'Twist & Bloom',
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -106,26 +72,61 @@ class MessagesAndNotificationsScreen extends StatelessWidget {
 
 class MessageBubble extends StatelessWidget {
   final String content;
-  final bool hasIcon;
+  final bool hasAvatar;
+  final String? avatarPath;
+  final String? title;
+  final bool isNotification;
 
-  const MessageBubble({super.key, required this.content, this.hasIcon = false});
+  const MessageBubble({
+    super.key,
+    required this.content,
+    this.hasAvatar = false,
+    this.avatarPath,
+    this.title,
+    this.isNotification = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(8),
+        color: isNotification ? Colors.grey.shade200 : Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 4,
+            offset: const Offset(2, 2),
+          ),
+        ],
       ),
       child: Row(
         children: [
-          if (hasIcon) ...[
-            const Icon(Icons.message, color: Colors.black54),
-            const SizedBox(width: 8),
+          if (hasAvatar && avatarPath != null) ...[
+            CircleAvatar(
+              backgroundImage: AssetImage(avatarPath!),
+              radius: 24,
+            ),
+            const SizedBox(width: 12),
           ],
-          Expanded(child: Text(content, style: const TextStyle(fontSize: 16))),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (title != null)
+                  Text(
+                    title!,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                Text(content, style: const TextStyle(fontSize: 16)),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -156,9 +157,22 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Message'),
+        backgroundColor: const Color(0xFFFF92B2),
+        elevation: 0,
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: const AssetImage('assets/images/avatar1.png'), // Avatar image
+            ),
+            const SizedBox(width: 12),
+            const Text(
+              'Twist & Bloom',
+              style: TextStyle(color: Colors.black),
+            ),
+          ],
+        ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -169,12 +183,11 @@ class _MessageScreenState extends State<MessageScreen> {
           const SizedBox(height: 20),
           Expanded(
             child: ListView.builder(
-              reverse: true, 
+              reverse: true, // Show new messages at the bottom
               itemCount: _messages.length,
               itemBuilder: (context, index) {
                 return MessageBubble(
                   content: _messages[_messages.length - 1 - index],
-                  hasIcon: false, 
                 );
               },
             ),
@@ -183,6 +196,12 @@ class _MessageScreenState extends State<MessageScreen> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
+                IconButton(
+                  icon: const Icon(Icons.camera_alt, color: Colors.grey),
+                  onPressed: () {
+                    // Implement camera action
+                  },
+                ),
                 Expanded(
                   child: TextField(
                     controller: _controller,
@@ -198,7 +217,7 @@ class _MessageScreenState extends State<MessageScreen> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.send),
+                  icon: const Icon(Icons.send, color: Colors.pink),
                   onPressed: _sendMessage,
                 ),
               ],
@@ -209,4 +228,3 @@ class _MessageScreenState extends State<MessageScreen> {
     );
   }
 }
-

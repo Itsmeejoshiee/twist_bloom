@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/views/products_details/Fillers/lavender_details.dart';
 import 'package:twist_bloom/widgets/product_ontap.dart';
 import '../widgets/gradient_background.dart';
 import '../views/products_details/product_details.dart';

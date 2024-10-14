@@ -37,28 +37,35 @@ class _DataSyncPageState extends State<DataSyncPage> {
           elevation: 0,
         ),
         body: GradientBackground(
-          child: Center(
-            child: Card(
-              margin: const EdgeInsets.all(10),
-              elevation: 4, // To give shadow effect
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10), // Rounded corners
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ListTile(
-                    title: const Text('Auto Sync Data'),
-                    subtitle: const Text('Automatically sync from your old device'),
-                    trailing: Switch(
-                      onChanged: _toggleAutoSync,
-                      value: _isAutoSync,
-                      activeColor: Colors.green,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: kToolbarHeight + 30), // Add space for AppBar height and extra padding
+              Padding(
+              padding: const EdgeInsets.all(16.0),
+                child: Card(
+                    margin: const EdgeInsets.all(10),
+                    elevation: 4, // To give shadow effect
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10), // Rounded corners
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ListTile(
+                          title: const Text('Auto Sync Data'),
+                          subtitle: const Text('Automatically sync from your old device'),
+                          trailing: Switch(
+                            onChanged: _toggleAutoSync,
+                            value: _isAutoSync,
+                            activeColor: Colors.green,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
               ),
-            ),
+            ],
           ),
         ),
       ),

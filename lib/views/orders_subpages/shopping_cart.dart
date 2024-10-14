@@ -12,19 +12,18 @@ class _CartPageState extends State<CartPage> {
   bool _isEditing = false;
   List<bool> _selectedProducts = List.generate(10, (index) => false);
   List<Map<String, dynamic>> _products = [
-    {'image': 'assets/icon/product/product1.jpg', 'title': 'Tulip', 'price': 65.0, 'variations': ['Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White']},
-    {'image': 'assets/icon/product/product2.jpg', 'title': 'Sunflower', 'price': 75.0, 'variations': ['Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White']},
-    {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 3', 'price': 260.0, 'variations': ['Not applicable']},
+    {'image': 'assets/icon/product/flowers/tulip.png', 'title': 'Tulip', 'price': 65.0, 'variations': ['Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White']},
+    {'image': 'assets/icon/product/flowers/sunflower.png', 'title': 'Sunflower', 'price': 75.0, 'variations': ['Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White']},
+    {'image': 'assets/icon/product/bouquets/FeaturedProduct2.png', 'title': 'Tulip Elegante', 'price': 260.0, 'variations': ['Not applicable']},
   ];
   List<int> _quantities = List.generate(10, (index) => 1);
 
   @override
   Widget build(BuildContext context) {
-    return GradientBackground(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           surfaceTintColor: Colors.transparent,
-          backgroundColor: const Color(0xFFFFFCED),
+          backgroundColor: const Color(0xFFFDFAFA),
           title: const Text('Shopping Cart'),
           actions: [
             TextButton(
@@ -41,17 +40,7 @@ class _CartPageState extends State<CartPage> {
           ],
           elevation: 4,
         ),
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment(-0.4, 1),
-              end: Alignment(0.4, -1),
-              colors: [
-                Color.fromRGBO(224, 209, 158, 0.14),
-                Color.fromRGBO(255, 252, 237, 1.0),
-              ],
-            ),
-          ),
+        body: GradientBackground(
           child: Stack(
             children: [
               Expanded(
@@ -143,7 +132,6 @@ class _CartPageState extends State<CartPage> {
             ],
           ),
         ),
-      ),
     );
   }
 
