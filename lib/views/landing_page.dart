@@ -256,6 +256,7 @@ class _LatestProductsSlideshowState extends State<LatestProductsSlideshow> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 10),
           const Text(
             'LATEST',
             style: TextStyle(
