@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ProductCardOnTap extends StatelessWidget {
+class ProductCardOnTap extends StatefulWidget {
   final String imageUrl;
   final String title;
   final double price;
@@ -15,9 +15,22 @@ class ProductCardOnTap extends StatelessWidget {
   });
 
   @override
+  _ProductCardOnTapState createState() => _ProductCardOnTapState();
+}
+
+class _ProductCardOnTapState extends State<ProductCardOnTap> {
+  bool isLiked = false; // Track whether the product is liked
+
+  void toggleLike() {
+    setState(() {
+      isLiked = !isLiked; // Toggle the like state
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap, // Calls the function when tapped
+      onTap: widget.onTap, // Calls the function when tapped
       child: Card(
         elevation: 3, // Slight elevation as in the original design
         shape: RoundedRectangleBorder(
@@ -27,17 +40,32 @@ class ProductCardOnTap extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity, // Ensures the image takes up full width
-              height: 170, // Fixed height to avoid overflow
-              padding: const EdgeInsets.all(8.0), // Padding around the image
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(15.0), // Rounded corners for the image
-                child: Image.asset(
-                  imageUrl,
-                  fit: BoxFit.cover, // Ensures the image covers the container
+            Stack(
+              children: [
+                Container(
+                  width: double.infinity, // Ensures the image takes up full width
+                  height: 170, // Fixed height to avoid overflow
+                  padding: const EdgeInsets.all(8.0), // Padding around the image
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15.0), // Rounded corners for the image
+                    child: Image.asset(
+                      widget.imageUrl,
+                      fit: BoxFit.cover, // Ensures the image covers the container
+                    ),
+                  ),
                 ),
-              ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: IconButton(
+                    icon: Icon(
+                      isLiked ? Icons.favorite : Icons.favorite_border,
+                      color: isLiked ? Colors.red : Colors.black,
+                    ),
+                    onPressed: toggleLike, // Toggle the like state when pressed
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: const EdgeInsets.all(8.0), // Consistent padding for text content
@@ -45,7 +73,7 @@ class ProductCardOnTap extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    title,
+                    widget.title,
                     style: const TextStyle(
                       fontSize: 12, // Smaller font size from the original design
                     ),
@@ -53,7 +81,7 @@ class ProductCardOnTap extends StatelessWidget {
                   ),
                   const SizedBox(height: 4), // Spacing between title and price
                   Text(
-                    '\$${price.toStringAsFixed(2)}', // Fixed dollar sign format
+                    '\$${widget.price.toStringAsFixed(2)}', // Fixed dollar sign format
                     style: const TextStyle(
                       fontSize: 12, // Smaller font for price to match the design
                       color: Colors.green, // Green color for the price
