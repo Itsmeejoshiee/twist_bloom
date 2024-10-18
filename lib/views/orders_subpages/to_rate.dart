@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/views/orders_subpages/completed.dart';
 import 'package:twist_bloom/views/orders_subpages/to_pay.dart';
-import 'package:twist_bloom/views/orders_subpages/to_receive.dart';
 import 'package:twist_bloom/views/orders_subpages/to_ship.dart';
+<<<<<<< Updated upstream
 import 'package:twist_bloom/widgets/gradient_background.dart';
+=======
+import 'package:twist_bloom/views/orders_subpages/to_receive.dart';
+>>>>>>> Stashed changes
 
 class ToRatePage extends StatelessWidget {
+  final List<Map<String, dynamic>> ratedProducts;
+  final Function(Map<String, dynamic>) onRated;
   final List<Map<String, dynamic>> completedProducts;
 
-  const ToRatePage({super.key, required this.completedProducts});
+  const ToRatePage({super.key, required this.ratedProducts, required this.onRated, required this.completedProducts});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +26,7 @@ class ToRatePage extends StatelessWidget {
       ),
       body: Column(
         children: [
+<<<<<<< Updated upstream
           
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -33,33 +39,68 @@ class ToRatePage extends StatelessWidget {
             ],
           ),
          
+=======
+          _buildNavigationBar(context),
+>>>>>>> Stashed changes
           Expanded(
-            child: completedProducts.isNotEmpty
+            child: ratedProducts.isNotEmpty
                 ? ListView.builder(
-                    itemCount: completedProducts.length,
+                    itemCount: ratedProducts.length,
                     itemBuilder: (context, index) {
                       return _ProductCard(
-                        image: completedProducts[index]['image'],
-                        title: completedProducts[index]['title'],
-                        price: completedProducts[index]['price'],
+                        product: ratedProducts[index],
+                        onActionPressed: () {
+                          onRated(ratedProducts[index]);
+                          // Here you can implement additional logic if needed
+                        },
+                        actionLabel: 'Rate',
                       );
                     },
                   )
+<<<<<<< Updated upstream
                 : const Center(
                 child: Text('No products to rate.')),
+=======
+                : const Center(child: Text('No products to rate.')),
+>>>>>>> Stashed changes
           ),
         ],
       ),),
     );
   }
 
-  Widget _buildNavigationButton(String label, Widget page, BuildContext context) {
+  Widget _buildNavigationBar(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        _buildNavigationButton('To Pay', () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ToPayPage(paidProducts: [], onPaid: (product) {}),
+          ));
+        }),
+        _buildNavigationButton('To Ship', () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ToShipPage(paidProducts: [], onShipped: (product) {}),
+          ));
+        }),
+        _buildNavigationButton('To Receive', () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ToReceivePage(shippedProducts: [], onOrderReceived: (product) {}),
+          ));
+        }),
+        _buildNavigationButton('Completed', () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CompletedPage(completedProducts: [], onRate: (product) {}),
+          ));
+        }),
+        _buildNavigationButton('To Rate', () => Navigator.of(context).popUntil((route) => route.isFirst)),
+      ],
+    );
+  }
+
+  Widget _buildNavigationButton(String label, VoidCallback onPressed) {
     return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => page,
-        ));
-      },
+      onTap: onPressed,
       child: Column(
         children: [
           Text(
@@ -72,16 +113,15 @@ class ToRatePage extends StatelessWidget {
   }
 }
 
-
 class _ProductCard extends StatelessWidget {
-  final String image;
-  final String title;
-  final double price;
+  final Map<String, dynamic> product;
+  final VoidCallback onActionPressed;
+  final String actionLabel;
 
   const _ProductCard({
-    required this.image,
-    required this.title,
-    required this.price,
+    required this.product,
+    required this.onActionPressed,
+    required this.actionLabel,
   });
 
   @override
@@ -90,10 +130,14 @@ class _ProductCard extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            child: Image.asset(image, fit: BoxFit.contain),
+            child: Image.asset(product['image'], fit: BoxFit.contain),
           ),
-          Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-          Text('\$$price'),
+          Text(product['title'], style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text('\$${product['price']}'),
+          ElevatedButton(
+            onPressed: onActionPressed,
+            child: Text(actionLabel),
+          ),
         ],
       ),
     );

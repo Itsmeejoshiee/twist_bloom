@@ -30,8 +30,25 @@ class OrdersPage extends StatelessWidget {
               ),
             ),
           ),
+<<<<<<< Updated upstream
           // Add the bottom navigation bar here if it is part of the gradient
         ],
+=======
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.fromLTRB(16, 64, 16, 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildMyActivitiesSection(context),
+              _buildSeparator(),
+              _buildMyPurchasesSection(context),
+              _buildSeparator(),
+              _buildMyPreOrdersSection(context),  // Pass context to this method
+            ],
+          ),
+        ),
+>>>>>>> Stashed changes
       ),
     );
   }
@@ -51,6 +68,155 @@ class OrdersPage extends StatelessWidget {
   Widget _buildMyActivitiesSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
+<<<<<<< Updated upstream
+=======
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'MY ACTIVITIES',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildCustomIconButton(
+                'assets/icon/cart.png',
+                'My Shipping Cart',
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CartPage()),
+                  );
+                },
+              ),
+              _buildCustomIconButton(
+                'assets/icon/likes.png',
+                'My Likes',
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LikesPage()),
+                  );
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMyPurchasesSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'MY PURCHASES',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              _buildNavigationButton(
+                'assets/icon/pay.png',
+                'To Pay',
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ToPayPage(
+                        paidProducts: [],
+                        onPaid: (product) {},
+                      ),
+                    ),
+                  );
+                },
+                context,
+              ),
+              _buildNavigationButton(
+                'assets/icon/ship.png',
+                'To Ship',
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ToShipPage(
+                        paidProducts: [],
+                        onShipped: (product) {},
+                      ),
+                    ),
+                  );
+                },
+                context,
+              ),
+              _buildNavigationButton(
+                'assets/icon/receive.png',
+                'To Receive',
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ToReceivePage(
+                        shippedProducts: [],
+                        onOrderReceived: (product) {},
+                      ),
+                    ),
+                  );
+                },
+                context,
+              ),
+              _buildNavigationButton(
+                'assets/icon/rate.png',
+                'To Rate',
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ToRatePage(
+                        ratedProducts: [],
+                        onRated: (product) {},
+                        completedProducts: [],
+                      ),
+                    ),
+                  );
+                },
+                context,
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 165.0),
+                  child: TextButton(
+                    onPressed: () {},
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.blue,
+                      textStyle: const TextStyle(fontSize: 14),
+                    ),
+                    child: const Text('View Purchase History  >'),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavigationButton(
+      String imagePath, String label, Function onTap, BuildContext context) {
+    return GestureDetector(
+      onTap: () => onTap(),
+>>>>>>> Stashed changes
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -91,14 +257,21 @@ class OrdersPage extends StatelessWidget {
     );
   }
 
+<<<<<<< Updated upstream
   // My Purchases section
   Widget _buildMyPurchasesSection(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(16,0,16,0),
+=======
+  Widget _buildMyPreOrdersSection(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+>>>>>>> Stashed changes
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
+<<<<<<< Updated upstream
             'MY PURCHASES',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
@@ -155,13 +328,28 @@ class OrdersPage extends StatelessWidget {
               ),
             ],
           ),
+=======
+            'MY PRE-ORDERS',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 16),
+          _buildPreOrderProduct(context), // Pass context here
+>>>>>>> Stashed changes
         ],
       ),
     );
   }
 
+<<<<<<< Updated upstream
   // Custom icon button
   Widget _buildCustomIconButton(String imagePath, String label, VoidCallback onPressed) {
+=======
+  Widget _buildCustomIconButton(
+      String imagePath,
+      String label,
+      VoidCallback onPressed,
+      ) {
+>>>>>>> Stashed changes
     return OutlinedButton.icon(
       onPressed: onPressed,
       icon: _buildResizedImage(imagePath, 24, 24),
@@ -186,6 +374,7 @@ class OrdersPage extends StatelessWidget {
     );
   }
 
+<<<<<<< Updated upstream
   // Method for building individual navigation buttons
   Widget _buildNavigationButton(String imagePath, String label, Widget page, BuildContext context) {
     return GestureDetector(
@@ -225,6 +414,9 @@ class OrdersPage extends StatelessWidget {
 
   // Displaying a single pre-ordered product
   Widget _buildPreOrderProduct() {
+=======
+  Widget _buildPreOrderProduct(BuildContext context) {
+>>>>>>> Stashed changes
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: const Color(0xFFFF92B2).withOpacity(0.35),
@@ -281,13 +473,31 @@ class OrdersPage extends StatelessWidget {
               width: 80,
               height: 21,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Navigate to ToShipPage when 'Confirm' is clicked
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ToShipPage(
+                        paidProducts: [],
+                        onShipped: (product) {},
+                      ),
+                    ),
+                  );
+                },
                 style: ButtonStyle(
+<<<<<<< Updated upstream
                   backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
                   foregroundColor:
                   WidgetStateProperty.all<Color>(const Color(0xFFFF92B2)),
                   elevation: WidgetStateProperty.all<double>(0),
                   shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+=======
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  foregroundColor: MaterialStateProperty.all<Color>(const Color(0xFFFF92B2)),
+                  elevation: MaterialStateProperty.all<double>(0),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+>>>>>>> Stashed changes
                     RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
                   ),
