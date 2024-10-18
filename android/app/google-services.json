@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1075362036033",
+    "project_id": "twist-bloom",
+    "storage_bucket": "twist-bloom.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075362036033:android:d02ad38b923065130b89c0",
+        "android_client_info": {
+          "package_name": "com.example.twist_bloom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075362036033-kel4u158epgf0vlf5t96d8opgi4s19vt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.twist_bloom",
+            "certificate_hash": "0c759cf7124c0198fbafdc85d3c01b3b8f717b64"
+          }
+        },
+        {
+          "client_id": "1075362036033-slgvvt662h1kl51m6akarp4gm7h5cjpp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB3drj6XDUO2fXYsGq-H_nUnkmGkhTmnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075362036033-slgvvt662h1kl51m6akarp4gm7h5cjpp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

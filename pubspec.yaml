@@ -1,0 +1,56 @@
+name: twist_bloom
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '^3.4.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_native_splash: ^2.4.0
+  timeline_tile: ^2.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/TwistBloom_logo.png
+    - assets/promo_background.png
+    - assets/icon/google.png
+    - assets/icon/
+    - assets/icon/product/
+    - assets/icon/product/accents/
+    - assets/icon/product/fillers/
+    - assets/icon/product/flowers/
+    - assets/icon/product/ribbons/
+    - assets/icon/product/bouquets/
+    - assets/icon/product/wrappers/
+    - assets/icon/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins/Poppins-Italic.ttf
+          style: italic
+    
+    - family: Arimo
+      fonts:
+        - asset: assets/fonts/Arimo/static/Arimo-Regular.ttf
+
+flutter_native_splash:
+  android: true
+  ios: true
+  web: false
+
+  background_image: "assets/splash_background.png"
+  image: "assets/TwistBloom_logo.png"
