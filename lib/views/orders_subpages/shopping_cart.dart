@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({Key? key}) : super(key: key);
+  const CartPage({super.key});
 
   @override
   _CartPageState createState() => _CartPageState();
@@ -11,7 +11,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   bool _isEditing = false;
   List<bool> _selectedProducts = List.generate(10, (index) => false);
-  List<Map<String, dynamic>> _products = [
+  final List<Map<String, dynamic>> _products = [
     {'image': 'assets/icon/product/flowers/tulip.png', 'title': 'Tulip', 'price': 65.0, 'variations': ['Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White']},
     {'image': 'assets/icon/product/flowers/sunflower.png', 'title': 'Sunflower', 'price': 75.0, 'variations': ['Red', 'Yellow', 'Purple', 'Fuschia', 'Orange', 'Baby Blue', 'Violet', 'Pink', 'Golden', 'Cobalt', 'Indigo', 'White']},
     {'image': 'assets/icon/product/bouquets/FeaturedProduct2.png', 'title': 'Tulip Elegante', 'price': 260.0, 'variations': ['Not applicable']},
@@ -21,117 +21,117 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          surfaceTintColor: Colors.transparent,
-          backgroundColor: const Color(0xFFFDFAFA),
-          title: const Text('Shopping Cart'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _isEditing = !_isEditing;
-                });
-              },
-              child: Text(
-                _isEditing ? 'Done' : 'Edit',
-                style: const TextStyle(color: Color(0xFFFF92B2)),
+      appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
+        backgroundColor: const Color(0xFFFDFAFA),
+        title: const Text('Shopping Cart'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _isEditing = !_isEditing;
+              });
+            },
+            child: Text(
+              _isEditing ? 'Done' : 'Edit',
+              style: const TextStyle(color: Color(0xFFFF92B2)),
+            ),
+          ),
+        ],
+        elevation: 4,
+      ),
+      body: GradientBackground(
+        child: Stack(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                itemCount: _products.length,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          if (_isEditing)
+                            Checkbox(
+                              value: _selectedProducts[index],
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  _selectedProducts[index] = value ?? false;
+                                });
+                              },
+                            ),
+                          Image.asset(
+                            _products[index]['image'],
+                            width: 80,
+                            height: 80,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  _products[index]['title'],
+                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                ),
+                                DropdownButton<String>(
+                                  value: _products[index]['variations'].first,
+                                  onChanged: (String? newValue) {
+                                    // Handle variation change
+                                  },
+                                  items: _products[index]['variations']
+                                      .map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                                ),
+                                Text(
+                                  '\$${_products[index]['price']}',
+                                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (!_isEditing)
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.remove),
+                                  onPressed: () {
+                                    setState(() {
+                                      if (_quantities[index] > 1) {
+                                        _quantities[index]--;
+                                      }
+                                    });
+                                  },
+                                ),
+                                Text('${_quantities[index]}'),
+                                IconButton(
+                                  icon: const Icon(Icons.add),
+                                  onPressed: () {
+                                    setState(() {
+                                      _quantities[index]++;
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
+                      const Divider(thickness: 1, color: Colors.grey),
+                    ],
+                  );
+                },
               ),
             ),
+            if (_isEditing) _buildEditingNavBar(),
+            if (!_isEditing) _buildCheckoutNavBar(),
           ],
-          elevation: 4,
         ),
-        body: GradientBackground(
-          child: Stack(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.all(8.0),
-                  itemCount: _products.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        Row(
-                          children: [
-                            if (_isEditing)
-                              Checkbox(
-                                value: _selectedProducts[index],
-                                onChanged: (bool? value) {
-                                  setState(() {
-                                    _selectedProducts[index] = value ?? false;
-                                  });
-                                },
-                              ),
-                            Image.asset(
-                              _products[index]['image'],
-                              width: 80,
-                              height: 80,
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    _products[index]['title'],
-                                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                  ),
-                                  DropdownButton<String>(
-                                    value: _products[index]['variations'].first,
-                                    onChanged: (String? newValue) {
-                                      // Handle variation change
-                                    },
-                                    items: _products[index]['variations']
-                                        .map<DropdownMenuItem<String>>((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                  ),
-                                  Text(
-                                    '\$${_products[index]['price']}',
-                                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            if (!_isEditing)
-                              Row(
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(Icons.remove),
-                                    onPressed: () {
-                                      setState(() {
-                                        if (_quantities[index] > 1) {
-                                          _quantities[index]--;
-                                        }
-                                      });
-                                    },
-                                  ),
-                                  Text('${_quantities[index]}'),
-                                  IconButton(
-                                    icon: const Icon(Icons.add),
-                                    onPressed: () {
-                                      setState(() {
-                                        _quantities[index]++;
-                                      });
-                                    },
-                                  ),
-                                ],
-                              ),
-                          ],
-                        ),
-                        const Divider(thickness: 1, color: Colors.grey),
-                      ],
-                    );
-                  },
-                ),
-              ),
-              if (_isEditing) _buildEditingNavBar(),
-              if (!_isEditing) _buildCheckoutNavBar(),
-            ],
-          ),
-        ),
+      ),
     );
   }
 

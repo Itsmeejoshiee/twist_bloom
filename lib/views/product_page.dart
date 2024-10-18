@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/views/products_details/Bouquets/lavender_lover_details.dart';
+import 'package:twist_bloom/views/products_details/Bouquets/lily_pretty_details.dart';
+import 'package:twist_bloom/views/products_details/Bouquets/sunshine_wonder_details.dart';
+import 'package:twist_bloom/views/products_details/Bouquets/tulip_elegante_details.dart';
 import 'package:twist_bloom/widgets/product_ontap.dart';
 import '../widgets/gradient_background.dart';
 import '../views/products_details/product_details.dart';
@@ -66,6 +70,26 @@ class _AllProductsPageState extends State<AllProductsPage> {
       'imageUrl': 'assets/icon/product/fillers/waxflower.png',
       'title': 'Wax Flower',
       'price': 35.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct1.png',
+      'title': 'Lily Pretty',
+      'price': 200.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct2.png',
+      'title': 'Tulip Elegante',
+      'price': 250.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct3.png',
+      'title': 'Lavender Lover',
+      'price': 280.0,
+    },
+    {
+      'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct4.png',
+      'title': 'Sunshine Wonder',
+      'price': 200.0,
     },
   ];
 
@@ -225,6 +249,30 @@ class _AllProductsPageState extends State<AllProductsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => const WaxFlowerDetails()),
+                            );
+                            break;
+                          case 'Lily Pretty':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LilyPrettyDetails()),
+                            );
+                            break;
+                          case 'Tulip Elegante':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const TulipEleganteDetails()),
+                            );
+                            break;
+                          case 'Lavender Lover':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const LavenderLoverDetails()),
+                            );
+                            break;
+                          case 'Sunshine Wonder':
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const SunshineWonderDetails()),
                             );
                             break;
                           default:

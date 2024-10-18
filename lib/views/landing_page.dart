@@ -1,5 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/views/products_details/Bouquets/lavender_lover_details.dart';
+import 'package:twist_bloom/views/products_details/Bouquets/sunshine_wonder_details.dart';
+import 'package:twist_bloom/views/products_details/Bouquets/tulip_elegante_details.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'dart:async';
 import '../widgets/product_ontap.dart';
@@ -346,22 +349,22 @@ class FeaturedProductsGrid extends StatelessWidget {
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct1.png',
         'title': 'Lily Pretty',
-        'price': 19.99,
+        'price': 200.0,
       },
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct2.png',
         'title': 'Tulip Elegante',
-        'price': 29.99,
+        'price': 250.0,
       },
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct3.png',
         'title': 'Lavender Lover',
-        'price': 39.99,
+        'price': 280.0,
       },
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct4.png',
         'title': 'Sunshine Wonder',
-        'price': 49.99,
+        'price': 200.0,
       },
     ];
 
@@ -410,21 +413,21 @@ class FeaturedProductsGrid extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LilyPrettyDetails(), // Navigate to page 2
+                        builder: (context) => const TulipEleganteDetails(), // Navigate to page 2
                       ),
                     );
                   } else if (index == 2) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LilyPrettyDetails(), // Navigate to page 2
+                        builder: (context) => const LavenderLoverDetails(), // Navigate to page 3
                       ),
                     );
-                  }  else if (product['title'] == 'Product 3') {
+                  }  else if (index == 3) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LilyPrettyDetails(), // Navigate to page 3
+                        builder: (context) => const SunshineWonderDetails(), // Navigate to page 4
                       ),
                     );
                   }
