@@ -59,7 +59,7 @@ class _SignInPageState extends State<SignInPage> {
                             height: 40,
                           ),
                           onPressed: () {
-//Dito yung sa google pati wala pa icon ng google paking shit walang google icon yung paking flutter
+
                           },
                         ),
                         SizedBox(width: 16),
