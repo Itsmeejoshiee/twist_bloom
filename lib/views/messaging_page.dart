@@ -23,7 +23,7 @@ class MessagesAndNotificationsScreen extends StatefulWidget {
 }
 
 class _MessagesAndNotificationsScreenState extends State<MessagesAndNotificationsScreen> {
-  final DatabaseReference _database = FirebaseDatabase.instance.ref('messages/accounts'); // Updated reference to match database structure
+  final DatabaseReference _database = FirebaseDatabase.instance.ref('messages/accounts');
   final TextEditingController _controller = TextEditingController();
   final List<Message> _messages = [];
 
@@ -33,7 +33,6 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
     _loadMessages();
   }
 
-  // Fetch messages from the nested Firebase structure
   Future<void> _loadMessages() async {
     _database.onValue.listen((DatabaseEvent event) {
       final List<Message> messages = [];
@@ -53,16 +52,15 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
     });
   }
 
-  // Send message to Firebase
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
       final message = Message(
         content: _controller.text,
-        senderId: 'user', // Replace 'user' with the actual sender ID if needed
+        senderId: 'user',
         timestamp: DateTime.now().toIso8601String(),
       );
 
-      _database.push().set(message.toMap()); // Push new message to the database
+      _database.push().set(message.toMap());
       _controller.clear();
     }
   }
@@ -93,7 +91,6 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              // Example Notification bubbles
               const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
               const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
               const SizedBox(height: 20),
@@ -108,7 +105,7 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
                   itemBuilder: (context, index) {
                     return MessageBubble(
                       content: _messages[index].content,
-                      isSender: _messages[index].senderId == 'user', // Adjust sender check as needed
+                      isSender: _messages[index].senderId == 'user',
                     );
                   },
                 ),
@@ -120,7 +117,7 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
                     IconButton(
                       icon: const Icon(Icons.camera_alt, color: Colors.grey),
                       onPressed: () {
-                        // Implement camera action
+                        // Dito pang camera
                       },
                     ),
                     Expanded(
