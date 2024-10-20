@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'dart:io';
 import '../widgets/gradient_background.dart';
 import '../models/message_model.dart';
 
@@ -26,6 +29,9 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
   final DatabaseReference _database = FirebaseDatabase.instance.ref('messages/accounts');
   final TextEditingController _controller = TextEditingController();
   final List<Message> _messages = [];
+  final ImagePicker _picker = ImagePicker();
+  bool _isExpanded = false;
+  bool _isInputVisible = false;
 
   @override
   void initState() {
@@ -45,6 +51,8 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
         });
       }
 
+      messages.sort((a, b) => DateTime.parse(a.timestamp).compareTo(DateTime.parse(b.timestamp)));
+
       setState(() {
         _messages.clear();
         _messages.addAll(messages);
@@ -52,18 +60,39 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
     });
   }
 
-  void _sendMessage() {
-    if (_controller.text.isNotEmpty) {
+  void _sendMessage({String? imageUrl}) {
+    if (_controller.text.isNotEmpty || imageUrl != null) {
       final message = Message(
-        content: _controller.text,
+        content: imageUrl ?? _controller.text,
         senderId: 'user',
         timestamp: DateTime.now().toIso8601String(),
+        isImage: imageUrl != null,
       );
 
       _database.push().set(message.toMap());
       _controller.clear();
     }
   }
+
+  Future<void> _pickImageFromGallery() async {
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      File file = File(pickedFile.path);
+      final Reference storageReference = FirebaseStorage.instance.ref().child('images/${DateTime.now().millisecondsSinceEpoch}_${pickedFile.name}');
+
+      try {
+        final UploadTask uploadTask = storageReference.putFile(file);
+        final TaskSnapshot snapshot = await uploadTask;
+
+        String imageUrl = await snapshot.ref.getDownloadURL();
+
+        _sendMessage(imageUrl: imageUrl);
+      } catch (e) {
+        // pang errors
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,48 +128,84 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _messages.length,
-                  itemBuilder: (context, index) {
-                    return MessageBubble(
-                      content: _messages[index].content,
-                      isSender: _messages[index].senderId == 'user',
-                    );
-                  },
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isExpanded = !_isExpanded;
+                    _isInputVisible = _isExpanded;
+                  });
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Chat',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                      Icon(
+                        _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.camera_alt, color: Colors.grey),
-                      onPressed: () {
-                        // Dito pang camera
+              const SizedBox(height: 8),
+              if (_isExpanded)
+                Expanded(
+                  child: Scrollbar(
+                    thumbVisibility: true,
+                    thickness: 8,
+                    radius: Radius.circular(20),
+                    child: ListView.builder(
+                      reverse: false,
+                      itemCount: _messages.length,
+                      itemBuilder: (context, index) {
+                        return MessageBubble(
+                          content: _messages[index].content,
+                          isSender: _messages[index].senderId == 'user',
+                          isImage: _messages[index].isImage,
+                        );
                       },
                     ),
-                    Expanded(
-                      child: TextField(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          hintText: 'Message...',
-                          filled: true,
-                          fillColor: Colors.grey.shade200,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            borderSide: BorderSide.none,
+                  ),
+                ),
+              if (_isInputVisible)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.camera_alt, color: Colors.grey),
+                        onPressed: _pickImageFromGallery,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            hintText: 'Message...',
+                            filled: true,
+                            fillColor: Colors.grey.shade200,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                              borderSide: BorderSide.none,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.send, color: Colors.pink),
-                      onPressed: _sendMessage,
-                    ),
-                  ],
+                      IconButton(
+                        icon: const Icon(Icons.send, color: Colors.pink),
+                        onPressed: () => _sendMessage(),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
             ],
           ),
         ),
@@ -152,12 +217,14 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
 class MessageBubble extends StatelessWidget {
   final String content;
   final bool isSender;
+  final bool isImage;
   final bool isNotification;
 
   const MessageBubble({
     Key? key,
     required this.content,
     this.isSender = false,
+    this.isImage = false,
     this.isNotification = false,
   }) : super(key: key);
 
@@ -177,7 +244,9 @@ class MessageBubble extends StatelessWidget {
             bottomRight: isSender ? Radius.zero : const Radius.circular(12),
           ),
         ),
-        child: Text(
+        child: isImage
+            ? Image.network(content)
+            : Text(
           content,
           style: TextStyle(
             fontSize: 16,
