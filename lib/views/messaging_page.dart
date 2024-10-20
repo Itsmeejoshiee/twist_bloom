@@ -23,7 +23,7 @@ class MessagesAndNotificationsScreen extends StatefulWidget {
 }
 
 class _MessagesAndNotificationsScreenState extends State<MessagesAndNotificationsScreen> {
-  final DatabaseReference _database = FirebaseDatabase.instance.ref('messages'); // Reference to Firebase
+  final DatabaseReference _database = FirebaseDatabase.instance.ref('messages/accounts'); // Updated reference to match database structure
   final TextEditingController _controller = TextEditingController();
   final List<Message> _messages = [];
 
@@ -33,7 +33,7 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
     _loadMessages();
   }
 
-  // Fetch messages from Firebase
+  // Fetch messages from the nested Firebase structure
   Future<void> _loadMessages() async {
     _database.onValue.listen((DatabaseEvent event) {
       final List<Message> messages = [];
@@ -58,11 +58,11 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
     if (_controller.text.isNotEmpty) {
       final message = Message(
         content: _controller.text,
-        senderId: 'user', // Replace 'user' with actual sender ID if needed
+        senderId: 'user', // Replace 'user' with the actual sender ID if needed
         timestamp: DateTime.now().toIso8601String(),
       );
 
-      _database.child('user').push().set(message.toMap()); // Push new message to the database
+      _database.push().set(message.toMap()); // Push new message to the database
       _controller.clear();
     }
   }
@@ -87,6 +87,15 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
                   ),
                 ],
               ),
+              const SizedBox(height: 20),
+              const Text(
+                'Notifications:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              // Example Notification bubbles
+              const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
+              const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
               const SizedBox(height: 20),
               const Text(
                 'Messages:',
@@ -142,14 +151,17 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
     );
   }
 }
+
 class MessageBubble extends StatelessWidget {
   final String content;
   final bool isSender;
+  final bool isNotification;
 
   const MessageBubble({
     Key? key,
     required this.content,
-    required this.isSender,
+    this.isSender = false,
+    this.isNotification = false,
   }) : super(key: key);
 
   @override
@@ -160,7 +172,7 @@ class MessageBubble extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isSender ? Colors.lightBlueAccent : Colors.grey.shade200,
+          color: isNotification ? Colors.grey.shade200 : (isSender ? Colors.lightBlueAccent : Colors.white),
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -170,9 +182,9 @@ class MessageBubble extends StatelessWidget {
         ),
         child: Text(
           content,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
-            color: Colors.white,
+            color: isSender || isNotification ? Colors.white : Colors.black,
           ),
         ),
       ),
