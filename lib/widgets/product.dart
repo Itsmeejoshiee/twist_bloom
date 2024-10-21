@@ -51,7 +51,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '\$${price.toStringAsFixed(2)}', // Fixed the dollar sign
+                  'P ${price.toStringAsFixed(2)}', // Fixed the Peso sign
                   style: const TextStyle(
                     fontSize: 12,
                     color: Colors.green,

@@ -12,6 +12,7 @@ class AddressPage extends StatefulWidget {
 }
 
 class _AddressPageState extends State<AddressPage> {
+  final TextEditingController _addressController = TextEditingController();
   String? regionCityDistrict;
   String? streetBuilding;
   String? unitFloor;
@@ -26,12 +27,14 @@ class _AddressPageState extends State<AddressPage> {
     String? userId = UserSession().getUserId();
 
     if (userId != null) {
-      DatabaseReference addressRef = FirebaseDatabase.instance.ref('users/$userId/address');
+      DatabaseReference addressRef =
+          FirebaseDatabase.instance.ref('users/$userId/address');
 
       DataSnapshot snapshot = await addressRef.get();
 
       if (snapshot.exists) {
-        Map<dynamic, dynamic> addressData = snapshot.value as Map<dynamic, dynamic>;
+        Map<dynamic, dynamic> addressData =
+            snapshot.value as Map<dynamic, dynamic>;
         setState(() {
           regionCityDistrict = addressData['region'];
           streetBuilding = addressData['street'];
@@ -75,11 +78,13 @@ class _AddressPageState extends State<AddressPage> {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min, // Centers content vertically
-                crossAxisAlignment: CrossAxisAlignment.center, // Centers content horizontally
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Centers content horizontally
                 children: [
                   if (regionCityDistrict != null) ...[
                     Container(
-                      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 32),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 32),
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -110,14 +115,18 @@ class _AddressPageState extends State<AddressPage> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => AddEditAddressPage(
-                                        userId: userId, // Pass userId to AddEditAddressPage
-                                        initialRegionCityDistrict: regionCityDistrict,
+                                        userId:
+                                            userId, // Pass userId to AddEditAddressPage
+                                        initialRegionCityDistrict:
+                                            regionCityDistrict,
                                         initialStreetBuilding: streetBuilding,
                                         initialUnitFloor: unitFloor,
                                         isEdit: true,
-                                        onSave: (newRegionCityDistrict, newStreetBuilding, newUnitFloor) {
+                                        onSave: (newRegionCityDistrict,
+                                            newStreetBuilding, newUnitFloor) {
                                           setState(() {
-                                            regionCityDistrict = newRegionCityDistrict;
+                                            regionCityDistrict =
+                                                newRegionCityDistrict;
                                             streetBuilding = newStreetBuilding;
                                             unitFloor = newUnitFloor;
                                           });
@@ -128,7 +137,8 @@ class _AddressPageState extends State<AddressPage> {
                                   );
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('User ID not found')),
+                                    const SnackBar(
+                                        content: Text('User ID not found')),
                                   );
                                 }
                               },
@@ -151,9 +161,11 @@ class _AddressPageState extends State<AddressPage> {
                           context,
                           MaterialPageRoute(
                             builder: (context) => AddEditAddressPage(
-                              userId: userId, // Pass userId to AddEditAddressPage
+                              userId:
+                                  userId, // Pass userId to AddEditAddressPage
                               isEdit: false,
-                              onSave: (newRegionCityDistrict, newStreetBuilding, newUnitFloor) {
+                              onSave: (newRegionCityDistrict, newStreetBuilding,
+                                  newUnitFloor) {
                                 setState(() {
                                   regionCityDistrict = newRegionCityDistrict;
                                   streetBuilding = newStreetBuilding;
@@ -171,7 +183,8 @@ class _AddressPageState extends State<AddressPage> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 50, vertical: 15),
                       backgroundColor: const Color.fromRGBO(255, 182, 193, 1),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
