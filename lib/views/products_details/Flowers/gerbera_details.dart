@@ -61,7 +61,8 @@ class _GerberaDetails extends State<GerberaDetails> {
   void initState() {
     super.initState();
     String? userId = UserSession().getUserId(); // Get the user ID
-    _dbRef = FirebaseDatabase.instance.ref('users/$userId/preorder'); // Update the dbRef to include userId
+    _dbRef = FirebaseDatabase.instance
+        .ref('users/$userId/preorder'); // Update the dbRef to include userId
   }
 
   @override
@@ -143,10 +144,13 @@ class _GerberaDetails extends State<GerberaDetails> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                  child: const Text('CUSTOMIZE',
+                      style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
                 ),
               ),
             ],
@@ -183,7 +187,8 @@ class _GerberaDetails extends State<GerberaDetails> {
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -216,9 +221,10 @@ class _GerberaDetails extends State<GerberaDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
+                                    color:
+                                        selectedColorName == colorInfo['name']
+                                            ? const Color(0xFFE0D19E)
+                                            : Colors.transparent,
                                     width: 2,
                                   ),
                                 ),
@@ -282,9 +288,11 @@ class _GerberaDetails extends State<GerberaDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10),
                         ),
-                        child: const Text('Add to Pre-order', style: TextStyle(fontSize: 16)),
+                        child: const Text('Add to Pre-order',
+                            style: TextStyle(fontSize: 16)),
                       ),
                     ],
                   ),
@@ -299,14 +307,16 @@ class _GerberaDetails extends State<GerberaDetails> {
 
   // Function to add pre-order data to Firebase
   void _addToPreOrder() {
-    String currentDate = DateTime.now().toIso8601String(); // Get current date in ISO format
+    String currentDate =
+        DateTime.now().toIso8601String(); // Get current date in ISO format
     Map<String, dynamic> preorderData = {
       'name': 'Gerbera Daisy',
       'color': selectedColorName,
       'quantity': quantity,
       'price': 70,
       'date': currentDate, // Add the date of pre-order
-      'image': 'assets/icon/product/flowers/gerbera.png', // Add the product image path
+      'image':
+          'assets/icon/product/flowers/gerbera.png', // Add the product image path
     };
 
     // Push the data to the database
@@ -317,5 +327,129 @@ class _GerberaDetails extends State<GerberaDetails> {
       // Handle any errors here
       print('Failed to add pre-order: $error');
     });
+  }
+}
+
+class ProductDetails {
+  final String name;
+  final String description;
+
+  ProductDetails({required this.name, required this.description});
+}
+
+class SearchWidget extends StatefulWidget {
+  const SearchWidget({super.key});
+
+  @override
+  _SearchWidgetState createState() => _SearchWidgetState();
+}
+
+class _SearchWidgetState extends State<SearchWidget> {
+  bool _isSearching = false;
+  final TextEditingController _searchController = TextEditingController();
+  final List<Map<String, String>> _products = [
+    {'name': 'lavender_lover', 'route': '/lavenderLover'},
+    {'name': 'lily_pretty', 'route': '/lilyPretty'},
+    {'name': 'sunshine_wonder', 'route': '/sunshineWonder'},
+    {'name': 'tulip_elegante', 'route': '/tulipElegante'},
+    {'name': 'baby_breath', 'route': '/babyBreath'},
+    {'name': 'eucalyptus', 'route': '/eucalyptus'},
+    {'name': 'lavender', 'route': '/lavender'},
+    {'name': 'leather_fern', 'route': '/leatherFern'},
+    {'name': 'wax_flower', 'route': '/waxFlower'},
+    {'name': 'gerbera', 'route': '/gerbera'},
+    {'name': 'lily', 'route': '/lily'},
+    {'name': 'poppy', 'route': '/poppy'},
+    {'name': 'rose', 'route': '/rose'},
+    {'name': 'sunflower', 'route': '/sunflower'},
+    {'name': 'tulips', 'route': '/tulips'},
+  ];
+  List<Map<String, String>> _filteredProducts = [];
+
+  void _filterProducts(String query) {
+    if (query.isEmpty) {
+      setState(() {
+        _filteredProducts = [];
+      });
+    } else {
+      setState(() {
+        _filteredProducts = _products
+            .where((product) =>
+                product['name']!.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 1),
+              child: _isSearching
+                  ? SizedBox(
+                      height: 40,
+                      width: 240,
+                      child: Center(
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            hintText: 'Search...',
+                            filled: true,
+                            fillColor: Colors.white,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: const BorderSide(
+                                color: Colors.black12,
+                                width: 1.0,
+                              ),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () {
+                                setState(() {
+                                  _searchController.clear();
+                                  _filterProducts('');
+                                });
+                              },
+                            ),
+                          ),
+                          onChanged: (query) {
+                            _filterProducts(query);
+                          },
+                        ),
+                      ),
+                    )
+                  : IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () {
+                        setState(() {
+                          _isSearching = true;
+                        });
+                      },
+                    ),
+            ),
+          ],
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: _filteredProducts.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(_filteredProducts[index]['name']!),
+                onTap: () {
+                  Navigator.pushNamed(
+                      context, _filteredProducts[index]['route']!);
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 }
