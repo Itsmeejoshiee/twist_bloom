@@ -6,8 +6,4 @@ export 'feedback_page.dart';
 export 'help_page.dart';
 export 'language_page.dart';
 export 'notification_pref_page.dart';
-export 'order_history_page.dart';
-export 'privacy_settings_page.dart';
-export 'security_page.dart';
-export 'shipping_pref.dart';
 export 'terms_cond_page.dart';

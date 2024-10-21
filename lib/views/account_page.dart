@@ -53,7 +53,7 @@ class _AccountPageState extends State<AccountPage> {
           'Account',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            fontSize: 30,
+            fontSize: 25,
           ),
         ),
         leading: IconButton(
