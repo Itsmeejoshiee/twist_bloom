@@ -55,7 +55,7 @@ class _SignInPageState extends State<SignInPage> {
                     SizedBox(height: 30),
                     Text(
                       "Continue with",
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 16),
@@ -80,14 +80,6 @@ class _SignInPageState extends State<SignInPage> {
                             } else {
                               print("Error Occured");
                             }
-                          },
-                        ),
-                        SizedBox(width: 16),
-                        IconButton(
-                          icon: Icon(Icons.facebook,
-                              size: 40, color: Colors.blue),
-                          onPressed: () {
-//Dito yung sa fb
                           },
                         ),
                       ],
