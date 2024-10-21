@@ -55,7 +55,7 @@ class _SignInPageState extends State<SignInPage> {
                     SizedBox(height: 30),
                     Text(
                       "Continue with",
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 16),
