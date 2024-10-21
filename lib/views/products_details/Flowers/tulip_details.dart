@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Database
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class TulipDetails extends StatefulWidget {
@@ -27,6 +28,7 @@ class _TulipDetails extends State<TulipDetails> {
 
   String selectedColorName = 'Red'; // Default selected color
   int quantity = 1;
+  final double price = 65.0; // Price per stem
 
   @override
   Widget build(BuildContext context) {
@@ -244,7 +246,7 @@ class _TulipDetails extends State<TulipDetails> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle pre-order logic
+                          _addToCart(); // Handle pre-order logic
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
@@ -265,9 +267,24 @@ class _TulipDetails extends State<TulipDetails> {
       },
     );
   }
+
+  // Function to add the pre-order details to Firebase
+  void _addToCart() async {
+    final database = FirebaseDatabase.instance.ref(); // Get the database reference
+
+    // Pre-order details
+    final preOrderDetails = {
+      'name': 'Tulip',
+      'price': price,
+      'quantity': quantity,
+      'color': selectedColorName,
+    };
+
+    // Save the pre-order details under the specified path
+    await database.child('users/user1/preorder').push().set(preOrderDetails);
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
 class TagWidget extends StatelessWidget {
   final String label;
 

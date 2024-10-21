@@ -1,5 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
+
+class TagWidget extends StatelessWidget {
+  final String label;
+
+  const TagWidget(this.label, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      decoration: BoxDecoration(
+        color: Colors.pink.shade100,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(fontSize: 20, color: Color(0xFF59333E)),
+      ),
+    );
+  }
+}
+
+
 
 class RoseDetails extends StatefulWidget {
   const RoseDetails({super.key});
@@ -9,7 +33,9 @@ class RoseDetails extends StatefulWidget {
 }
 
 class _RoseDetails extends State<RoseDetails> {
-  // List of colors with corresponding display color and name
+  // Firebase Database reference
+  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
+
   List<Map<String, dynamic>> colors = [
     {'name': 'Red', 'color': Colors.red},
     {'name': 'Orange', 'color': Colors.orange},
@@ -130,7 +156,7 @@ class _RoseDetails extends State<RoseDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -143,24 +169,21 @@ class _RoseDetails extends State<RoseDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // The GridView for color options
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // 3 columns like the design
+                      crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
+                      childAspectRatio: 3,
                     ),
                     itemBuilder: (context, index) {
                       final colorInfo = colors[index];
                       return GestureDetector(
                         onTap: () {
                           setModalState(() {
-                            setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
-                            });
+                            selectedColorName = colorInfo['name'];
                           });
                         },
                         child: Container(
@@ -173,7 +196,6 @@ class _RoseDetails extends State<RoseDetails> {
                           ),
                           child: Row(
                             children: [
-                              // Circle representing the color
                               Container(
                                 width: 24,
                                 height: 24,
@@ -211,7 +233,6 @@ class _RoseDetails extends State<RoseDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // Align the quantity, cart, and pre-order button in the same row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -221,11 +242,9 @@ class _RoseDetails extends State<RoseDetails> {
                             icon: const Icon(Icons.remove),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  if (quantity > 1) {
-                                    quantity--;
-                                  }
-                                });
+                                if (quantity > 1) {
+                                  quantity--;
+                                }
                               });
                             },
                           ),
@@ -234,9 +253,7 @@ class _RoseDetails extends State<RoseDetails> {
                             icon: const Icon(Icons.add),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  quantity++;
-                                });
+                                quantity++;
                               });
                             },
                           ),
@@ -244,7 +261,7 @@ class _RoseDetails extends State<RoseDetails> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle pre-order logic
+                          _addPreOrderToDatabase();
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
@@ -265,26 +282,27 @@ class _RoseDetails extends State<RoseDetails> {
       },
     );
   }
-}
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
-class TagWidget extends StatelessWidget {
-  final String label;
+  // Function to add pre-order details to Firebase
+  void _addPreOrderToDatabase() {
+    // Create the data to store
+    Map<String, dynamic> preOrderData = {
+      'name': 'Rose',
+      'price': 70,
+      'quantity': quantity,
+      'color': selectedColorName,
+    };
 
-  const TagWidget(this.label, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-      decoration: BoxDecoration(
-        color: Colors.pink.shade100,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(fontSize: 20, color: Color(0xFF59333E)),
-      ),
-    );
+    // Store the data under /users/user1/preorder
+    _databaseReference.child('users/user1/preorder').push().set(preOrderData).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order added successfully!')),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add pre-order: $error')),
+      );
+    });
   }
 }
+

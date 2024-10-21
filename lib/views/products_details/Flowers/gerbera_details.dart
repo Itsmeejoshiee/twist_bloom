@@ -1,5 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+// TagWidget definition
+class TagWidget extends StatelessWidget {
+  final String label;
+
+  const TagWidget(this.label, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      decoration: BoxDecoration(
+        color: Colors.pink.shade100,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(fontSize: 20, color: Color(0xFF59333E)),
+      ),
+    );
+  }
+}
+
 
 class GerberaDetails extends StatefulWidget {
   const GerberaDetails({super.key});
@@ -9,6 +34,9 @@ class GerberaDetails extends StatefulWidget {
 }
 
 class _GerberaDetails extends State<GerberaDetails> {
+  // Firebase database reference
+  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref('users/user1/preorder');
+
   // List of colors with corresponding display color and name
   List<Map<String, dynamic>> colors = [
     {'name': 'Red', 'color': Colors.red},
@@ -85,15 +113,16 @@ class _GerberaDetails extends State<GerberaDetails> {
                 ],
               ),
               const SizedBox(height: 8),
-              const Row(
+              Row(
                 children: [
-                  TagWidget('Gerbera Daisy'),
+                  TagWidget('Gerbera Daisy'), // Custom color for Gerbera Daisy
                   SizedBox(width: 7),
-                  TagWidget('Stem'),
+                  TagWidget('Stem'), // Custom color for Stem
                   SizedBox(width: 7),
-                  TagWidget('Pre-order'),
+                  TagWidget('Pre-order'), // Custom color for Pre-order
                 ],
               ),
+
               const SizedBox(height: 16),
               const Text(
                 'Lorem ipsum odor amet, consectetur adipiscing elit.',
@@ -130,7 +159,7 @@ class _GerberaDetails extends State<GerberaDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -148,10 +177,10 @@ class _GerberaDetails extends State<GerberaDetails> {
                     shrinkWrap: true,
                     itemCount: colors.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // 3 columns like the design
+                      crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
+                      childAspectRatio: 3,
                     ),
                     itemBuilder: (context, index) {
                       final colorInfo = colors[index];
@@ -159,7 +188,7 @@ class _GerberaDetails extends State<GerberaDetails> {
                         onTap: () {
                           setModalState(() {
                             setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
+                              selectedColorName = colorInfo['name'];
                             });
                           });
                         },
@@ -173,7 +202,6 @@ class _GerberaDetails extends State<GerberaDetails> {
                           ),
                           child: Row(
                             children: [
-                              // Circle representing the color
                               Container(
                                 width: 24,
                                 height: 24,
@@ -211,52 +239,48 @@ class _GerberaDetails extends State<GerberaDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // Align the quantity, cart, and pre-order button in the same row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
                           IconButton(
+                            onPressed: () {
+                              if (quantity > 1) {
+                                setModalState(() {
+                                  quantity--;
+                                });
+                              }
+                            },
                             icon: const Icon(Icons.remove),
-                            onPressed: () {
-                              setModalState(() {
-                                setState(() {
-                                  if (quantity > 1) {
-                                    quantity--;
-                                  }
-                                });
-                              });
-                            },
                           ),
-                          Text('$quantity'),
+                          Text(
+                            '$quantity',
+                            style: const TextStyle(fontSize: 20),
+                          ),
                           IconButton(
-                            icon: const Icon(Icons.add),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  quantity++;
-                                });
+                                quantity++;
                               });
                             },
+                            icon: const Icon(Icons.add),
                           ),
                         ],
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle pre-order logic
-                          Navigator.pop(context);
+                          _addToPreOrder();
+                          Navigator.pop(context); // Close the bottom sheet
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Pre-order', style: TextStyle(fontSize: 16)),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
                 ],
               ),
             );
@@ -265,26 +289,27 @@ class _GerberaDetails extends State<GerberaDetails> {
       },
     );
   }
+
+  // Function to add the pre-order data to Firebase
+  void _addToPreOrder() {
+    final preOrderData = {
+      'name': 'Gerbera Daisy',
+      'color': selectedColorName,
+      'quantity': quantity,
+    };
+
+    _dbRef.push().set(preOrderData).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to Pre-order!')));
+    }).catchError((error) {
+      print('Error adding to pre-order: $error');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to add to Pre-order')));
+    });
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
-class TagWidget extends StatelessWidget {
-  final String label;
-
-  const TagWidget(this.label, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-      decoration: BoxDecoration(
-        color: Colors.pink.shade100,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(
-        label,
-        style: const TextStyle(fontSize: 20, color: Color(0xFF59333E)),
-      ),
-    );
-  }
+// Main function to run the app
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(); // Initialize Firebase
+  runApp(const MaterialApp(home: GerberaDetails()));
 }

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class LilyDetails extends StatefulWidget {
   const LilyDetails({super.key});
 
   @override
-  _LilyDetails createState() => _LilyDetails();
+  _LilyDetailsState createState() => _LilyDetailsState();
 }
 
-class _LilyDetails extends State<LilyDetails> {
-  // List of colors with corresponding display color and name
-  List<Map<String, dynamic>> colors = [
+class _LilyDetailsState extends State<LilyDetails> {
+  final String userId = 'user1'; // Mock user ID
+  final List<Map<String, dynamic>> colors = [
     {'name': 'Red', 'color': Colors.red},
     {'name': 'Orange', 'color': Colors.orange},
     {'name': 'Golden', 'color': Colors.amber},
@@ -20,13 +21,15 @@ class _LilyDetails extends State<LilyDetails> {
     {'name': 'Purple', 'color': Colors.purple},
     {'name': 'Violet', 'color': Colors.deepPurple},
     {'name': 'Indigo', 'color': Colors.indigo},
-    {'name': 'Fuschia', 'color': Colors.pink},
+    {'name': 'Fuchsia', 'color': Colors.pink},
     {'name': 'Pink', 'color': Colors.pinkAccent},
     {'name': 'White', 'color': Colors.white},
   ];
 
   String selectedColorName = 'Red'; // Default selected color
   int quantity = 1;
+  final String flowerName = 'Lily';
+  final double price = 65.0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +38,7 @@ class _LilyDetails extends State<LilyDetails> {
         backgroundColor: const Color(0xFFFDFAFA),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () => Navigator.pop(context),
         ),
         title: const Text('Lily'),
       ),
@@ -64,55 +65,16 @@ class _LilyDetails extends State<LilyDetails> {
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              const Row(
-                children: [
-                  Text(
-                    '₱65',
-                    style: TextStyle(
-                      fontSize: 30,
-                      color: Color(0xFFFF92B2),
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(width: 4),
-                  Text(
-                    'Per stem',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
+              _buildPriceRow(),
               const SizedBox(height: 8),
-              const Row(
-                children: [
-                  TagWidget('Lily'),
-                  SizedBox(width: 7),
-                  TagWidget('Stem'),
-                  SizedBox(width: 7),
-                  TagWidget('Pre-order'),
-                ],
-              ),
+              _buildTagsRow(),
               const SizedBox(height: 16),
               const Text(
                 'Lorem ipsum odor amet, consectetur adipiscing elit.',
                 style: TextStyle(fontSize: 16),
               ),
               const Spacer(),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    _showCustomizationSheet(context);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
-                ),
-              ),
+              _buildCustomizeButton(),
             ],
           ),
         ),
@@ -120,7 +82,55 @@ class _LilyDetails extends State<LilyDetails> {
     );
   }
 
-  // Function to show the BottomSheet with customization options
+  Row _buildPriceRow() {
+    return const Row(
+      children: [
+        Text(
+          '₱65',
+          style: TextStyle(
+            fontSize: 30,
+            color: Color(0xFFFF92B2),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 4),
+        Text(
+          'Per stem',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildTagsRow() {
+    return const Row(
+      children: [
+        TagWidget('Lily'),
+        SizedBox(width: 7),
+        TagWidget('Stem'),
+        SizedBox(width: 7),
+        TagWidget('Pre-order'),
+      ],
+    );
+  }
+
+  Center _buildCustomizeButton() {
+    return Center(
+      child: ElevatedButton(
+        onPressed: () => _showCustomizationSheet(context),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFFFF92B2),
+          padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
+        child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+      ),
+    );
+  }
+
   void _showCustomizationSheet(BuildContext parentContext) {
     showModalBottomSheet(
       context: parentContext,
@@ -130,7 +140,7 @@ class _LilyDetails extends State<LilyDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -143,119 +153,14 @@ class _LilyDetails extends State<LilyDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // The GridView for color options
-                  GridView.builder(
-                    shrinkWrap: true,
-                    itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // 3 columns like the design
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
-                    ),
-                    itemBuilder: (context, index) {
-                      final colorInfo = colors[index];
-                      return GestureDetector(
-                        onTap: () {
-                          setModalState(() {
-                            setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
-                            });
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          decoration: BoxDecoration(
-                            color: selectedColorName == colorInfo['name']
-                                ? const Color(0xFFE0D19E)
-                                : const Color(0xFFB3B3B3).withOpacity(.30),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              // Circle representing the color
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: colorInfo['color'],
-                                  border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
-                                    width: 2,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 8),
-                              Text(
-                                colorInfo['name'],
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: selectedColorName == colorInfo['name']
-                                      ? Colors.black
-                                      : Colors.grey.shade700,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                  _buildColorOptions(setModalState),
                   const SizedBox(height: 16),
                   const Text(
                     'Quantity',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // Align the quantity, cart, and pre-order button in the same row
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.remove),
-                            onPressed: () {
-                              setModalState(() {
-                                setState(() {
-                                  if (quantity > 1) {
-                                    quantity--;
-                                  }
-                                });
-                              });
-                            },
-                          ),
-                          Text('$quantity'),
-                          IconButton(
-                            icon: const Icon(Icons.add),
-                            onPressed: () {
-                              setModalState(() {
-                                setState(() {
-                                  quantity++;
-                                });
-                              });
-                            },
-                          ),
-                        ],
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Handle pre-order logic
-                          Navigator.pop(context);
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                        ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
-                      ),
-                    ],
-                  ),
+                  _buildQuantityControls(setModalState),
                   const SizedBox(height: 20),
                 ],
               ),
@@ -265,9 +170,136 @@ class _LilyDetails extends State<LilyDetails> {
       },
     );
   }
+
+  GridView _buildColorOptions(StateSetter setModalState) {
+    return GridView.builder(
+      shrinkWrap: true,
+      itemCount: colors.length,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+        childAspectRatio: 3,
+      ),
+      itemBuilder: (context, index) {
+        final colorInfo = colors[index];
+        return GestureDetector(
+          onTap: () {
+            setModalState(() {
+              selectedColorName = colorInfo['name']; // Update selected color
+            });
+          },
+          child: _buildColorOptionItem(colorInfo),
+        );
+      },
+    );
+  }
+
+  Container _buildColorOptionItem(Map<String, dynamic> colorInfo) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      decoration: BoxDecoration(
+        color: selectedColorName == colorInfo['name'] ? const Color(0xFFE0D19E) : const Color(0xFFB3B3B3).withOpacity(.30),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          _buildColorCircle(colorInfo),
+          const SizedBox(width: 8),
+          _buildColorNameText(colorInfo),
+        ],
+      ),
+    );
+  }
+
+  Container _buildColorCircle(Map<String, dynamic> colorInfo) {
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: colorInfo['color'],
+        border: Border.all(
+          color: selectedColorName == colorInfo['name'] ? const Color(0xFFE0D19E) : Colors.transparent,
+          width: 2,
+        ),
+      ),
+    );
+  }
+
+  Text _buildColorNameText(Map<String, dynamic> colorInfo) {
+    return Text(
+      colorInfo['name'],
+      style: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+        color: selectedColorName == colorInfo['name'] ? Colors.black : Colors.grey.shade700,
+      ),
+    );
+  }
+
+  Row _buildQuantityControls(StateSetter setModalState) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.remove),
+              onPressed: () {
+                setModalState(() {
+                  if (quantity > 1) quantity--;
+                });
+              },
+            ),
+            Text(quantity.toString(), style: const TextStyle(fontSize: 16)),
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                setModalState(() {
+                  quantity++;
+                });
+              },
+            ),
+          ],
+        ),
+        ElevatedButton(
+          onPressed: () {
+            _preOrder();
+            Navigator.pop(context); // Close the modal
+          },
+          child: const Text('Pre-order'),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _preOrder() async {
+    final DatabaseReference dbRef = FirebaseDatabase.instance.ref('/users/$userId/preorder');
+    final orderDetails = {
+      'name': flowerName,
+      'price': price,
+      'quantity': quantity,
+      'color': selectedColorName,
+    };
+
+    // Push order details to Firebase
+    try {
+      await dbRef.push().set(orderDetails);
+      // Optionally, show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order placed successfully!')),
+      );
+    } catch (error) {
+      // Handle errors
+      print('Error placing pre-order: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Failed to place pre-order.')),
+      );
+    }
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
 class TagWidget extends StatelessWidget {
   final String label;
 

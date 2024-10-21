@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Database package
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class SunflowerDetails extends StatefulWidget {
@@ -9,7 +10,6 @@ class SunflowerDetails extends StatefulWidget {
 }
 
 class _SunflowerDetails extends State<SunflowerDetails> {
-  // List of colors with corresponding display color and name
   List<Map<String, dynamic>> colors = [
     {'name': 'Red', 'color': Colors.red},
     {'name': 'Orange', 'color': Colors.orange},
@@ -27,6 +27,7 @@ class _SunflowerDetails extends State<SunflowerDetails> {
 
   String selectedColorName = 'Red'; // Default selected color
   int quantity = 1;
+  final double price = 75.0; // Price of the sunflower
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +121,6 @@ class _SunflowerDetails extends State<SunflowerDetails> {
     );
   }
 
-  // Function to show the BottomSheet with customization options
   void _showCustomizationSheet(BuildContext parentContext) {
     showModalBottomSheet(
       context: parentContext,
@@ -130,7 +130,7 @@ class _SunflowerDetails extends State<SunflowerDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -143,24 +143,21 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // The GridView for color options
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // 3 columns like the design
+                      crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
+                      childAspectRatio: 3,
                     ),
                     itemBuilder: (context, index) {
                       final colorInfo = colors[index];
                       return GestureDetector(
                         onTap: () {
                           setModalState(() {
-                            setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
-                            });
+                            selectedColorName = colorInfo['name']; // Update selected color
                           });
                         },
                         child: Container(
@@ -173,7 +170,6 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                           ),
                           child: Row(
                             children: [
-                              // Circle representing the color
                               Container(
                                 width: 24,
                                 height: 24,
@@ -211,7 +207,6 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // Align the quantity, cart, and pre-order button in the same row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -221,11 +216,9 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                             icon: const Icon(Icons.remove),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  if (quantity > 1) {
-                                    quantity--;
-                                  }
-                                });
+                                if (quantity > 1) {
+                                  quantity--;
+                                }
                               });
                             },
                           ),
@@ -234,9 +227,7 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                             icon: const Icon(Icons.add),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  quantity++;
-                                });
+                                quantity++;
                               });
                             },
                           ),
@@ -244,7 +235,7 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle pre-order logic
+                          _addToCart(); // Call the method to add to cart
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
@@ -265,9 +256,33 @@ class _SunflowerDetails extends State<SunflowerDetails> {
       },
     );
   }
+
+  // Method to add pre-order details to Firebase
+  void _addToCart() {
+    final DatabaseReference database = FirebaseDatabase.instance.ref(); // Initialize Firebase Database reference
+    String userId = 'user1'; // Replace with dynamic user ID if available
+
+    // Create a map for pre-order details
+    Map<String, dynamic> preOrderDetails = {
+      'name': 'Sunflower',
+      'price': price,
+      'quantity': quantity,
+      'color': selectedColorName,
+    };
+
+    // Push pre-order details to Firebase under /users/user1/preorder
+    database.child('users/$userId/preorder').push().set(preOrderDetails).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order added successfully!')),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add pre-order: $error')),
+      );
+    });
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
 class TagWidget extends StatelessWidget {
   final String label;
 

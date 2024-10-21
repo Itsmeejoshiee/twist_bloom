@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class WaxFlowerDetails extends StatefulWidget {
@@ -27,6 +28,8 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
 
   String selectedColorName = 'Baby Blue'; // Default selected color
   int quantity = 1;
+  final String productName = 'Wax Flower'; // Product name
+  final double productPrice = 35.0; // Product price
 
   @override
   Widget build(BuildContext context) {
@@ -245,6 +248,7 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
                       ElevatedButton(
                         onPressed: () {
                           // Handle pre-order logic
+                          _preOrderProduct();
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
@@ -265,9 +269,35 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
       },
     );
   }
+
+  // Function to handle pre-order logic
+  void _preOrderProduct() async {
+    final DatabaseReference dbRef = FirebaseDatabase.instance.ref();
+
+    // Create a map of pre-order details
+    final Map<String, dynamic> preOrderDetails = {
+      'name': productName,
+      'price': productPrice,
+      'quantity': quantity,
+      'color': selectedColorName,
+    };
+
+    // Push pre-order details to Firebase
+    await dbRef.child('users/user1/preorder').push().set(preOrderDetails).then((_) {
+      // Show confirmation message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order added successfully!')),
+      );
+    }).catchError((error) {
+      // Handle error
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add pre-order: $error')),
+      );
+    });
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
+// Dummy widget for tags, you may replace with your own implementation
 class TagWidget extends StatelessWidget {
   final String label;
 

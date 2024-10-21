@@ -350,21 +350,25 @@ class FeaturedProductsGrid extends StatelessWidget {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct1.png',
         'title': 'Lily Pretty',
         'price': 200.0,
+        'productId':1001,
       },
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct2.png',
         'title': 'Tulip Elegante',
         'price': 250.0,
+        'productId':1002,
       },
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct3.png',
         'title': 'Lavender Lover',
         'price': 280.0,
+        'productId':1003,
       },
       {
         'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct4.png',
         'title': 'Sunshine Wonder',
         'price': 200.0,
+        'productId':1004,
       },
     ];
 
@@ -400,6 +404,7 @@ class FeaturedProductsGrid extends StatelessWidget {
                 imageUrl: product['imageUrl'],
                 title: product['title'],
                 price: product['price'],
+                productId: product['productId'],
                 onTap: () {
                   // Define different navigation based on index or product property
                   if (index == 0) {

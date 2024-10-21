@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class PoppyDetails extends StatefulWidget {
@@ -27,6 +28,8 @@ class _PoppyDetails extends State<PoppyDetails> {
 
   String selectedColorName = 'Red'; // Default selected color
   int quantity = 1;
+  final String flowerName = 'Poppy';
+  final double flowerPrice = 45.0;
 
   @override
   Widget build(BuildContext context) {
@@ -158,9 +161,7 @@ class _PoppyDetails extends State<PoppyDetails> {
                       return GestureDetector(
                         onTap: () {
                           setModalState(() {
-                            setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
-                            });
+                            selectedColorName = colorInfo['name']; // Update in both modal and parent
                           });
                         },
                         child: Container(
@@ -221,11 +222,9 @@ class _PoppyDetails extends State<PoppyDetails> {
                             icon: const Icon(Icons.remove),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  if (quantity > 1) {
-                                    quantity--;
-                                  }
-                                });
+                                if (quantity > 1) {
+                                  quantity--;
+                                }
                               });
                             },
                           ),
@@ -234,9 +233,7 @@ class _PoppyDetails extends State<PoppyDetails> {
                             icon: const Icon(Icons.add),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  quantity++;
-                                });
+                                quantity++;
                               });
                             },
                           ),
@@ -244,8 +241,7 @@ class _PoppyDetails extends State<PoppyDetails> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle pre-order logic
-                          Navigator.pop(context);
+                          _handlePreOrder();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
@@ -265,9 +261,33 @@ class _PoppyDetails extends State<PoppyDetails> {
       },
     );
   }
+
+  // Function to handle pre-order logic
+  void _handlePreOrder() {
+    final databaseRef = FirebaseDatabase.instance.ref('/users/user1/preorder');
+
+    // Create the pre-order data
+    Map<String, dynamic> preOrderData = {
+      'name': flowerName,
+      'price': flowerPrice,
+      'quantity': quantity,
+      'color': selectedColorName,
+    };
+
+    // Save to Firebase
+    databaseRef.push().set(preOrderData).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order placed successfully!')),
+      );
+      Navigator.pop(context); // Close the modal
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to place pre-order: $error')),
+      );
+    });
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
 class TagWidget extends StatelessWidget {
   final String label;
 
