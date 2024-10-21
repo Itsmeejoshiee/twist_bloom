@@ -19,23 +19,18 @@ class _AddressPageState extends State<AddressPage> {
   @override
   void initState() {
     super.initState();
-    // Fetch the address when the page loads
     fetchAddressFromFirebase();
   }
 
   Future<void> fetchAddressFromFirebase() async {
-    // Get the userId from UserSession
     String? userId = UserSession().getUserId();
 
     if (userId != null) {
-      // Reference to the user's address in Firebase
       DatabaseReference addressRef = FirebaseDatabase.instance.ref('users/$userId/address');
 
-      // Fetch the address data from Firebase
       DataSnapshot snapshot = await addressRef.get();
 
       if (snapshot.exists) {
-        // Extract the address details from the snapshot
         Map<dynamic, dynamic> addressData = snapshot.value as Map<dynamic, dynamic>;
         setState(() {
           regionCityDistrict = addressData['region'];
@@ -43,7 +38,6 @@ class _AddressPageState extends State<AddressPage> {
           unitFloor = addressData['unit'];
         });
       } else {
-        // If no address exists, set the values to null
         setState(() {
           regionCityDistrict = null;
           streetBuilding = null;
@@ -51,7 +45,6 @@ class _AddressPageState extends State<AddressPage> {
         });
       }
     } else {
-      // If userId is null, show a message or handle accordingly
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('User ID not found')),
       );
@@ -75,9 +68,9 @@ class _AddressPageState extends State<AddressPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: SizedBox.expand( // Ensure the GradientBackground takes the full height of the screen
+      body: SizedBox.expand(
         child: GradientBackground(
-          child: Center( // Centers the entire content
+          child: Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(

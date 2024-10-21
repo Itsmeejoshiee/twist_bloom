@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/views/signup_page.dart';
 import 'account_subpages/personal_info_page.dart';
 import 'account_subpages/login_security.dart';
 import 'principal_classes.dart';
@@ -26,7 +25,6 @@ class _AccountPageState extends State<AccountPage> {
   void _fetchCurrentName() {
     // Fetch the current display name from Firebase
     User? user = FirebaseAuth.instance.currentUser;
-
     if (user != null && user.displayName != null) {
       setState(() {
         userName = user.displayName; // Update the userName
@@ -42,9 +40,6 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     // Fetch userId from UserSession
     String? userId = UserSession().getUserId();
-
-    // Fetch the current user from FirebaseAuth
-    User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -94,11 +89,8 @@ class _AccountPageState extends State<AccountPage> {
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      foregroundImage: user?.photoURL != null
-                          ? NetworkImage(user!.photoURL!)
-                          : null,
                       backgroundImage:
-                          const AssetImage('assets/user_avatar.jpg'),
+                      const AssetImage('assets/profile_picture.png'),
                       child: RawMaterialButton(
                         onPressed: () {
                           _showPhotoOptions(context);
@@ -109,10 +101,9 @@ class _AccountPageState extends State<AccountPage> {
                     ),
                     const SizedBox(height: 5, width: 318),
                     Text(
-                      userName ??
-                          'User', // Use fetched user name or fallback to 'User'
+                      userName ?? 'User', // Use fetched user name or fallback to 'User'
                       style: const TextStyle(
-                          fontSize: 25,
+                          fontSize: 32,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Poppins'),
                     ),
@@ -157,8 +148,7 @@ class _AccountPageState extends State<AccountPage> {
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('User ID not found')),
+                              const SnackBar(content: Text('User ID not found')),
                             );
                           }
                         },
@@ -377,11 +367,7 @@ class _AccountPageState extends State<AccountPage> {
               child: const Text('Log Out'),
               onPressed: () {
                 // Proceed with log out logic
-                FirebaseAuth.instance.signOut();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignUpPage()),
-                );
+                Navigator.pop(context);
               },
             ),
           ],
