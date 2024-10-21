@@ -1,17 +1,25 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class UserModel {
+class PhoneModel {
   final String userId;
 
-  UserModel({required this.userId});
+  PhoneModel({required this.userId});
 
-  Future<void> updatePhoneNumber(String phoneNumber) async {
+  Future<void> updatePhoneNumber(String phoneNumber, String smsCode, String verificationId) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      await user.updatePhoneNumber(PhoneAuthProvider.credential(
-        verificationId: "YOUR_VERIFICATION_ID",
-        smsCode: phoneNumber,
-      ));
+      try {
+        // Use the verification ID and SMS code to create the phone auth credential
+        PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationId,
+          smsCode: smsCode,
+        );
+
+        // Update the user's phone number
+        await user.updatePhoneNumber(credential);
+      } catch (e) {
+        throw Exception('Failed to update phone number: $e');
+      }
     }
   }
 }
