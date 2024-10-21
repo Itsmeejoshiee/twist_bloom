@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase database package
 import '../../../widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import the user session file
 
 class TulipEleganteDetails extends StatefulWidget {
   const TulipEleganteDetails({super.key});
@@ -11,6 +12,8 @@ class TulipEleganteDetails extends StatefulWidget {
 
 class _TulipEleganteDetails extends State<TulipEleganteDetails> {
   int quantity = 1;
+  final DatabaseReference _database = FirebaseDatabase.instance.ref(); // Reference to Firebase Database
+  final String selectedColorName = "Pink"; // Example color selection
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +112,7 @@ class _TulipEleganteDetails extends State<TulipEleganteDetails> {
                       ElevatedButton(
                         onPressed: () {
                           // Handle pre-order logic
-                          Navigator.pop(context);
+                          _addToCart();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
@@ -128,9 +131,39 @@ class _TulipEleganteDetails extends State<TulipEleganteDetails> {
       ),
     );
   }
+
+  // Function to handle adding pre-order details to Firebase
+  void _addToCart() {
+    String? userId = UserSession().getUserId(); // Retrieve the user ID
+    String currentDate = DateTime.now().toIso8601String(); // Get the current date in ISO format
+    String imagePath = 'assets/icon/product/bouquets/FeaturedProduct2.png'; // Path to the product image
+
+    // Create a map of the pre-order details
+    Map<String, dynamic> preOrderData = {
+      'name': "Tulip Elegante Bouquets",
+      'price': 260, // The price you have displayed
+      'quantity': quantity,
+      'color': selectedColorName,
+      'date': currentDate, // Include the date of pre-order
+      'image': imagePath, // Include the image path
+    };
+
+    // Push the data to the Firebase database under the specified path
+    _database.child('users/$userId/preorder').push().set(preOrderData).then((_) {
+      // Show a confirmation message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order placed successfully!')),
+      );
+    }).catchError((error) {
+      // Show an error message if something goes wrong
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to place pre-order: $error')),
+      );
+    });
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
+// A simple widget for product tags (Tulips, Bouquets, Onhand)
 class TagWidget extends StatelessWidget {
   final String label;
 

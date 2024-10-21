@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import '../../../widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import your UserSession file
 
 class EucalyptusDetails extends StatefulWidget {
   const EucalyptusDetails({super.key});
@@ -28,6 +29,7 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
 
   String selectedColorName = 'Green'; // Default selected color
   int quantity = 1;
+  final DatabaseReference dbRef = FirebaseDatabase.instance.ref(); // Firebase reference
 
   @override
   Widget build(BuildContext context) {
@@ -159,9 +161,7 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
                       return GestureDetector(
                         onTap: () {
                           setModalState(() {
-                            setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
-                            });
+                            selectedColorName = colorInfo['name']; // Update in both modal and parent
                           });
                         },
                         child: Container(
@@ -222,11 +222,9 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
                             icon: const Icon(Icons.remove),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  if (quantity > 1) {
-                                    quantity--;
-                                  }
-                                });
+                                if (quantity > 1) {
+                                  quantity--;
+                                }
                               });
                             },
                           ),
@@ -235,9 +233,7 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
                             icon: const Icon(Icons.add),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  quantity++;
-                                });
+                                quantity++;
                               });
                             },
                           ),
@@ -245,19 +241,19 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle pre-order logic
+                          _preOrderProduct();
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Pre-order'),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 16),
                 ],
               ),
             );
@@ -266,9 +262,36 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
       },
     );
   }
+
+  // Function to handle pre-ordering
+  void _preOrderProduct() {
+    // Get the user ID from UserSession
+    String? userId = UserSession().getUserId(); // Replace with your method to get user ID
+    String path = '/users/$userId/preorder';
+
+    // Get the current date
+    String dateOfPreOrder = DateTime.now().toIso8601String();
+
+    // Add pre-order details to Firebase
+    dbRef.child(path).push().set({
+      'name': 'Eucalyptus',
+      'price': 30,
+      'quantity': quantity,
+      'color': selectedColorName,
+      'date': dateOfPreOrder, // Date of pre-order
+      'image': 'assets/icon/product/fillers/eucalyptus.png' // Product image path
+    }).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order placed successfully!')),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to place pre-order: $error')),
+      );
+    });
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
 class TagWidget extends StatelessWidget {
   final String label;
 

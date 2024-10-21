@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import '../../../widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import UserSession
 
 class LavenderLoverDetails extends StatefulWidget {
   const LavenderLoverDetails({super.key});
@@ -11,6 +12,40 @@ class LavenderLoverDetails extends StatefulWidget {
 
 class _LavenderLoverDetails extends State<LavenderLoverDetails> {
   int quantity = 1;
+  final String productName = "Lavender Lover Bouquets";
+  final int productPrice = 200;
+  final String productColor = 'Lavender'; // Example color, you can modify this as needed
+  final String productImage = 'assets/icon/product/bouquets/FeaturedProduct3.png'; // Path to product image
+
+  // Reference to the Firebase Realtime Database
+  final DatabaseReference database = FirebaseDatabase.instance.ref();
+
+  // Function to handle pre-order logic
+  void _handlePreOrder() {
+    String? userId = UserSession().getUserId(); // Retrieve user ID
+    String currentDate = DateTime.now().toIso8601String(); // Get current date in ISO format
+
+    // Store data in the Firebase Realtime Database
+    database.child('users/$userId/preorder').push().set({
+      'name': productName,
+      'price': productPrice,
+      'quantity': quantity,
+      'color': productColor,
+      'date': currentDate, // Store the pre-order date
+      'image': productImage, // Store the product image path
+    }).then((_) {
+      // Optionally show a success message or navigate back
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order added successfully!')),
+      );
+      Navigator.pop(context);
+    }).catchError((error) {
+      // Handle any errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $error')),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +70,7 @@ class _LavenderLoverDetails extends State<LavenderLoverDetails> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/icon/product/bouquets/FeaturedProduct3.png',
+                    productImage, // Use the product image path here
                     width: 360,
                     height: 350,
                     fit: BoxFit.cover,
@@ -107,10 +142,7 @@ class _LavenderLoverDetails extends State<LavenderLoverDetails> {
                   Row(
                     children: [
                       ElevatedButton(
-                        onPressed: () {
-                          // Handle pre-order logic
-                          Navigator.pop(context);
-                        },
+                        onPressed: _handlePreOrder,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
                           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),

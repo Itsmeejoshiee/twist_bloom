@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import 'package:firebase_database/firebase_database.dart';
+import '/../user_session.dart'; // Import the UserSession class
 
 class LavenderDetails extends StatefulWidget {
   const LavenderDetails({super.key});
@@ -9,7 +11,6 @@ class LavenderDetails extends StatefulWidget {
 }
 
 class _LavenderDetails extends State<LavenderDetails> {
-  // List of colors with corresponding display color and name
   List<Map<String, dynamic>> colors = [
     {'name': 'Red', 'color': Colors.red},
     {'name': 'Orange', 'color': Colors.orange},
@@ -27,6 +28,7 @@ class _LavenderDetails extends State<LavenderDetails> {
 
   String selectedColorName = 'Violet'; // Default selected color
   int quantity = 1;
+  final DatabaseReference dbRef = FirebaseDatabase.instance.ref(); // Reference to your Firebase Database
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +122,6 @@ class _LavenderDetails extends State<LavenderDetails> {
     );
   }
 
-  // Function to show the BottomSheet with customization options
   void _showCustomizationSheet(BuildContext parentContext) {
     showModalBottomSheet(
       context: parentContext,
@@ -130,7 +131,7 @@ class _LavenderDetails extends State<LavenderDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -143,24 +144,21 @@ class _LavenderDetails extends State<LavenderDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // The GridView for color options
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // 3 columns like the design
+                      crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
+                      childAspectRatio: 3,
                     ),
                     itemBuilder: (context, index) {
                       final colorInfo = colors[index];
                       return GestureDetector(
                         onTap: () {
                           setModalState(() {
-                            setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
-                            });
+                            selectedColorName = colorInfo['name'];
                           });
                         },
                         child: Container(
@@ -173,7 +171,6 @@ class _LavenderDetails extends State<LavenderDetails> {
                           ),
                           child: Row(
                             children: [
-                              // Circle representing the color
                               Container(
                                 width: 24,
                                 height: 24,
@@ -211,7 +208,6 @@ class _LavenderDetails extends State<LavenderDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // Align the quantity, cart, and pre-order button in the same row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -221,11 +217,9 @@ class _LavenderDetails extends State<LavenderDetails> {
                             icon: const Icon(Icons.remove),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  if (quantity > 1) {
-                                    quantity--;
-                                  }
-                                });
+                                if (quantity > 1) {
+                                  quantity--;
+                                }
                               });
                             },
                           ),
@@ -234,9 +228,7 @@ class _LavenderDetails extends State<LavenderDetails> {
                             icon: const Icon(Icons.add),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  quantity++;
-                                });
+                                quantity++;
                               });
                             },
                           ),
@@ -244,7 +236,7 @@ class _LavenderDetails extends State<LavenderDetails> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle pre-order logic
+                          _preOrderProduct(); // Call the pre-order function
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
@@ -265,9 +257,33 @@ class _LavenderDetails extends State<LavenderDetails> {
       },
     );
   }
-}
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
+  void _preOrderProduct() {
+    String? userId = UserSession().getUserId(); // Get the user ID
+    String currentDate = DateTime.now().toIso8601String(); // Get current date in ISO 8601 format
+
+    // Prepare the pre-order details including date and image URL
+    final preOrderDetails = {
+      'name': 'Lavender',
+      'price': 45,
+      'quantity': quantity,
+      'color': selectedColorName,
+      'date': currentDate, // Add current date
+      'image': 'assets/icon/product/fillers/lavender.png', // Add product image path
+    };
+
+    // Save the pre-order details to Firebase under /users/userId/preorder
+    dbRef.child('users/$userId/preorder').push().set(preOrderDetails).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Product added to cart!')),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add product: $error')),
+      );
+    });
+  }
+}
 class TagWidget extends StatelessWidget {
   final String label;
 

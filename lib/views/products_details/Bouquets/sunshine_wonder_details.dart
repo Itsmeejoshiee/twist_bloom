@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import '../../../widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import the UserSession class
 
 class SunshineWonderDetails extends StatefulWidget {
   const SunshineWonderDetails({super.key});
@@ -11,6 +12,11 @@ class SunshineWonderDetails extends StatefulWidget {
 
 class _SunshineWonderDetails extends State<SunshineWonderDetails> {
   int quantity = 1;
+  final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
+  final String bouquetName = "Sunshine Wonder Bouquets";
+  final double bouquetPrice = 200.0;
+  String selectedColor = "Yellow"; // Default color (you can modify this as needed)
+  final String productImage = 'assets/icon/product/bouquets/FeaturedProduct4.png'; // Path to the product image
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +41,7 @@ class _SunshineWonderDetails extends State<SunshineWonderDetails> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/icon/product/bouquets/FeaturedProduct4.png',
+                    productImage,
                     width: 360,
                     height: 350,
                     fit: BoxFit.cover,
@@ -109,6 +115,7 @@ class _SunshineWonderDetails extends State<SunshineWonderDetails> {
                       ElevatedButton(
                         onPressed: () {
                           // Handle pre-order logic
+                          _addPreOrderToFirebase();
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
@@ -128,9 +135,37 @@ class _SunshineWonderDetails extends State<SunshineWonderDetails> {
       ),
     );
   }
+
+  // Function to add pre-order details to Firebase
+  void _addPreOrderToFirebase() {
+    String? userId = UserSession().getUserId(); // Get the user ID dynamically
+    String preOrderId = _databaseReference.child('users/$userId/preorder').push().key!;
+
+    // Get the current date
+    String currentDate = DateTime.now().toIso8601String(); // Use ISO 8601 format for consistency
+
+    Map<String, dynamic> preOrderDetails = {
+      'name': bouquetName,
+      'price': bouquetPrice,
+      'quantity': quantity,
+      'color': selectedColor,
+      'date': currentDate, // Include the pre-order date
+      'image': productImage, // Include the image path
+    };
+
+    _databaseReference.child('users/$userId/preorder/$preOrderId').set(preOrderDetails).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order added successfully!')),
+      );
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add pre-order: $error')),
+      );
+    });
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
+// A simple widget for product tags (Sunflower, Bouquets, Onhand)
 class TagWidget extends StatelessWidget {
   final String label;
 

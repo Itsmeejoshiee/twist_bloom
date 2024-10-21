@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart'; // Import Firebase Database
+import 'package:intl/intl.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import UserSession for user ID retrieval
 
 class TulipDetails extends StatefulWidget {
   const TulipDetails({super.key});
@@ -272,16 +274,34 @@ class _TulipDetails extends State<TulipDetails> {
   void _addToCart() async {
     final database = FirebaseDatabase.instance.ref(); // Get the database reference
 
-    // Pre-order details
-    final preOrderDetails = {
-      'name': 'Tulip',
-      'price': price,
-      'quantity': quantity,
+    // Get the current date and time in a readable format
+    final String preOrderDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+
+    // Get the user ID from UserSession
+    String? userId = UserSession().getUserId();
+
+    // Create a map for the pre-order data
+    Map<String, dynamic> preOrderData = {
+      'product_name': 'Tulip',
       'color': selectedColorName,
+      'quantity': quantity,
+      'price': price,
+      'pre_order_date': preOrderDate,
+      'image': 'assets/icon/product/flowers/tulip.png' // Use the image path
     };
 
-    // Save the pre-order details under the specified path
-    await database.child('users/user1/preorder').push().set(preOrderDetails);
+    // Push the data to the correct path in the database
+    await database.child('users/$userId/preorder').push().set(preOrderData).then((_) {
+      // Optionally show a success message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order added to cart successfully!')),
+      );
+    }).catchError((error) {
+      // Handle any errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add pre-order: $error')),
+      );
+    });
   }
 }
 

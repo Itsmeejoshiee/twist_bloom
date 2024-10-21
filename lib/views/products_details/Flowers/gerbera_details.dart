@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'package:firebase_core/firebase_core.dart';
+import '/../user_session.dart'; // Import your UserSession file
 
 // TagWidget definition
 class TagWidget extends StatelessWidget {
@@ -25,7 +26,6 @@ class TagWidget extends StatelessWidget {
   }
 }
 
-
 class GerberaDetails extends StatefulWidget {
   const GerberaDetails({super.key});
 
@@ -35,7 +35,8 @@ class GerberaDetails extends StatefulWidget {
 
 class _GerberaDetails extends State<GerberaDetails> {
   // Firebase database reference
-  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref('users/user1/preorder');
+  late DatabaseReference _dbRef;
+  late String userId;
 
   // List of colors with corresponding display color and name
   List<Map<String, dynamic>> colors = [
@@ -55,6 +56,13 @@ class _GerberaDetails extends State<GerberaDetails> {
 
   String selectedColorName = 'Red'; // Default selected color
   int quantity = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    String? userId = UserSession().getUserId(); // Get the user ID
+    _dbRef = FirebaseDatabase.instance.ref('users/$userId/preorder'); // Update the dbRef to include userId
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +130,6 @@ class _GerberaDetails extends State<GerberaDetails> {
                   TagWidget('Pre-order'), // Custom color for Pre-order
                 ],
               ),
-
               const SizedBox(height: 16),
               const Text(
                 'Lorem ipsum odor amet, consectetur adipiscing elit.',
@@ -290,26 +297,25 @@ class _GerberaDetails extends State<GerberaDetails> {
     );
   }
 
-  // Function to add the pre-order data to Firebase
+  // Function to add pre-order data to Firebase
   void _addToPreOrder() {
-    final preOrderData = {
-      'name': 'Gerbera Daisy',
+    String currentDate = DateTime.now().toIso8601String(); // Get current date in ISO format
+    Map<String, dynamic> preorderData = {
+      'product': 'Gerbera Daisy',
       'color': selectedColorName,
       'quantity': quantity,
+      'price': 70,
+      'date': currentDate, // Add the date of pre-order
+      'image': 'assets/icon/product/flowers/gerbera.png', // Add the product image path
     };
 
-    _dbRef.push().set(preOrderData).then((_) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added to Pre-order!')));
+    // Push the data to the database
+    _dbRef.push().set(preorderData).then((_) {
+      // You might want to show a success message here
+      print('Pre-order added successfully');
     }).catchError((error) {
-      print('Error adding to pre-order: $error');
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to add to Pre-order')));
+      // Handle any errors here
+      print('Failed to add pre-order: $error');
     });
   }
-}
-
-// Main function to run the app
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); // Initialize Firebase
-  runApp(const MaterialApp(home: GerberaDetails()));
 }

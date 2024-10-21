@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart'; // Import intl package for date formatting
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import '/../user_session.dart'; // Adjust import according to your file structure
 
 class LilyDetails extends StatefulWidget {
   const LilyDetails({super.key});
@@ -10,7 +12,7 @@ class LilyDetails extends StatefulWidget {
 }
 
 class _LilyDetailsState extends State<LilyDetails> {
-  final String userId = 'user1'; // Mock user ID
+  late final String userId; // Use late to initialize later
   final List<Map<String, dynamic>> colors = [
     {'name': 'Red', 'color': Colors.red},
     {'name': 'Orange', 'color': Colors.orange},
@@ -30,6 +32,12 @@ class _LilyDetailsState extends State<LilyDetails> {
   int quantity = 1;
   final String flowerName = 'Lily';
   final double price = 65.0;
+
+  @override
+  void initState() {
+    super.initState();
+    userId = UserSession().getUserId() ?? ''; // Get user ID from session
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -174,6 +182,7 @@ class _LilyDetailsState extends State<LilyDetails> {
   GridView _buildColorOptions(StateSetter setModalState) {
     return GridView.builder(
       shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(), // Prevent scrolling
       itemCount: colors.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
@@ -276,27 +285,27 @@ class _LilyDetailsState extends State<LilyDetails> {
 
   Future<void> _preOrder() async {
     final DatabaseReference dbRef = FirebaseDatabase.instance.ref('/users/$userId/preorder');
-    final orderDetails = {
-      'name': flowerName,
+
+    // Format the current date
+    String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+    // Product image path
+    String productImage = 'assets/icon/product/flowers/lily.png';
+
+    // Push new order to Firebase
+    await dbRef.push().set({
+      'flowerName': flowerName,
       'price': price,
       'quantity': quantity,
       'color': selectedColorName,
-    };
+      'date': formattedDate,
+      'image': productImage,
+    });
 
-    // Push order details to Firebase
-    try {
-      await dbRef.push().set(orderDetails);
-      // Optionally, show a success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Pre-order placed successfully!')),
-      );
-    } catch (error) {
-      // Handle errors
-      print('Error placing pre-order: $error');
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Failed to place pre-order.')),
-      );
-    }
+    // Show confirmation message
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Order placed successfully!')),
+    );
   }
 }
 

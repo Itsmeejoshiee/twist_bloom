@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_database/firebase_database.dart';
 import '../../../widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import your UserSession class
 
 class LeatherFernDetails extends StatefulWidget {
   const LeatherFernDetails({super.key});
@@ -28,6 +29,15 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
 
   String selectedColorName = 'Green'; // Default selected color
   int quantity = 1;
+  final String productName = 'Leather Fern'; // Product name
+  final double productPrice = 45.0; // Product price
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize Firebase (make sure to have Firebase configured properly)
+    FirebaseDatabase.instance;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +141,7 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -144,15 +154,14 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // The GridView for color options
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // 3 columns like the design
+                      crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
+                      childAspectRatio: 3,
                     ),
                     itemBuilder: (context, index) {
                       final colorInfo = colors[index];
@@ -160,7 +169,7 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                         onTap: () {
                           setModalState(() {
                             setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
+                              selectedColorName = colorInfo['name'];
                             });
                           });
                         },
@@ -174,7 +183,6 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                           ),
                           child: Row(
                             children: [
-                              // Circle representing the color
                               Container(
                                 width: 24,
                                 height: 24,
@@ -212,7 +220,6 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // Align the quantity, cart, and pre-order button in the same row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -245,7 +252,8 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle pre-order logic
+                          // Call the function to handle pre-order logic
+                          _preOrderProduct();
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
@@ -266,9 +274,36 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
       },
     );
   }
+
+  // Function to handle pre-order logic
+  void _preOrderProduct() async {
+    final DatabaseReference dbRef = FirebaseDatabase.instance.ref();
+    String? userId = UserSession().getUserId(); // Get user ID
+
+    // Get the current date
+    String currentDate = DateTime.now().toIso8601String(); // Format the date
+
+    // Create a map of pre-order details
+    final Map<String, dynamic> preOrderDetails = {
+      'name': productName,
+      'price': productPrice,
+      'quantity': quantity,
+      'color': selectedColorName,
+      'date': currentDate, // Add the current date
+      'image': 'assets/icon/product/fillers/leather_fern.png', // Product image path
+    };
+
+    // Push the pre-order details to the Firebase database
+    await dbRef.child('users/$userId/preorder').push().set(preOrderDetails).then((_) {
+      // Optionally, you can show a confirmation message or toast here
+      print('Pre-order added successfully');
+    }).catchError((error) {
+      // Handle any errors
+      print('Failed to add pre-order: $error');
+    });
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
 class TagWidget extends StatelessWidget {
   final String label;
 

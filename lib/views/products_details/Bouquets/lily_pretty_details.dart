@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Database
+import 'package:intl/intl.dart'; // Import for date formatting
 import '../../../widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import your user session
 
 class LilyPrettyDetails extends StatefulWidget {
   const LilyPrettyDetails({super.key});
@@ -11,6 +13,11 @@ class LilyPrettyDetails extends StatefulWidget {
 
 class _LilyPrettyDetails extends State<LilyPrettyDetails> {
   int quantity = 1;
+  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref(); // Reference to Firebase Database
+  final String itemName = "Lily Pretty Bouquets"; // Item name
+  final double itemPrice = 200; // Item price
+  String selectedColor = "Red"; // Default selected color
+  final String productImage = 'assets/icon/product/bouquets/FeaturedProduct1.png'; // Product image
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +42,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/icon/product/bouquets/FeaturedProduct1.png',
+                    productImage,
                     width: 360,
                     height: 350,
                     fit: BoxFit.cover,
@@ -109,7 +116,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
                       ElevatedButton(
                         onPressed: () {
                           // Handle pre-order logic
-                          Navigator.pop(context);
+                          _addToPreOrder(); // Call the function to add to pre-order
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
@@ -128,9 +135,34 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
       ),
     );
   }
+
+  // Function to add pre-order details to Firebase Realtime Database
+  Future<void> _addToPreOrder() async {
+    try {
+      String? userId = UserSession().getUserId(); // Get user ID from session
+      String orderDate = DateFormat('yyyy-MM-dd').format(DateTime.now()); // Format the current date
+      // Create a new order object
+      Map<String, dynamic> orderData = {
+        'name': itemName,
+        'price': itemPrice,
+        'quantity': quantity,
+        'color': selectedColor,
+        'date': orderDate, // Add the date of the pre-order
+        'image': productImage, // Add the image of the product
+      };
+      // Push the new order data to Firebase
+      await _dbRef.child('users/$userId/preorder').push().set(orderData);
+      // Show success message
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Pre-order added successfully!')));
+      Navigator.pop(context); // Optionally navigate back
+    } catch (e) {
+      // Handle any errors
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to add pre-order: $e')));
+    }
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
+// A simple widget for product tags (Lily, Bouquets, Onhand)
 class TagWidget extends StatelessWidget {
   final String label;
 

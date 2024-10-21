@@ -1,6 +1,9 @@
+// Import necessary packages
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart'; // Import Firebase Database package
+import 'package:intl/intl.dart'; // Import for date formatting
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import for UserSession
 
 class SunflowerDetails extends StatefulWidget {
   const SunflowerDetails({super.key});
@@ -260,7 +263,10 @@ class _SunflowerDetails extends State<SunflowerDetails> {
   // Method to add pre-order details to Firebase
   void _addToCart() {
     final DatabaseReference database = FirebaseDatabase.instance.ref(); // Initialize Firebase Database reference
-    String userId = 'user1'; // Replace with dynamic user ID if available
+    String? userId = UserSession().getUserId(); // Get the dynamic user ID
+
+    // Get the current date and format it
+    String dateTimeNow = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
 
     // Create a map for pre-order details
     Map<String, dynamic> preOrderDetails = {
@@ -268,17 +274,18 @@ class _SunflowerDetails extends State<SunflowerDetails> {
       'price': price,
       'quantity': quantity,
       'color': selectedColorName,
+      'date': dateTimeNow, // Add the current date and time
+      'image': 'assets/icon/product/flowers/sunflower.png', // Add the image URL
     };
 
-    // Push pre-order details to Firebase under /users/user1/preorder
+    // Push pre-order details to Firebase under /users/userId/preorder
     database.child('users/$userId/preorder').push().set(preOrderDetails).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Pre-order added successfully!')),
+        const SnackBar(content: Text('Pre-order added to cart!')),
       );
     }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to add pre-order: $error')),
-      );
+      // Handle error
+      print('Failed to add pre-order: $error');
     });
   }
 }

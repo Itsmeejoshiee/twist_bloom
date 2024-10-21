@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import your UserSession class
 
 class WaxFlowerDetails extends StatefulWidget {
   const WaxFlowerDetails({super.key});
@@ -274,30 +275,24 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
   void _preOrderProduct() async {
     final DatabaseReference dbRef = FirebaseDatabase.instance.ref();
 
+    // Get the user ID from UserSession
+    String? userId = UserSession().getUserId();
+
     // Create a map of pre-order details
     final Map<String, dynamic> preOrderDetails = {
       'name': productName,
       'price': productPrice,
       'quantity': quantity,
       'color': selectedColorName,
+      'date': DateTime.now().toIso8601String(), // Add current date
+      'image': 'assets/icon/product/fillers/waxflower.png', // Product image path
     };
 
-    // Push pre-order details to Firebase
-    await dbRef.child('users/user1/preorder').push().set(preOrderDetails).then((_) {
-      // Show confirmation message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Pre-order added successfully!')),
-      );
-    }).catchError((error) {
-      // Handle error
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to add pre-order: $error')),
-      );
-    });
+    // Save the pre-order details to Firebase Database
+    await dbRef.child('/users/$userId/preorder').push().set(preOrderDetails);
   }
 }
 
-// Dummy widget for tags, you may replace with your own implementation
 class TagWidget extends StatelessWidget {
   final String label;
 

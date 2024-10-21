@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart'; // For formatting the date
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import UserSession to access userId
 
 class PoppyDetails extends StatefulWidget {
   const PoppyDetails({super.key});
@@ -133,7 +135,7 @@ class _PoppyDetails extends State<PoppyDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -146,22 +148,21 @@ class _PoppyDetails extends State<PoppyDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // The GridView for color options
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3, // 3 columns like the design
+                      crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
+                      childAspectRatio: 3,
                     ),
                     itemBuilder: (context, index) {
                       final colorInfo = colors[index];
                       return GestureDetector(
                         onTap: () {
                           setModalState(() {
-                            selectedColorName = colorInfo['name']; // Update in both modal and parent
+                            selectedColorName = colorInfo['name'];
                           });
                         },
                         child: Container(
@@ -174,7 +175,6 @@ class _PoppyDetails extends State<PoppyDetails> {
                           ),
                           child: Row(
                             children: [
-                              // Circle representing the color
                               Container(
                                 width: 24,
                                 height: 24,
@@ -212,7 +212,6 @@ class _PoppyDetails extends State<PoppyDetails> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  // Align the quantity, cart, and pre-order button in the same row
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -264,25 +263,31 @@ class _PoppyDetails extends State<PoppyDetails> {
 
   // Function to handle pre-order logic
   void _handlePreOrder() {
-    final databaseRef = FirebaseDatabase.instance.ref('/users/user1/preorder');
+    final userId = UserSession().getUserId(); // Get the userId
+    final databaseRef = FirebaseDatabase.instance.ref('/users/$userId/preorder');
 
-    // Create the pre-order data
+    // Create the pre-order data with the current date and image path
+    String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String productImage = 'assets/icon/product/flowers/poppy.png'; // Set the product image path
+
     Map<String, dynamic> preOrderData = {
       'name': flowerName,
       'price': flowerPrice,
       'quantity': quantity,
       'color': selectedColorName,
+      'date': formattedDate, // Add the date field
+      'image': productImage,  // Add the image field
     };
 
     // Save to Firebase
     databaseRef.push().set(preOrderData).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Pre-order placed successfully!')),
+        const SnackBar(content: Text('Pre-order added to cart!')),
       );
-      Navigator.pop(context); // Close the modal
     }).catchError((error) {
+      print('Failed to add pre-order: $error');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to place pre-order: $error')),
+        const SnackBar(content: Text('Failed to add pre-order.')),
       );
     });
   }

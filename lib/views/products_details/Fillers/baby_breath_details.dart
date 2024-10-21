@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Database
 import '../../../widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import the UserSession class
 
 class BabyBreathDetails extends StatefulWidget {
   const BabyBreathDetails({super.key});
@@ -10,6 +11,9 @@ class BabyBreathDetails extends StatefulWidget {
 }
 
 class _BabyBreathDetails extends State<BabyBreathDetails> {
+  // Firebase database reference
+  final DatabaseReference _database = FirebaseDatabase.instance.ref();
+
   // List of colors with corresponding display color and name
   List<Map<String, dynamic>> colors = [
     {'name': 'Red', 'color': Colors.red},
@@ -131,7 +135,7 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -159,9 +163,7 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
                       return GestureDetector(
                         onTap: () {
                           setModalState(() {
-                            setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
-                            });
+                            selectedColorName = colorInfo['name'];
                           });
                         },
                         child: Container(
@@ -222,11 +224,9 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
                             icon: const Icon(Icons.remove),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  if (quantity > 1) {
-                                    quantity--;
-                                  }
-                                });
+                                if (quantity > 1) {
+                                  quantity--;
+                                }
                               });
                             },
                           ),
@@ -235,9 +235,7 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
                             icon: const Icon(Icons.add),
                             onPressed: () {
                               setModalState(() {
-                                setState(() {
-                                  quantity++;
-                                });
+                                quantity++;
                               });
                             },
                           ),
@@ -245,19 +243,19 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Handle pre-order logic
-                          Navigator.pop(context);
+                          _addToCart(); // Handle pre-order
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text(
+                          'Pre-order',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
                 ],
               ),
             );
@@ -266,9 +264,38 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
       },
     );
   }
+
+  // Function to handle adding pre-order details to Firebase
+  void _addToCart() {
+    // Get user ID from UserSession
+    String? userId = UserSession().getUserId();
+
+    // Create a map of the pre-order details
+    Map<String, dynamic> preOrderData = {
+      'name': "Baby's Breath",
+      'price': 35,
+      'quantity': quantity,
+      'color': selectedColorName,
+      'date': DateTime.now().toIso8601String(), // Add current date
+      'image': 'assets/icon/product/fillers/baby_breath.png', // Add product image path
+    };
+
+    // Push the data to the Firebase database under the specified path
+    _database.child('users/$userId/preorder').push().set(preOrderData).then((_) {
+      // Show a confirmation message
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Pre-order added successfully!')),
+      );
+      Navigator.pop(context); // Close the BottomSheet after adding to cart
+    }).catchError((error) {
+      // Handle any errors
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to add pre-order: $error')),
+      );
+    });
+  }
 }
 
-// A simple widget for product tags (Lavender, Filler, Pre-order)
 class TagWidget extends StatelessWidget {
   final String label;
 

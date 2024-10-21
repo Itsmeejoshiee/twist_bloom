@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart'; // Import this package for date formatting
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import '/../user_session.dart'; // Import the user session to retrieve user ID
 
 class TagWidget extends StatelessWidget {
   final String label;
@@ -23,8 +25,6 @@ class TagWidget extends StatelessWidget {
   }
 }
 
-
-
 class RoseDetails extends StatefulWidget {
   const RoseDetails({super.key});
 
@@ -33,8 +33,8 @@ class RoseDetails extends StatefulWidget {
 }
 
 class _RoseDetails extends State<RoseDetails> {
-  // Firebase Database reference
   final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
+  String? userId = UserSession().getUserId(); // Retrieve the user ID here
 
   List<Map<String, dynamic>> colors = [
     {'name': 'Red', 'color': Colors.red},
@@ -133,10 +133,13 @@ class _RoseDetails extends State<RoseDetails> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                  child: const Text('CUSTOMIZE',
+                      style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
                 ),
               ),
             ],
@@ -146,7 +149,6 @@ class _RoseDetails extends State<RoseDetails> {
     );
   }
 
-  // Function to show the BottomSheet with customization options
   void _showCustomizationSheet(BuildContext parentContext) {
     showModalBottomSheet(
       context: parentContext,
@@ -203,7 +205,8 @@ class _RoseDetails extends State<RoseDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
+                                    color: selectedColorName ==
+                                        colorInfo['name']
                                         ? const Color(0xFFE0D19E)
                                         : Colors.transparent,
                                     width: 2,
@@ -261,15 +264,18 @@ class _RoseDetails extends State<RoseDetails> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          _addPreOrderToDatabase();
+                          _addPreOrderToDatabase(); // Add pre-order to database
                           Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart', style: TextStyle(
+                            fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -283,26 +289,31 @@ class _RoseDetails extends State<RoseDetails> {
     );
   }
 
-  // Function to add pre-order details to Firebase
+  // Inside your _addPreOrderToDatabase method
   void _addPreOrderToDatabase() {
+    // Create the current date and time formatted as a string
+    String currentDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(
+        DateTime.now());
+
+    // Define the price of the rose
+    int price = 70; // Adjust this value if necessary
+
     // Create the data to store
     Map<String, dynamic> preOrderData = {
       'name': 'Rose',
-      'price': 70,
-      'quantity': quantity,
       'color': selectedColorName,
+      'quantity': quantity,
+      'date': currentDate,
+      'image': 'assets/icon/product/flowers/rose.png', // Image path
+      'price': price, // Include price in the pre-order data
     };
 
-    // Store the data under /users/user1/preorder
-    _databaseReference.child('users/user1/preorder').push().set(preOrderData).then((_) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Pre-order added successfully!')),
-      );
+    // Update the user's pre-orders in the database
+    _databaseReference.child('users/$userId/preorder').push().set(
+        preOrderData).then((_) {
+      print('Pre-order added successfully');
     }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to add pre-order: $error')),
-      );
+      print('Failed to add pre-order: $error');
     });
   }
 }
-
