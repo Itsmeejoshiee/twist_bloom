@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/views/signup_page.dart';
 import 'account_subpages/personal_info_page.dart';
 import 'account_subpages/login_security.dart';
 import 'principal_classes.dart';
