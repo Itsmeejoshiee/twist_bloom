@@ -47,8 +47,9 @@ class _SignInPageState extends State<SignInPage> {
         body: GradientBackground(
           child: Column(
             children: [
-              Expanded(
+              Flexible(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 30),
@@ -67,7 +68,19 @@ class _SignInPageState extends State<SignInPage> {
                             width: 40,
                             height: 40,
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            UserCredential? user =
+                                await _auth.signInwithGoogle();
+                            if (user != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                              );
+                            } else {
+                              print("Error Occured");
+                            }
+                          },
                         ),
                         SizedBox(width: 16),
                         IconButton(
@@ -81,7 +94,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     SizedBox(height: 32),
                     _buildTextField(
-                        labelText: "E-mail",
+                        labelText: "Email",
                         hintText: "Enter your email",
                         controller: _emailController),
                     SizedBox(height: 25),
@@ -106,58 +119,54 @@ class _SignInPageState extends State<SignInPage> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: _signIn,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFFF92B2),
-                            foregroundColor: Colors.black,
-                            padding: EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(290),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _signIn,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFFF92B2),
+                          foregroundColor: Colors.black,
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(290),
+                          ),
+                          elevation: 4,
+                        ),
+                        child: Text("Sign In"),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Center(
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          children: [
+                            TextSpan(
+                              text: "Don't have an account? ",
                             ),
-                            elevation: 4,
-                          ),
-                          child: Text("Sign In"),
+                            TextSpan(
+                              text: "Sign Up",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.none),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => const SignUpPage(),
+                                    ),
+                                  );
+                                },
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 16),
-                      Center(
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                            children: [
-                              TextSpan(
-                                text: "Don't have an account? ",
-                              ),
-                              TextSpan(
-                                text: "Sign Up",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.none),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignUpPage(),
-                                      ),
-                                    );
-                                  },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],

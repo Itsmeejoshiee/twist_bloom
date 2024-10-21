@@ -9,6 +9,8 @@ import 'package:twist_bloom/Views/principal_classes.dart';
 import 'package:twist_bloom/Views/signin_page.dart';
 import 'package:twist_bloom/models/user_auth/firebase_auth_service.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:twist_bloom/models/user_auth/firebase_auth_service.dart';
 
 void main() {
   runApp(const SignUpPage());
@@ -49,22 +51,23 @@ class _SignUpPageState extends State<SignUpPage> {
         body: GradientBackground(
           child: Column(
             children: [
-              Expanded(
+              Flexible(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 30),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 40.0),
                       child: Text(
                         "Let's Get Started",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 30),
                         textAlign: TextAlign.center,
                       ),
                     ),
+                    SizedBox(height: 30),
                     Text(
                       "Continue with",
-                      style: TextStyle(fontSize: 14),
+                      style: TextStyle(fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 16),
@@ -77,7 +80,19 @@ class _SignUpPageState extends State<SignUpPage> {
                             width: 40,
                             height: 40,
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            UserCredential? user =
+                                await _auth.signInwithGoogle();
+                            if (user != null) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                              );
+                            } else {
+                              print("Error Occured");
+                            }
+                          },
                         ),
                         SizedBox(width: 16),
                         IconButton(
@@ -96,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         controller: _fullnameController),
                     SizedBox(height: 25),
                     _buildTextField(
-                        labelText: "E-mail",
+                        labelText: "Email",
                         hintText: "Enter your email",
                         controller: _emailController),
                     SizedBox(height: 25),
@@ -121,58 +136,54 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: _signUp,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFFF92B2),
-                            foregroundColor: Colors.black,
-                            padding: EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(290),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: _signUp,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFFFF92B2),
+                          foregroundColor: Colors.black,
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(290),
+                          ),
+                          elevation: 4,
+                        ),
+                        child: Text("Sign Up"),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Center(
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          children: [
+                            TextSpan(
+                              text: "Don't have an account? ",
                             ),
-                            elevation: 4,
-                          ),
-                          child: Text("Register"),
+                            TextSpan(
+                              text: "Sign In",
+                              style: TextStyle(
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.none),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => const SignInPage(),
+                                    ),
+                                  );
+                                },
+                            ),
+                          ],
                         ),
                       ),
-                      SizedBox(height: 16),
-                      Center(
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(fontSize: 16, color: Colors.black),
-                            children: [
-                              TextSpan(
-                                text: "Already have an account? ",
-                              ),
-                              TextSpan(
-                                text: "Log in",
-                                style: TextStyle(
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.none),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignInPage(),
-                                      ),
-                                    );
-                                  },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ],

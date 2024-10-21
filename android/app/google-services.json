@@ -13,7 +13,20 @@
           "package_name": "com.example.twist_bloom"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1001956523638-iq8bmu6q4vso0lmdhingq66i1at0kfnt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.twist_bloom",
+            "certificate_hash": "0c759cf7124c0198fbafdc85d3c01b3b8f717b64"
+          }
+        },
+        {
+          "client_id": "1001956523638-f0o69tj3hs1kk59d3c45bnuo81fbn2ep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAnEfza7PbeSHpxLNyfWfoJWm5cDJng4kw"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001956523638-f0o69tj3hs1kk59d3c45bnuo81fbn2ep.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
