@@ -22,13 +22,19 @@ class MessagesAndNotificationsScreen extends StatefulWidget {
   const MessagesAndNotificationsScreen({super.key});
 
   @override
-  _MessagesAndNotificationsScreenState createState() => _MessagesAndNotificationsScreenState();
+  _MessagesAndNotificationsScreenState createState() =>
+      _MessagesAndNotificationsScreenState();
 }
 
-class _MessagesAndNotificationsScreenState extends State<MessagesAndNotificationsScreen> {
-  final DatabaseReference _database = FirebaseDatabase.instance.ref('messages/accounts');
+class _MessagesAndNotificationsScreenState
+    extends State<MessagesAndNotificationsScreen> {
+  final DatabaseReference _messagesDatabase =
+  FirebaseDatabase.instance.ref('messages/accounts');
+  final DatabaseReference _notificationsDatabase =
+  FirebaseDatabase.instance.ref('notifications');
   final TextEditingController _controller = TextEditingController();
   final List<Message> _messages = [];
+  final List<String> _notifications = [];
   final ImagePicker _picker = ImagePicker();
   bool _isExpanded = false;
   bool _isInputVisible = false;
@@ -37,10 +43,11 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
   void initState() {
     super.initState();
     _loadMessages();
+    _loadNotifications();
   }
 
   Future<void> _loadMessages() async {
-    _database.onValue.listen((DatabaseEvent event) {
+    _messagesDatabase.onValue.listen((DatabaseEvent event) {
       final List<Message> messages = [];
       final data = event.snapshot.value as Map<dynamic, dynamic>?;
 
@@ -51,7 +58,8 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
         });
       }
 
-      messages.sort((a, b) => DateTime.parse(a.timestamp).compareTo(DateTime.parse(b.timestamp)));
+      messages.sort(
+              (a, b) => DateTime.parse(a.timestamp).compareTo(DateTime.parse(b.timestamp)));
 
       setState(() {
         _messages.clear();
@@ -59,6 +67,26 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
       });
     });
   }
+
+  Future<void> _loadNotifications() async {
+    _notificationsDatabase.onValue.listen((DatabaseEvent event) {
+      final List<String> notifications = [];
+      final data = event.snapshot.value as Map<dynamic, dynamic>?;
+
+      if (data != null) {
+        data.forEach((key, value) {
+          final notificationData = Map<String, dynamic>.from(value);
+          notifications.add(notificationData['content'] ?? '');
+        });
+      }
+
+      setState(() {
+        _notifications.clear();
+        _notifications.addAll(notifications);
+      });
+    });
+  }
+
 
   void _sendMessage({String? imageUrl}) {
     if (_controller.text.isNotEmpty || imageUrl != null) {
@@ -69,7 +97,7 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
         isImage: imageUrl != null,
       );
 
-      _database.push().set(message.toMap());
+      _messagesDatabase.push().set(message.toMap());
       _controller.clear();
     }
   }
@@ -78,7 +106,9 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       File file = File(pickedFile.path);
-      final Reference storageReference = FirebaseStorage.instance.ref().child('images/${DateTime.now().millisecondsSinceEpoch}_${pickedFile.name}');
+      final Reference storageReference = FirebaseStorage.instance
+          .ref()
+          .child('images/${DateTime.now().millisecondsSinceEpoch}_${pickedFile.name}');
 
       try {
         final UploadTask uploadTask = storageReference.putFile(file);
@@ -88,11 +118,30 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
 
         _sendMessage(imageUrl: imageUrl);
       } catch (e) {
-        // pang errors
+        _showErrorDialog('Image Selection Error', 'Could not select image from gallery. Please try again.');
       }
     }
   }
 
+  void _showErrorDialog(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,8 +169,12 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
-              const MessageBubble(content: 'Lorem ipsum dolor amet, consectetur', isNotification: true),
+              ..._notifications
+                  .map((notification) => MessageBubble(
+                content: notification,
+                isNotification: true,
+              ))
+                  .toList(),
               const SizedBox(height: 20),
               const Text(
                 'Messages:',
@@ -162,7 +215,7 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
                   child: Scrollbar(
                     thumbVisibility: true,
                     thickness: 8,
-                    radius: Radius.circular(20),
+                    radius: const Radius.circular(20),
                     child: ListView.builder(
                       reverse: false,
                       itemCount: _messages.length,
@@ -214,6 +267,7 @@ class _MessagesAndNotificationsScreenState extends State<MessagesAndNotification
   }
 }
 
+
 class MessageBubble extends StatelessWidget {
   final String content;
   final bool isSender;
@@ -236,7 +290,9 @@ class MessageBubble extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: isNotification ? Colors.grey.shade200 : (isSender ? Colors.lightBlueAccent : Colors.white),
+          color: isNotification
+              ? Colors.amber.shade100
+              : (isSender ? Colors.lightBlueAccent : Colors.white),
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -244,16 +300,38 @@ class MessageBubble extends StatelessWidget {
             bottomRight: isSender ? Radius.zero : const Radius.circular(12),
           ),
         ),
-        child: isImage
-            ? Image.network(content)
-            : Text(
-          content,
-          style: TextStyle(
-            fontSize: 16,
-            color: isSender || isNotification ? Colors.white : Colors.black,
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (isNotification)
+              const Icon(
+                Icons.notifications,
+                color: Colors.orange,
+                size: 25,
+              ),
+            const SizedBox(width: 8),
+            isImage
+                ? ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.6,
+                maxHeight: MediaQuery.of(context).size.height * 0.4,
+              ),
+              child: Image.network(
+                content,
+                fit: BoxFit.cover,
+              ),
+            )
+                : Text(
+              content,
+              style: TextStyle(
+                fontSize: 16,
+                color: isSender || isNotification ? Colors.black : Colors.black,
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
