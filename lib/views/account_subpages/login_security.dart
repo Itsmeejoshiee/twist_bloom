@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'edit_email.dart';
 import 'edit_password.dart';
-import '../../controllers/user_info_controller.dart'; // Assuming you have a user session service to get email and password.
+import '../../user_session.dart';
 
 class LoginAndSecurity extends StatelessWidget {
   const LoginAndSecurity({super.key});
