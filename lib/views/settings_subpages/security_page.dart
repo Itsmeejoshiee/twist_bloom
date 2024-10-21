@@ -107,44 +107,6 @@ class SecurityPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const ListTile(
-                        title: Text('Login History'),
-                      ),
-                      SizedBox(
-                        width: 274,
-                        child: Card(
-                          color: Colors.grey[200],
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Column(
-                            children: [
-                              Text(
-                                'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: 274,
-                        child: Card(
-                          color: Colors.grey[200],
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Column(
-                            children: [
-                              Text(
-                                'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 40),
                     ],
                   ),

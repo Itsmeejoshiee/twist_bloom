@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'account_subpages/personal_info_page.dart';
 import 'account_subpages/login_security.dart';
 import 'principal_classes.dart';
-import 'signup_page.dart';
 import '../widgets/gradient_background.dart';
 import '../user_session.dart';
-import '../../models/email_model.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
