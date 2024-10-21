@@ -14,6 +14,7 @@ class EditNamePage extends StatefulWidget {
 class _EditNamePageState extends State<EditNamePage> {
   final TextEditingController _nameController = TextEditingController();
   String? userId;
+  bool _isValid = true;
 
   @override
   void initState() {
@@ -31,9 +32,13 @@ class _EditNamePageState extends State<EditNamePage> {
     }
   }
 
-  void _updateName() async {
-    String newName = _nameController.text;
-    if (newName.isNotEmpty) {
+  void _validateAndUpdateName() async {
+    setState(() {
+      _isValid = _nameController.text.isNotEmpty;
+    });
+
+    if (_isValid) {
+      String newName = _nameController.text;
       UserModel userModel = UserModel(userId: userId!, name: newName);
       try {
         await userModel.updateName(newName);
@@ -73,12 +78,6 @@ class _EditNamePageState extends State<EditNamePage> {
             Navigator.pop(context);
           },
         ),
-        actions: [
-          TextButton(
-            onPressed: _updateName,
-            child: const Text('Save', style: TextStyle(color: Colors.white)),
-          ),
-        ],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
@@ -105,13 +104,29 @@ class _EditNamePageState extends State<EditNamePage> {
                 ),
                 child: TextField(
                   controller: _nameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "John Doe",
+                    errorText: !_isValid && _nameController.text.isEmpty
+                        ? 'Please enter a name'
+                        : null,
                   ),
                   style: const TextStyle(fontSize: 20, fontFamily: 'Poppins'),
                 ),
               ),
+              const Spacer(),
+              ElevatedButton(
+                onPressed: _validateAndUpdateName,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  backgroundColor: const Color.fromRGBO(255, 182, 193, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                child: const Text('Save'),
+              ),
+              const SizedBox(height: 20), // Space between button and bottom
             ],
           ),
         ),

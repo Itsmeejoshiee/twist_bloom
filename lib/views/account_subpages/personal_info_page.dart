@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
-import 'edit_bio.dart';
 import 'edit_name.dart';
 import 'edit_phone_num.dart';
 import 'address_page.dart';
@@ -76,14 +75,6 @@ class PersonalInfoPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const EditNamePage()),
-                      );
-                    }),
-                    _buildInfoButton(context, 'Bio', () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EditBioPage(), // Pass userId here
-                        ),
                       );
                     }),
                     _buildInfoButton(context, 'Gender', () {
