@@ -16,36 +16,43 @@ class _PromoStep6Page extends State<PromoStep6Page> {
       'imageUrl': 'assets/icon/product/bouquets/sample_design1.png',
       'title': 'Style #1',
       'price': 0.0,
+      'productId':1014,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/sample_design2.png',
       'title': 'Style #2',
       'price': 0.0,
+      'productId':1015,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/sample_design3.png',
       'title': 'Style #3',
       'price': 0.0,
+      'productId':1016,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/sample_design4.png',
       'title': 'Style #4',
       'price': 0.0,
+      'productId':1017,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/sample_design5.png',
       'title': 'Style #5',
       'price': 0.0,
+      'productId':1018,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/sample_design6.png',
       'title': 'Style #6',
       'price': 0.0,
+      'productId':1019,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/sample_design7.png',
       'title': 'Style #7',
       'price': 0.0,
+      'productId':1020,
     },
   ];
 
@@ -131,6 +138,7 @@ class _PromoStep6Page extends State<PromoStep6Page> {
                             imageUrl: product['imageUrl'],
                             title: product['title'],
                             price: product['price'],
+                            productId: product['productId'],
                           ),
                         ),
                       );

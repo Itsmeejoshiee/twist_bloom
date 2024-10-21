@@ -23,31 +23,37 @@ class _PromoStep1Page extends State<PromoStep1Page> {
       'imageUrl': 'assets/icon/product/flowers/tulip.png',
       'title': 'Tulip',
       'price': 65.0,
+      'productId':3006,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/sunflower.png',
       'title': 'Sunflower',
       'price': 75.0,
+      'productId':3005,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/poppy.png',
       'title': 'Poppy',
       'price': 45.0,
+      'productId':3003,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/rose.png',
       'title': 'Rose',
       'price': 70.0,
+      'productId':3004,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/lily.png',
       'title': 'Lily',
       'price': 65.0,
+      'productId':3002,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/gerbera.png',
       'title': 'Gerbera Daisy',
       'price': 70.0,
+      'productId':3001,
     },
   ];
 
@@ -119,6 +125,7 @@ class _PromoStep1Page extends State<PromoStep1Page> {
                           imageUrl: filteredProducts[index]['imageUrl'],
                           title: filteredProducts[index]['title'],
                           price: filteredProducts[index]['price'],
+                          productId: filteredProducts[index]['productId'],
                           onTap: () {
                             // Add navigation based on the title of the product
                             switch (filteredProducts[index]['title']) {

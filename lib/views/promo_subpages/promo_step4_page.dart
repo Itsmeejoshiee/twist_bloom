@@ -17,26 +17,31 @@ class _PromoStep4Page extends State<PromoStep4Page> {
       'imageUrl': 'assets/icon/product/accents/sinamay_cream.png',
       'title': 'Sinamay (Cream)',
       'price': 0.0,
+      'productId':0002,
     },
     {
       'imageUrl': 'assets/icon/product/accents/sinamay_golden_yellow.png',
       'title': 'Sinamay (Golden Yellow)',
       'price': 0.0,
+      'productId':0003,
     },
     {
       'imageUrl': 'assets/icon/product/accents/tissue_paper.png',
       'title': 'Tissue Paper (White)',
       'price': 0.0,
+      'productId':0005,
     },
     {
       'imageUrl': 'assets/icon/product/accents/snowflake_net.png',
       'title': 'Snowflake Net (White)',
       'price': 0.0,
+      'productId':0004,
     },
     {
       'imageUrl': 'assets/icon/product/accents/pearl_wave_yarn.png',
       'title': 'Pearl Wave Yarn (Per meter)',
       'price': 0.0,
+      'productId':0001,
     },
   ];
 
@@ -122,6 +127,7 @@ class _PromoStep4Page extends State<PromoStep4Page> {
                         imageUrl: product['imageUrl'],
                         title: product['title'],
                         price: product['price'],
+                        productId: product['productId'],
                       ),
                     ),
                   );

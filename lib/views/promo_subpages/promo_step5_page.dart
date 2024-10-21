@@ -17,56 +17,67 @@ class _PromoStep5Page extends State<PromoStep5Page> {
       'imageUrl': 'assets/icon/product/ribbons/cream.png',
       'title': 'Cream',
       'price': 0.0,
+      'productId':4003,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/milky_white.png',
       'title': 'Milky White',
       'price': 0.0,
+      'productId':4007,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/golden_yellow.png',
       'title': 'Golden Yellow',
       'price': 0.0,
+      'productId':4004,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/wine_red_ribbon.png',
       'title': 'Wine Red',
       'price': 0.0,
+      'productId':4011,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/pink_rose.png',
       'title': 'Pink Rose',
       'price': 0.0,
+      'productId':4009,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/light_blue.png',
       'title': 'Light Blue',
       'price': 0.0,
+      'productId':4005,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/blue_fishtail.png',
       'title': 'Blue (fishtail)',
       'price': 0.0,
+      'productId':4001,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/burgundy_fishtail.png',
       'title': 'Burgundy (fishtail)',
       'price': 0.0,
+      'productId':4002,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/light_purple_fishtail.png',
       'title': 'Light Purple (fishtail)',
       'price': 0.0,
+      'productId':4006,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/white_fishtail.png',
       'title': 'White (fishtail)',
       'price': 0.0,
+      'productId':4010,
     },
     {
       'imageUrl': 'assets/icon/product/ribbons/milky_white_fishtail.png',
       'title': 'Milky White (fishtail)',
       'price': 0.0,
+      'productId':4008,
     },
   ];
 
@@ -149,6 +160,7 @@ class _PromoStep5Page extends State<PromoStep5Page> {
                         imageUrl: product['imageUrl'],
                         title: product['title'],
                         price: product['price'],
+                        productId: product['productId'],
                       ),
                     ),
                   );

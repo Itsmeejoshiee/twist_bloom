@@ -17,41 +17,49 @@ class _PromoStep3Page extends State<PromoStep3Page> {
       'imageUrl': 'assets/icon/product/wrappers/kraft_board.png',
       'title': 'Kraft Board',
       'price': 0.0,
+      'productId':5003,
     },
     {
       'imageUrl': 'assets/icon/product/wrappers/kraft_paper.png',
       'title': 'Kraft Paper',
       'price': 0.0,
+      'productId':5004,
     },
     {
       'imageUrl': 'assets/icon/product/wrappers/navy_blue.png',
       'title': 'Navy Blue',
       'price': 0.0,
+      'productId':5007,
     },
     {
       'imageUrl': 'assets/icon/product/wrappers/lime_green.png',
       'title': 'Lime Green',
       'price': 0.0,
+      'productId':5005,
     },
     {
       'imageUrl': 'assets/icon/product/wrappers/cardamom_purple.png',
       'title': 'Cardamom Purple',
       'price': 0.0,
+      'productId':5001,
     },
     {
       'imageUrl': 'assets/icon/product/wrappers/milky_yellow.png',
       'title': 'Milky Yellow',
       'price': 0.0,
+      'productId':5006,
     },
     {
       'imageUrl': 'assets/icon/product/wrappers/gouache.png',
       'title': 'Gouache + Milky White',
       'price': 0.0,
+      'productId':5002,
     },
     {
       'imageUrl': 'assets/icon/product/wrappers/wine_red.png',
       'title': 'Wine Red',
       'price': 0.0,
+      'productId':5008,
     },
   ];
 
@@ -126,6 +134,7 @@ class _PromoStep3Page extends State<PromoStep3Page> {
                           imageUrl: product['imageUrl'],
                           title: product['title'],
                           price: product['price'],
+                          productId: product['productId'],
                         ),
                       ),
                     );

@@ -7,7 +7,7 @@ class UserSession {
     return _instance;
   }
 
-  String? userId;
+  String? userId = "user1";
 
   void setUserId(String id) {
     userId = id;

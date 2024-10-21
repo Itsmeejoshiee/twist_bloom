@@ -22,26 +22,31 @@ class _PromoStep2Page extends State<PromoStep2Page> {
       'imageUrl': 'assets/icon/product/fillers/lavender.png',
       'title': 'Lavender',
       'price': 45.0,
+      'productId':2003,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/eucalyptus.png',
       'title': 'Eucalyptus',
       'price': 30.0,
+      'productId':2002,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/leather_fern.png',
       'title': 'Leather Fern',
       'price': 45.0,
+      'productId':2004,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/baby_breath.png',
       'title': "Baby's Breath",
       'price': 35.0,
+      'productId':2001,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/waxflower.png',
       'title': 'Wax Flower',
       'price': 35.0,
+      'productId':2005,
     },
   ];
 
@@ -122,6 +127,7 @@ class _PromoStep2Page extends State<PromoStep2Page> {
                           imageUrl: filteredProducts[index]['imageUrl'],
                           title: filteredProducts[index]['title'],
                           price: filteredProducts[index]['price'],
+                          productId: filteredProducts[index]['productId'],
                           onTap: () {
                             switch (filteredProducts[index]['title']) {
                               case 'Lavender':

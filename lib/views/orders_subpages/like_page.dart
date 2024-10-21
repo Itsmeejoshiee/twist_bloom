@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import '../../user_session.dart'; // Import your user session for user ID
 
 class LikesPage extends StatefulWidget {
   const LikesPage({super.key});
@@ -11,13 +13,71 @@ class LikesPage extends StatefulWidget {
 class _LikesPageState extends State<LikesPage> {
   int _likeCount = 0; // Counter for likes
   bool _isEditing = false; // Flag to check if in editing mode
-  List<bool> _selectedProducts = List.generate(10, (index) => false); // Dummy product selection state
-  final List<Map<String, dynamic>> _products = [
-    {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 1', 'price': 10.0, 'rating': 4.5},
-    {'image': 'assets/icon/product/product2.jpg', 'title': 'Product 2', 'price': 15.0, 'rating': 4.0},
-    {'image': 'assets/icon/product/product1.jpg', 'title': 'Product 3', 'price': 20.0, 'rating': 3.5},
-    // Add more products as needed
-  ];
+  List<bool> _selectedProducts = []; // Product selection state
+  List<Map<String, dynamic>> _likedProducts = []; // List to store liked products
+  String? userId; // Store the current user's ID
+
+  @override
+  void initState() {
+    super.initState();
+    userId = UserSession().getUserId(); // Fetch userId from user session
+    _fetchLikedProducts();
+  }
+
+  Future<void> _fetchLikedProducts() async {
+    if (userId == null) return; // Check if userId is not null
+
+    DatabaseReference ref = FirebaseDatabase.instance.ref('users/$userId/likes'); // Adjust path for user-specific likes
+    DatabaseEvent event = await ref.once(); // Use `once` to get a single snapshot
+    DataSnapshot snapshot = event.snapshot; // Get the snapshot from the event
+
+    if (snapshot.exists) {
+      List<Map<String, dynamic>> fetchedProducts = [];
+      // Ensure that the snapshot value is a Map
+      if (snapshot.value is Map) {
+        final likesMap = snapshot.value as Map;
+        for (var entry in likesMap.entries) {
+          // Each entry corresponds to a liked product
+          if (entry.value is Map) {
+            Map<String, dynamic> product = Map<String, dynamic>.from(entry.value as Map);
+            // Convert price to double if it is an int
+            if (product['price'] is int) {
+              product['price'] = (product['price'] as int).toDouble(); // Convert int to double
+            }
+            fetchedProducts.add(product);
+          }
+        }
+      }
+      setState(() {
+        _likedProducts = fetchedProducts; // Store liked products
+        _selectedProducts = List.generate(_likedProducts.length, (index) => false); // Initialize selection state
+        _likeCount = _likedProducts.length; // Set like count based on fetched products
+      });
+    }
+  }
+
+  Future<void> _deleteSelectedProducts() async {
+    if (userId == null) return; // Check if userId is not null
+
+    DatabaseReference ref = FirebaseDatabase.instance.ref('users/$userId/likes'); // Reference to user-specific likes
+
+    // Loop through selected products and delete them from Firebase
+    for (int i = 0; i < _likedProducts.length; i++) {
+      if (_selectedProducts[i]) {
+        // Get the product ID from the liked products list
+        String productId = _likedProducts[i]['productId'].toString(); // Assuming each liked product has a unique 'id' field
+        String productIdKey = 'product_$productId'; // Create the unique key for Firebase
+        print('Deleting product with ID: $productIdKey'); // Debug statement
+
+        // Remove the product from Firebase
+        await ref.child(productIdKey).remove().catchError((error) {
+          print('Error deleting product: $error'); // Catch and print any errors
+        });
+      }
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +118,8 @@ class _LikesPageState extends State<LikesPage> {
         body: GradientBackground(
           child: Stack(
             children: [
-              GridView.builder(
+              _likedProducts.isNotEmpty // Check if there are liked products
+                  ? GridView.builder(
                 padding: const EdgeInsets.all(8.0),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, // Number of items per row
@@ -66,13 +127,13 @@ class _LikesPageState extends State<LikesPage> {
                   mainAxisSpacing: 8.0,
                   childAspectRatio: 151 / 213, // Ratio for width/height of the product card
                 ),
-                itemCount: _products.length,
+                itemCount: _likedProducts.length,
                 itemBuilder: (context, index) {
-                  return pc(
-                    image: _products[index]['image'],
-                    title: _products[index]['title'],
-                    price: _products[index]['price'],
-                    rating: _products[index]['rating'],
+                  return ProductCard(
+                    image: _likedProducts[index]['image'],
+                    title: _likedProducts[index]['title'],
+                    price: _likedProducts[index]['price'],
+                    rating: 4.5, // Example rating, replace with actual data if available
                     isSelected: _selectedProducts[index],
                     isEditing: _isEditing,
                     onSelect: (bool? value) {
@@ -80,14 +141,22 @@ class _LikesPageState extends State<LikesPage> {
                         _selectedProducts[index] = value ?? false;
                       });
                     },
-                    onSelectNow: () {
+                    onLike: () {
                       setState(() {
-                        _selectedProducts[index] = !_selectedProducts[index];
+                        // Add or remove product from liked products
+                        if (_likedProducts.contains(_likedProducts[index])) {
+                          _likedProducts.remove(_likedProducts[index]);
+                          _likeCount--; // Decrease like count
+                        } else {
+                          _likedProducts.add(_likedProducts[index]);
+                          _likeCount++; // Increase like count
+                        }
                       });
                     },
                   );
                 },
-              ),
+              )
+                  : const Center(child: Text('No liked products available')), // Show message if no liked products
               if (_isEditing) _buildEditingNavBar(),
             ],
           ),
@@ -120,12 +189,13 @@ class _LikesPageState extends State<LikesPage> {
               child: const Text('Select All'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                await _deleteSelectedProducts(); // Call delete function
                 setState(() {
-                  // Delete selected products
-                  _products.removeWhere((product) => _selectedProducts[_products.indexOf(product)]);
-                  _selectedProducts = List.generate(_products.length, (index) => false);
-                  _likeCount = _products.length; // Update count after deletion
+                  // Update local state after deletion
+                  _likedProducts.removeWhere((product) => _selectedProducts[_likedProducts.indexOf(product)]);
+                  _selectedProducts = List.generate(_likedProducts.length, (index) => false);
+                  _likeCount = _likedProducts.length; // Update count after deletion
                 });
               },
               child: const Text(
@@ -140,7 +210,9 @@ class _LikesPageState extends State<LikesPage> {
   }
 }
 
-class pc extends StatelessWidget {
+
+
+class ProductCard extends StatelessWidget {
   final String image;
   final String title;
   final double price;
@@ -148,9 +220,9 @@ class pc extends StatelessWidget {
   final bool isSelected;
   final bool isEditing;
   final ValueChanged<bool?> onSelect;
-  final VoidCallback onSelectNow;
+  final VoidCallback onLike;
 
-  const pc({
+  const ProductCard({
     super.key,
     required this.image,
     required this.title,
@@ -159,7 +231,7 @@ class pc extends StatelessWidget {
     required this.isSelected,
     required this.isEditing,
     required this.onSelect,
-    required this.onSelectNow,
+    required this.onLike,
   });
 
   @override
@@ -237,17 +309,17 @@ class pc extends StatelessWidget {
                   BoxShadow(
                     color: Colors.black26,
                     offset: Offset(0, -1), // Shadow above the button
-                    blurRadius: 2,
+                    blurRadius: 3,
                   ),
                 ],
               ),
               child: TextButton(
-                onPressed: onSelectNow,
+                onPressed: onLike,
                 child: Text(
-                  isEditing ? (isSelected ? 'Selected' : 'Select') : 'Add to Cart',
+                  isEditing ? 'Remove' : 'Like', // Show different text based on editing mode
                   style: const TextStyle(
-                    fontSize: 14, // Adjusted font size
-                    color: Colors.white, // Ensure text color contrasts with button color
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),

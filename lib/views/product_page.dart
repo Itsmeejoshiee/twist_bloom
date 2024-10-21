@@ -20,76 +20,91 @@ class _AllProductsPageState extends State<AllProductsPage> {
       'imageUrl': 'assets/icon/product/flowers/tulip.png',
       'title': 'Tulip',
       'price': 65.0,
+      'productId':3006,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/sunflower.png',
       'title': 'Sunflower',
       'price': 75.0,
+      'productId':3005,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/poppy.png',
       'title': 'Poppy',
       'price': 45.0,
+      'productId':3003,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/rose.png',
       'title': 'Rose',
       'price': 70.0,
+      'productId':3004,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/lily.png',
       'title': 'Lily',
       'price': 65.0,
+      'productId':3002,
     },
     {
       'imageUrl': 'assets/icon/product/flowers/gerbera.png',
       'title': 'Gerbera Daisy',
       'price': 70.0,
+      'productId':3001,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/lavender.png',
       'title': 'Lavender',
       'price': 45.0,
+      'productId':2003,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/eucalyptus.png',
       'title': 'Eucalyptus',
       'price': 30.0,
+      'productId':2002,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/leather_fern.png',
       'title': 'Leather Fern',
       'price': 45.0,
+      'productId':2004,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/baby_breath.png',
       'title': "Baby's Breath",
       'price': 35.0,
+      'productId':2001,
     },
     {
       'imageUrl': 'assets/icon/product/fillers/waxflower.png',
       'title': 'Wax Flower',
       'price': 35.0,
+      'productId':2005,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct1.png',
       'title': 'Lily Pretty',
       'price': 200.0,
+      'productId':1001,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct2.png',
       'title': 'Tulip Elegante',
       'price': 250.0,
+      'productId':1002,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct3.png',
       'title': 'Lavender Lover',
       'price': 280.0,
+      'productId':1003,
     },
     {
       'imageUrl': 'assets/icon/product/bouquets/FeaturedProduct4.png',
       'title': 'Sunshine Wonder',
       'price': 200.0,
+      'productId':1004,
     },
   ];
 
@@ -182,6 +197,7 @@ class _AllProductsPageState extends State<AllProductsPage> {
                       imageUrl: filteredProducts[index]['imageUrl'],
                       title: filteredProducts[index]['title'],
                       price: filteredProducts[index]['price'],
+                      productId: filteredProducts[index]['productId'],
                       onTap: () {
                         // Add navigation logic based on the product's title
                         switch (filteredProducts[index]['title']) {
