@@ -26,6 +26,7 @@ class AddEditAddressPage extends StatefulWidget {
 
 class _AddEditAddressPageState extends State<AddEditAddressPage> {
   final AddressController _controller = AddressController();
+  bool _isValid = true;
 
   @override
   void initState() {
@@ -44,12 +45,36 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
     super.dispose();
   }
 
+  void _validateAndSave() {
+    setState(() {
+      _isValid = _controller.regionCityDistrictController.text.isNotEmpty &&
+          _controller.streetBuildingController.text.isNotEmpty &&
+          _controller.unitFloorController.text.isNotEmpty;
+    });
+
+    if (_isValid) {
+      widget.onSave(
+        _controller.regionCityDistrictController.text,
+        _controller.streetBuildingController.text,
+        _controller.unitFloorController.text,
+      );
+      Navigator.pop(context); // Go back to the previous page
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill in all the fields')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.isEdit ? 'Edit Address' : 'Add New Address',
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25,
+        title: Text(
+          widget.isEdit ? 'Edit Address' : 'Add New Address',
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 25,
           ),
         ),
       ),
@@ -65,16 +90,17 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
               _buildTextField('Unit/Floor', _controller.unitFloorController),
               const Spacer(),
               ElevatedButton(
-                onPressed: () {
-                  widget.onSave(
-                    _controller.regionCityDistrictController.text,
-                    _controller.streetBuildingController.text,
-                    _controller.unitFloorController.text,
-                  );
-                  Navigator.pop(context);
-                },
+                onPressed: _validateAndSave,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  backgroundColor: const Color.fromRGBO(255, 182, 193, 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
                 child: const Text('Save'),
               ),
+              const SizedBox(height: 20), // Space between button and bottom
             ],
           ),
         ),
@@ -88,6 +114,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
       decoration: InputDecoration(
         labelText: label,
         border: const OutlineInputBorder(),
+        errorText: !_isValid && controller.text.isEmpty ? 'This field is required' : null,
       ),
     );
   }

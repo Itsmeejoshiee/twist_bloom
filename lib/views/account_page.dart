@@ -6,15 +6,42 @@ import 'principal_classes.dart';
 import 'signup_page.dart';
 import '../widgets/gradient_background.dart';
 import '../user_session.dart';
+import '../../models/email_model.dart';
 
-class AccountPage extends StatelessWidget {
+class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
 
   @override
+  _AccountPageState createState() => _AccountPageState();
+}
+
+class _AccountPageState extends State<AccountPage> {
+  String? userName; // Variable to hold the user name
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCurrentName();
+  }
+
+  void _fetchCurrentName() {
+    // Fetch the current display name from Firebase
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null && user.displayName != null) {
+      setState(() {
+        userName = user.displayName; // Update the userName
+      });
+    } else {
+      setState(() {
+        userName = 'User'; // Fallback if no display name is found
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Fetch userId and name from UserSession
+    // Fetch userId from UserSession
     String? userId = UserSession().getUserId();
-    String? userName = UserSession().getUserName();
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -76,7 +103,7 @@ class AccountPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 5, width: 318),
                     Text(
-                      userName ?? "Leslie's Clover Chips", // Use fetched user name or fallback to 'User'
+                      userName ?? 'User', // Use fetched user name or fallback to 'User'
                       style: const TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -314,15 +341,8 @@ class AccountPage extends StatelessWidget {
                 String password = passwordController.text;
                 if (password.isNotEmpty) {
                   // Proceed with account deletion logic
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Account deleted"),
-                  ));
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Password required"),
-                  ));
                 }
+                Navigator.pop(context);
               },
             ),
           ],
@@ -348,12 +368,8 @@ class AccountPage extends StatelessWidget {
             TextButton(
               child: const Text('Log Out'),
               onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignUpPage()),
-                  );
-                });
+                // Proceed with log out logic
+                Navigator.pop(context);
               },
             ),
           ],

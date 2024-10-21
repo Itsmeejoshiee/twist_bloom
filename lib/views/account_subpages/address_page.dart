@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'add_edit_address.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
-import '../../user_session.dart'; // Import UserSession
+import '../../user_session.dart';  // Import UserSession
 
 class AddressPage extends StatefulWidget {
   const AddressPage({super.key});
@@ -14,6 +15,48 @@ class _AddressPageState extends State<AddressPage> {
   String? regionCityDistrict;
   String? streetBuilding;
   String? unitFloor;
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch the address when the page loads
+    fetchAddressFromFirebase();
+  }
+
+  Future<void> fetchAddressFromFirebase() async {
+    // Get the userId from UserSession
+    String? userId = UserSession().getUserId();
+
+    if (userId != null) {
+      // Reference to the user's address in Firebase
+      DatabaseReference addressRef = FirebaseDatabase.instance.ref('users/$userId/address');
+
+      // Fetch the address data from Firebase
+      DataSnapshot snapshot = await addressRef.get();
+
+      if (snapshot.exists) {
+        // Extract the address details from the snapshot
+        Map<dynamic, dynamic> addressData = snapshot.value as Map<dynamic, dynamic>;
+        setState(() {
+          regionCityDistrict = addressData['region'];
+          streetBuilding = addressData['street'];
+          unitFloor = addressData['unit'];
+        });
+      } else {
+        // If no address exists, set the values to null
+        setState(() {
+          regionCityDistrict = null;
+          streetBuilding = null;
+          unitFloor = null;
+        });
+      }
+    } else {
+      // If userId is null, show a message or handle accordingly
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User ID not found')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +145,8 @@ class _AddressPageState extends State<AddressPage> {
                       ],
                     ),
                   ),
+                ] else ...[
+                  const Text('No address found'),
                 ],
                 const Spacer(),
                 ElevatedButton(
