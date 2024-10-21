@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import '/../user_session.dart';
+import 'package:twist_bloom/views/orders_page.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -24,7 +25,8 @@ class _CartPageState extends State<CartPage> {
 
   Future<void> _loadCartItems() async {
     String? userId = UserSession().getUserId();
-    DatabaseReference cartRef = FirebaseDatabase.instance.ref('/users/$userId/cart');
+    DatabaseReference cartRef =
+        FirebaseDatabase.instance.ref('/users/$userId/cart');
 
     // Fetch data once
     DatabaseEvent event = await cartRef.once();
@@ -44,15 +46,22 @@ class _CartPageState extends State<CartPage> {
       data.forEach((key, value) {
         // Check if the value is a Map and has the expected keys
         if (value is Map<dynamic, dynamic>) {
-          String productName = value['name'] as String? ?? 'Unnamed Product'; // Default value
-          String productImage = value['image'] as String? ?? 'default_image_url'; // Default image
-          double productPrice = (value['price'] as num?)?.toDouble() ?? 0.0; // Default price
-          String productColor = value['color'] as String? ?? 'Unknown Color'; // Default color
-          String productDate = value['date'] as String? ?? 'Unknown Date'; // Default date
-          int productQuantity = (value['quantity'] as num?)?.toInt() ?? 0; // Default quantity
+          String productName =
+              value['name'] as String? ?? 'Unnamed Product'; // Default value
+          String productImage =
+              value['image'] as String? ?? 'default_image_url'; // Default image
+          double productPrice =
+              (value['price'] as num?)?.toDouble() ?? 0.0; // Default price
+          String productColor =
+              value['color'] as String? ?? 'Unknown Color'; // Default color
+          String productDate =
+              value['date'] as String? ?? 'Unknown Date'; // Default date
+          int productQuantity =
+              (value['quantity'] as num?)?.toInt() ?? 0; // Default quantity
 
           // Log individual product details to identify issues
-          print('Product details - Name: $productName, Image: $productImage, Price: $productPrice, Color: $productColor, Date: $productDate, Quantity: $productQuantity');
+          print(
+              'Product details - Name: $productName, Image: $productImage, Price: $productPrice, Color: $productColor, Date: $productDate, Quantity: $productQuantity');
 
           // Check for null values before adding to the lists
           if (productName.isNotEmpty) {
@@ -64,7 +73,8 @@ class _CartPageState extends State<CartPage> {
               'date': productDate,
               'key': key, // Store the key to reference later
             });
-            _quantities.add(productQuantity); // Use the quantity from the product details
+            _quantities.add(
+                productQuantity); // Use the quantity from the product details
             _selectedProducts.add(false); // Default selection to false
           } else {
             print('Product name is null or empty for key: $key');
@@ -86,7 +96,8 @@ class _CartPageState extends State<CartPage> {
 
   Future<void> _moveToCheckout() async {
     String? userId = UserSession().getUserId();
-    DatabaseReference checkoutRef = FirebaseDatabase.instance.ref('/users/$userId/checkout');
+    DatabaseReference checkoutRef =
+        FirebaseDatabase.instance.ref('/users/$userId/checkout');
 
     // Iterate through all products and add them to checkout
     for (int i = 0; i < _products.length; i++) {
@@ -120,13 +131,19 @@ class _CartPageState extends State<CartPage> {
       // Refresh the cart items after checkout
       _loadCartItems();
     });
-  }
 
+    // Navigate to OrdersPage
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => OrdersPage()),
+    );
+  }
 
 // Method to remove all products from the cart
   Future<void> _removeAllProductsFromCart() async {
     String? userId = UserSession().getUserId();
-    DatabaseReference cartRef = FirebaseDatabase.instance.ref('/users/$userId/cart');
+    DatabaseReference cartRef =
+        FirebaseDatabase.instance.ref('/users/$userId/cart');
 
     try {
       // Clear the entire cart
@@ -137,11 +154,10 @@ class _CartPageState extends State<CartPage> {
     }
   }
 
-
-
   Future<void> _removeSelectedProducts() async {
     String? userId = UserSession().getUserId();
-    DatabaseReference cartRef = FirebaseDatabase.instance.ref('/users/$userId/cart');
+    DatabaseReference cartRef =
+        FirebaseDatabase.instance.ref('/users/$userId/cart');
 
     // Collect the keys of the products to delete
     List<String> keysToDelete = [];
@@ -149,7 +165,8 @@ class _CartPageState extends State<CartPage> {
     for (int i = _products.length - 1; i >= 0; i--) {
       if (_selectedProducts[i]) {
         // Get the key associated with the product
-        String productKey = _products[i]['key'] ?? ''; // Make sure to store the key when loading products
+        String productKey = _products[i]['key'] ??
+            ''; // Make sure to store the key when loading products
         if (productKey.isNotEmpty) {
           keysToDelete.add(productKey);
         }
@@ -169,7 +186,6 @@ class _CartPageState extends State<CartPage> {
     // Log deletion
     print('Removed selected products from cart.');
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -225,12 +241,17 @@ class _CartPageState extends State<CartPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  _products[index]['name'], // Corrected from 'title' to 'name'
-                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                                  _products[index][
+                                      'name'], // Corrected from 'title' to 'name'
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   '\$${_products[index]['price'].toStringAsFixed(2)}',
-                                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
@@ -294,7 +315,8 @@ class _CartPageState extends State<CartPage> {
                 await _removeSelectedProducts(); // Call the new delete method
                 setState(() {
                   // Reset the selected products list
-                  _selectedProducts = List.generate(_products.length, (index) => false);
+                  _selectedProducts =
+                      List.generate(_products.length, (index) => false);
                   _quantities = List.generate(_products.length, (index) => 1);
                 });
               },
@@ -308,7 +330,6 @@ class _CartPageState extends State<CartPage> {
       ),
     );
   }
-
 
   // Checkout Mode Navigation Bar
   Widget _buildCheckoutNavBar() {

@@ -228,13 +228,19 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void _signUp() async {
-    String username = _fullnameController.text;
+    String fullname = _fullnameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    User? user = await _auth.signUpwithEmailAndPassword(email, password);
+    User? user =
+        await _auth.signUpwithEmailAndPassword(fullname, email, password);
 
     if (user != null) {
+      String? photoURL = user.photoURL;
+
+      if (photoURL == null) {
+        photoURL = "https://via.placeholder.com/150";
+      }
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => HomePage()),

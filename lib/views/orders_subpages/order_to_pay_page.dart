@@ -1,12 +1,123 @@
+// Import necessary packages
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'package:twist_bloom/views/orders_subpages/order_completed_page.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_receive_page.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_ship_page.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_rate_page.dart';
+import '/../user_session.dart';
 
-class ToPayPage extends StatelessWidget {
+// Product class to hold the product details
+class Product {
+  final String key; // Add the key attribute
+  final String name;
+  final String price;
+  final String date;
+  final String image;
+  final String color;
+  final int quantity;
+
+  Product({
+    required this.key, // Add this parameter
+    required this.name,
+    required this.price,
+    required this.date,
+    required this.image,
+    required this.color,
+    required this.quantity,
+  });
+
+  factory Product.fromMap(Map<dynamic, dynamic> map, String key) {
+    return Product(
+      key: key, // Set the key here
+      name: map['name'] ?? '',
+      price: map['price']?.toString() ?? '',
+      date: map['date'] ?? '',
+      image: map['image'] ?? '',
+      color: map['color'] ?? '',
+      quantity: map['quantity'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'price': price,
+      'date': date,
+      'image': image,
+      'color': color,
+      'quantity': quantity,
+    };
+  }
+}
+
+
+class ToPayPage extends StatefulWidget {
   const ToPayPage({super.key});
+
+  @override
+  _ToPayPageState createState() => _ToPayPageState();
+}
+
+class _ToPayPageState extends State<ToPayPage> {
+  final DatabaseReference _databaseRef = FirebaseDatabase.instance.ref();
+  List<Product> _products = [];
+  bool _isLoading = true; // Loading state
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProducts();
+  }
+
+  Future<void> _fetchProducts() async {
+    setState(() {
+      _isLoading = true; // Set loading state
+    });
+
+    String? userId = UserSession().getUserId(); // Replace with the actual user ID
+    final snapshot = await _databaseRef.child('users/$userId/checkout').get();
+
+    if (snapshot.exists) {
+      final productList = snapshot.value as Map<dynamic, dynamic>;
+      List<Product> products = [];
+      productList.forEach((key, value) {
+        products.add(Product.fromMap(value, key)); // Pass the key to the Product constructor
+      });
+      setState(() {
+        _products = products;
+      });
+    } else {
+      print('No data available.');
+    }
+
+    setState(() {
+      _isLoading = false; // Reset loading state
+    });
+  }
+
+  Future<void> _moveToShip(Product product) async {
+    setState(() {
+      _isLoading = true; // Set loading state while processing
+    });
+
+    String? userId = UserSession().getUserId(); // Replace with the actual user ID
+
+    // Move product to "To Ship" location
+    await _databaseRef.child('users/$userId/toship').push().set(product.toMap());
+
+    // Remove the product from the "To Pay" section using its unique key
+    await _databaseRef.child('users/$userId/checkout/${product.key}').remove();
+
+    // Refresh the product list after moving the product
+    await _fetchProducts(); // Fetch the updated product list
+
+    setState(() {
+      _isLoading = false; // Reset loading state
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +128,22 @@ class ToPayPage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           title: const Text('My Purchases'),
         ),
-        body: Column(
+        body: _isLoading
+            ? Center(child: CircularProgressIndicator()) // Show loading spinner
+            : _products.isEmpty
+            ? Center(child: Text('No products available.')) // Empty state
+            : Column(
           children: [
             _buildNavigationRow(context),
             const SizedBox(height: 16), // Space before the product card
-            _buildProductCard(context), // Product card
+            Expanded(
+              child: ListView.builder(
+                itemCount: _products.length,
+                itemBuilder: (context, index) {
+                  return _buildProductCard(context, _products[index]);
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -40,6 +162,24 @@ class ToPayPage extends StatelessWidget {
       ],
     );
   }
+  Future<void> _removeProduct(Product product) async {
+    setState(() {
+      _isLoading = true; // Set loading state while processing
+    });
+
+    String? userId = UserSession().getUserId(); // Replace with the actual user ID
+
+    // Remove the product from the "To Pay" section using its unique key
+    await _databaseRef.child('users/$userId/checkout/${product.key}').remove();
+
+    // Refresh the product list after removing the product
+    await _fetchProducts(); // Fetch the updated product list
+
+    setState(() {
+      _isLoading = false; // Reset loading state
+    });
+  }
+
 
   Widget _buildNavigationButton(String label, Widget page, BuildContext context, {required bool isCurrentPage}) {
     return GestureDetector(
@@ -78,9 +218,9 @@ class ToPayPage extends StatelessWidget {
     );
   }
 
-  Widget _buildProductCard(BuildContext context) {
+  Widget _buildProductCard(BuildContext context, Product product) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: const Color(0xFFFAD0D4),
       elevation: 0,
@@ -99,7 +239,7 @@ class ToPayPage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  'assets/icon/product/bouquets/sample_design6.png',
+                  product.image, // Using Image.asset for local image
                   fit: BoxFit.cover,
                 ),
               ),
@@ -108,25 +248,30 @@ class ToPayPage extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'Poppies and Rose Bouquet',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    product.name,
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    '₱150',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    'P${product.price}',
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    'On September 21, 2024',
-                    style: TextStyle(fontSize: 10),
+                    'Date: ${product.date}',
+                    style: const TextStyle(fontSize: 10),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    'To pay',
-                    style: TextStyle(fontSize: 10),
+                    'Quantity: ${product.quantity}',
+                    style: const TextStyle(fontSize: 10),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Color: ${product.color}',
+                    style: const TextStyle(fontSize: 10),
                   ),
                 ],
               ),
@@ -138,7 +283,10 @@ class ToPayPage extends StatelessWidget {
                 SizedBox(
                   height: 30,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // Call the move to ship function with the product
+                      _moveToShip(product);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xFFE63D7C),
                       shape: RoundedRectangleBorder(
@@ -151,24 +299,28 @@ class ToPayPage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 8),
                 SizedBox(
                   height: 30,
                   child: ElevatedButton(
-                    onPressed: () {}, // Add action if needed
+                    onPressed: () {
+                      // Call the remove product function with the product
+                      _removeProduct(product);
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.red,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      // Remove the side property to avoid outline
                     ),
                     child: const Text(
-                      'Cancel',
-                      style: TextStyle(fontSize: 12, color: Color(0xFFE63D7C)),
+                      style: TextStyle(fontSize: 12, color: Colors.white),
+                      'Remove',
                     ),
                   ),
                 ),
+
               ],
             ),
           ],
@@ -177,3 +329,4 @@ class ToPayPage extends StatelessWidget {
     );
   }
 }
+

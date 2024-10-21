@@ -1,12 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 import '../../widgets/gradient_background.dart';
 import 'order_to_pay_page.dart';
 import 'order_to_receive_page.dart';
 import 'order_completed_page.dart';
 import 'order_to_rate_page.dart';
 
-class ToShipPage extends StatelessWidget {
+class ToShipPage extends StatefulWidget {
   const ToShipPage({super.key});
+
+  @override
+  _ToShipPageState createState() => _ToShipPageState();
+}
+
+class _ToShipPageState extends State<ToShipPage> {
+  final DatabaseReference _toShipRef = FirebaseDatabase.instance.ref().child('users/user1/toship');
+  List<Map<dynamic, dynamic>> _products = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchToShipProducts();
+  }
+
+  void _fetchToShipProducts() {
+    _toShipRef.onValue.listen((event) {
+      final data = event.snapshot.value as Map<dynamic, dynamic>?;
+      if (data != null) {
+        setState(() {
+          _products = data.entries.map((entry) => entry.value as Map<dynamic, dynamic>).toList();
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +47,17 @@ class ToShipPage extends StatelessWidget {
           children: [
             _buildNavigationRow(context),
             const SizedBox(height: 16), // Add some spacing between tabs and product
-            _buildProductCard(context), // Add product card here
+            Expanded(
+              child: _products.isNotEmpty
+                  ? ListView.builder(
+                itemCount: _products.length,
+                itemBuilder: (context, index) {
+                  final product = _products[index];
+                  return _buildProductCard(context, product);
+                },
+              )
+                  : const Center(child: CircularProgressIndicator()),
+            ),
           ],
         ),
       ),
@@ -63,7 +99,7 @@ class ToShipPage extends StatelessWidget {
             label,
             style: TextStyle(
               fontSize: 12,
-              color: isCurrentPage ? Color(0xFFE63D7C) : Colors.black, // Set color based on current page
+              color: isCurrentPage ? const Color(0xFFE63D7C) : Colors.black, // Set color based on current page
             ),
           ),
           if (isCurrentPage) // Underline for the current page
@@ -71,14 +107,16 @@ class ToShipPage extends StatelessWidget {
               margin: const EdgeInsets.only(top: 4),
               height: 2,
               width: 60,
-              color: Color(0xFFE63D7C),
+              color: const Color(0xFFE63D7C),
             ),
         ],
       ),
     );
   }
 
-  Widget _buildProductCard(BuildContext context) {
+  Widget _buildProductCard(BuildContext context, Map<dynamic, dynamic> product) {
+    final imageUrl = product['image'] ?? '';  // Get image URL from product details
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -98,9 +136,15 @@ class ToShipPage extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  'assets/icon/product/bouquets/sample_design6.png',
+                child: imageUrl.startsWith('assets/')
+                    ? Image.asset(
+                  imageUrl, // Use asset image for local images
                   fit: BoxFit.cover,
+                )
+                    : Image.network(
+                  imageUrl, // Use network image for online images
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => _buildPlaceholderImage(), // Handle error loading image
                 ),
               ),
             ),
@@ -108,25 +152,25 @@ class ToShipPage extends StatelessWidget {
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
-                    'Poppies and Rose Bouquet',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    product['name'] ?? 'Unknown Product',
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    '₱150',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    '₱${product['price'] ?? '0'}',
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    'On September 21, 2024',
-                    style: TextStyle(fontSize: 10),
+                    'On ${product['date'] ?? 'Unknown Date'}',
+                    style: const TextStyle(fontSize: 10),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
-                    'For delivery',
-                    style: TextStyle(fontSize: 10),
+                    product['status'] ?? 'Unknown Status',
+                    style: const TextStyle(fontSize: 10),
                   ),
                 ],
               ),
@@ -140,7 +184,7 @@ class ToShipPage extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {}, // No action needed since it's already paid
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFFCE3E5), // Change to gray to indicate "Paid"
+                      backgroundColor: const Color(0xFFFCE3E5), // Change to gray to indicate "Paid"
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -156,6 +200,14 @@ class ToShipPage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+
+  Widget _buildPlaceholderImage() {
+    return Image.asset(
+      'assets/icon/product/default_image.png', // Path to your local placeholder image
+      fit: BoxFit.cover,
     );
   }
 }
