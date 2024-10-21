@@ -4,7 +4,6 @@ import '../../models/address_model.dart';
 import '../../user_session.dart';
 
 class AddressController {
-  final List<AddressModel> _addresses = [];
   final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
 
   final TextEditingController regionCityDistrictController = TextEditingController();
@@ -28,46 +27,60 @@ class AddressController {
     unitFloorController.dispose();
   }
 
-  List<AddressModel> get addresses => _addresses;
+  Future<void> saveAddress(String userId, Function(String, String, String) onSave) async {
+    Map<String, dynamic> addressData = {
+      'region': regionCityDistrictController.text,
+      'street': streetBuildingController.text,
+      'unit': unitFloorController.text,
+    };
 
-  void saveAddress(Function(String, String, String) onSave) async {
-    final newAddress = AddressModel(
-      regionCityDistrict: regionCityDistrictController.text,
-      streetBuilding: streetBuildingController.text,
-      unitFloor: unitFloorController.text,
-    );
+    await _databaseReference
+        .child('users/$userId/address')
+        .set(addressData)
+        .then((_) {
+      onSave(
+        regionCityDistrictController.text,
+        streetBuildingController.text,
+        unitFloorController.text,
+      );
+    }).catchError((error) {
+      print('Failed to save address: $error');
+    });
+  }
 
-    _addresses.add(newAddress);
+  Future<Map<String, String?>> fetchAddress(String userId) async {
+    DatabaseReference addressRef = _databaseReference.child('users/$userId/address');
+    DataSnapshot snapshot = await addressRef.get();
 
-    String? userId = UserSession().getUserId();
-
-    if (userId != null) {
-      Map<String, dynamic> addressData = {
-        'region': newAddress.regionCityDistrict,
-        'street': newAddress.streetBuilding,
-        'unit': newAddress.unitFloor,
+    if (snapshot.exists) {
+      Map<dynamic, dynamic> addressData = snapshot.value as Map<dynamic, dynamic>;
+      return {
+        'region': addressData['region'],
+        'street': addressData['street'],
+        'unit': addressData['unit']
       };
-
-      await _databaseReference.child('users/$userId/address').set(addressData).then((_) {
-        print('Address saved successfully!');
-      }).catchError((error) {
-        print('Failed to save address: $error');
-      });
+    } else {
+      return {
+        'region': null,
+        'street': null,
+        'unit': null
+      };
     }
-
-    // Execute the callback function
-    onSave(
-      regionCityDistrictController.text,
-      streetBuildingController.text,
-      unitFloorController.text,
-    );
   }
 
-  void editAddress(int index, AddressModel updatedAddress) {
-    _addresses[index] = updatedAddress;
+  Future<void> editAddress(String userId, Map<String, String?> updatedAddress) async {
+    await _databaseReference.child('users/$userId/address').update(updatedAddress).then((_) {
+      print('Address updated successfully!');
+    }).catchError((error) {
+      print('Failed to update address: $error');
+    });
   }
 
-  void deleteAddress(int index) {
-    _addresses.removeAt(index);
+  Future<void> deleteAddress(String userId) async {
+    await _databaseReference.child('users/$userId/address').remove().then((_) {
+      print('Address deleted successfully!');
+    }).catchError((error) {
+      print('Failed to delete address: $error');
+    });
   }
 }

@@ -3,7 +3,7 @@ import 'package:twist_bloom/widgets/gradient_background.dart';
 import '../../controllers/account_settings_controllers/address_controller.dart';
 
 class AddEditAddressPage extends StatefulWidget {
-  final String userId; // Add this line
+  final String userId;
   final String? initialRegionCityDistrict;
   final String? initialStreetBuilding;
   final String? initialUnitFloor;
@@ -12,7 +12,7 @@ class AddEditAddressPage extends StatefulWidget {
 
   const AddEditAddressPage({
     Key? key,
-    required this.userId, // Add this line
+    required this.userId,
     this.initialRegionCityDistrict,
     this.initialStreetBuilding,
     this.initialUnitFloor,
@@ -58,7 +58,7 @@ class _AddEditAddressPageState extends State<AddEditAddressPage> {
         _controller.streetBuildingController.text,
         _controller.unitFloorController.text,
       );
-      Navigator.pop(context); // Go back to the previous page
+      Navigator.pop(context);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please fill in all the fields')),
