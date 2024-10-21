@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 class AppVerPage extends StatefulWidget {
@@ -10,11 +11,32 @@ class AppVerPage extends StatefulWidget {
 
 class _AppVerPageState extends State<AppVerPage> {
   bool _isAutoUpdate = false;
+  final String _autoUpdateKey = 'autoUpdate';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAutoUpdatePreference();
+  }
+
+  // Load the auto-update preference from Hive
+  Future<void> _loadAutoUpdatePreference() async {
+    var box = Hive.box('settings');
+    setState(() {
+      _isAutoUpdate = box.get(_autoUpdateKey, defaultValue: false); // Default is false
+    });
+  }
+
+  // Save the auto-update preference to Hive
+  Future<void> _saveAutoUpdatePreference() async {
+    var box = Hive.box('settings');
+    box.put(_autoUpdateKey, _isAutoUpdate);
+  }
 
   void _toggleAutoUpdate(bool value) {
     setState(() {
       _isAutoUpdate = value;
-      // Auto Update Logic
+      _saveAutoUpdatePreference(); // Save the preference when toggled
     });
   }
 
@@ -25,7 +47,7 @@ class _AppVerPageState extends State<AppVerPage> {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: const Text('App Version'),
+          title: const Text('App Version', style: TextStyle(fontFamily: 'Poppins')),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -39,7 +61,7 @@ class _AppVerPageState extends State<AppVerPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start, // Aligns items to the top
             children: [
-              const SizedBox(height: kToolbarHeight + 30), // Add space equal to the height of AppBar and some extra padding
+              const SizedBox(height: kToolbarHeight + 30), // Add space for AppBar height and extra padding
               Padding(
                 padding: const EdgeInsets.all(16.0), // Padding around the card
                 child: Card(
