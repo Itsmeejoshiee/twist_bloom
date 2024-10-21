@@ -46,66 +46,6 @@ class CurrencyPage extends StatelessWidget {
                         ),
                         subtitle: Text('Philippine Peso (Php)'),
                       ),
-                      const SizedBox(height: 40),
-                      const ListTile(
-                        title: Text(
-                          'Transaction History',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 274,
-                        child: Card(
-                          color: Colors.grey[200],
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: 274,
-                        child: Card(
-                          color: Colors.grey[200],
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      SizedBox(
-                        width: 274,
-                        child: Card(
-                          color: Colors.grey[200],
-                          elevation: 4,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),

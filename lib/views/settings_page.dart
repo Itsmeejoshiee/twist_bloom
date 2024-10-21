@@ -45,14 +45,8 @@ class SettingsPage extends StatelessWidget {
                           context, Icons.language, 'Language', const LanguagePage()),
                       _buildListTile(context, Icons.currency_exchange,
                           'Currency', const CurrencyPage()),
-                      _buildListTile(context, Icons.privacy_tip,
-                          'Privacy Settings', const PrivacySettingsPage()),
-                      _buildListTile(context, Icons.security,
-                          'Account Security', const SecurityPage()),
                       _buildListTile(context, Icons.local_shipping,
                           'Shipping Preferences', const ShippingPrefPage()),
-                      _buildListTile(context, Icons.history, 'Order History',
-                          const OrderHistoryPage()),
                       _buildListTile(
                           context, Icons.help, 'Help & Support', const HelpPage()),
                       _buildListTile(
