@@ -3,6 +3,7 @@ import 'package:twist_bloom/widgets/gradient_background.dart';
 import '../../controllers/account_settings_controllers/address_controller.dart';
 
 class AddEditAddressPage extends StatefulWidget {
+  final String userId; // Add this line
   final String? initialRegionCityDistrict;
   final String? initialStreetBuilding;
   final String? initialUnitFloor;
@@ -10,13 +11,14 @@ class AddEditAddressPage extends StatefulWidget {
   final Function(String, String, String) onSave;
 
   const AddEditAddressPage({
-    super.key,
+    Key? key,
+    required this.userId, // Add this line
     this.initialRegionCityDistrict,
     this.initialStreetBuilding,
     this.initialUnitFloor,
     required this.isEdit,
     required this.onSave,
-  });
+  }) : super(key: key);
 
   @override
   _AddEditAddressPageState createState() => _AddEditAddressPageState();

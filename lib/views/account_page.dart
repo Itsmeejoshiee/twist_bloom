@@ -5,12 +5,17 @@ import 'account_subpages/login_security.dart';
 import 'principal_classes.dart';
 import 'signup_page.dart';
 import '../widgets/gradient_background.dart';
+import '../user_session.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Fetch userId and name from UserSession
+    String? userId = UserSession().getUserId();
+    String? userName = UserSession().getUserName();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -60,8 +65,7 @@ class AccountPage extends StatelessWidget {
                     CircleAvatar(
                       radius: 50,
                       backgroundImage:
-                          const AssetImage('assets/profile_picture.png'),
-                      // Profile Picture
+                      const AssetImage('assets/profile_picture.png'),
                       child: RawMaterialButton(
                         onPressed: () {
                           _showPhotoOptions(context);
@@ -71,9 +75,9 @@ class AccountPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5, width: 318),
-                    const Text(
-                      'John Doe',
-                      style: TextStyle(
+                    Text(
+                      userName ?? "Leslie's Clover Chips", // Use fetched user name or fallback to 'User'
+                      style: const TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Poppins'),
@@ -111,11 +115,17 @@ class AccountPage extends StatelessWidget {
                             alignment: Alignment.centerLeft),
                         icon: const Icon(Icons.person, color: Colors.black),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const PersonalInfoPage()),
-                          );
+                          if (userId != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PersonalInfoPage()),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('User ID not found')),
+                            );
+                          }
                         },
                         label: const Text(
                           'Personal Information',
@@ -338,11 +348,12 @@ class AccountPage extends StatelessWidget {
             TextButton(
               child: const Text('Log Out'),
               onPressed: () {
-                FirebaseAuth.instance.signOut();
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignUpPage()),
-                );
+                FirebaseAuth.instance.signOut().then((value) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignUpPage()),
+                  );
+                });
               },
             ),
           ],

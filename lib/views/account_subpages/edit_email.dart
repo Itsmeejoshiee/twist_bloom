@@ -1,20 +1,68 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/widgets/gradient_background.dart';
+import '../../user_session.dart';
+import '../../models/email_model.dart';
 
-class EditEmailPage extends StatelessWidget {
+class EditEmailPage extends StatefulWidget {
   const EditEmailPage({super.key});
+
+  @override
+  _EditEmailPageState createState() => _EditEmailPageState();
+}
+
+class _EditEmailPageState extends State<EditEmailPage> {
+  final TextEditingController _emailController = TextEditingController();
+  String? userId;
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch the userId from UserSession
+    userId = UserSession().getUserId();
+    // Optionally, fetch the current email from Firebase
+    _fetchCurrentEmail();
+  }
+
+  void _fetchCurrentEmail() {
+    // Fetch the current email from Firebase using the userId
+    // This can be done here if needed.
+  }
+
+  void _updateEmail() async {
+    String newEmail = _emailController.text;
+    if (newEmail.isNotEmpty) {
+      UserModel userModel = UserModel(userId: userId!, email: newEmail);
+      try {
+        await userModel.updateEmail(newEmail);
+        Navigator.pop(context);
+        // Show a success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Email updated successfully')),
+        );
+      } catch (e) {
+        // Handle error (e.g., show error message)
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to update email')),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter an email')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Edit Email',
+        title: const Text(
+          'Edit Email',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
+          ),
         ),
-      ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -23,17 +71,15 @@ class EditEmailPage extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () {
-              // Save email functionality here
-              Navigator.pop(context);
-            },
+            onPressed: _updateEmail,
             child: const Text('Save', style: TextStyle(color: Colors.white)),
-          )
+          ),
         ],
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: GradientBackground(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             const SizedBox(height: 30),
@@ -52,10 +98,14 @@ class EditEmailPage extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const TextField(
+              child: TextField(
+                controller: _emailController,
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(border: InputBorder.none, hintText: 'Email'),
-                style: TextStyle(fontSize: 20, fontFamily: 'Poppins'),
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Email',
+                ),
+                style: const TextStyle(fontSize: 20, fontFamily: 'Poppins'),
               ),
             ),
           ],

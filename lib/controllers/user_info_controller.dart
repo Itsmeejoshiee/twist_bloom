@@ -7,10 +7,9 @@ class UserSession {
     return _instance;
   }
 
-  String? _userId = "user1";
+  String? _userId;
   String? _email;
   String? _password;
-  String? _name;
 
   void setUserId(String id) {
     _userId = id;
@@ -34,17 +33,5 @@ class UserSession {
 
   String? getPassword() {
     return _password;
-  }
-
-  void setUserName(String name) {
-    _name = name;
-  }
-
-  String? getUserName() {
-    return _name;
-  }
-
-  void logout() {
-    _userId = null;
   }
 }

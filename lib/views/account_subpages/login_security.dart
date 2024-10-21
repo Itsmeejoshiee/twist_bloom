@@ -2,16 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'edit_email.dart';
 import 'edit_password.dart';
+import '../../controllers/user_info_controller.dart'; // Assuming you have a user session service to get email and password.
 
 class LoginAndSecurity extends StatelessWidget {
   const LoginAndSecurity({super.key});
 
+  String _censorEmail(String email) {
+    // Display first and last part of the email, censor the rest
+    int atIndex = email.indexOf('@');
+    if (atIndex > 2) {
+      return email.substring(0, 2) + '****' + email.substring(atIndex - 1);
+    }
+    return '****'; // Fallback in case email is invalid
+  }
+
+  String _censorPassword(String password) {
+    // Show only asterisks for password
+    return '*' * password.length;
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Fetch email and password from UserSession
+    String email = UserSession().getEmail() ?? 'Unknown Email';
+    String password = UserSession().getPassword() ?? 'Unknown Password';
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Account Info',
+        title: const Text(
+          'Login & Security',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 25,
@@ -48,12 +68,12 @@ class LoginAndSecurity extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    _buildInfoButton(context, 'Email', () {
+                    _buildInfoButton(context, 'Email: ${_censorEmail(email)}', () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => EditEmailPage()));
                     }),
-                    _buildInfoButton(context, 'Password', () {
+                    _buildInfoButton(context, 'Password: ${_censorPassword(password)}', () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => EditPasswordPage()));

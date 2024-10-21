@@ -4,6 +4,7 @@ import 'edit_bio.dart';
 import 'edit_name.dart';
 import 'edit_phone_num.dart';
 import 'address_page.dart';
+import '../../user_session.dart';
 
 void _showBirthdayPicker(BuildContext context) async {
   DateTime? selectedDate = await showDatePicker(
@@ -18,6 +19,10 @@ void _showBirthdayPicker(BuildContext context) async {
       );
     },
   );
+
+  if (selectedDate != null) {
+    // Handle selected date (e.g., update the user's birthday in your model)
+  }
 }
 
 class PersonalInfoPage extends StatelessWidget {
@@ -25,12 +30,15 @@ class PersonalInfoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Fetch the user ID from UserSession
+    String? userId = UserSession().getUserId();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Account Info',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25,
-          ),
+        title: const Text(
+          'Account Info',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -66,13 +74,17 @@ class PersonalInfoPage extends StatelessWidget {
                   children: [
                     _buildInfoButton(context, 'Name', () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const EditNamePage()));
+                        context,
+                        MaterialPageRoute(builder: (context) => const EditNamePage()),
+                      );
                     }),
                     _buildInfoButton(context, 'Bio', () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const EditBioPage()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditBioPage(), // Pass userId here
+                        ),
+                      );
                     }),
                     _buildInfoButton(context, 'Gender', () {
                       _showGenderSelect(context);
@@ -104,15 +116,16 @@ class PersonalInfoPage extends StatelessWidget {
                   children: [
                     _buildInfoButton(context, 'Phone', () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const EditPhonePage()));
+                        context,
+                        MaterialPageRoute(builder: (context) => const EditPhonePage()),
+                      );
                     }),
                     _buildInfoButton(context, 'Address', () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const AddressPage()));
-                    }
-                    ),
+                        context,
+                        MaterialPageRoute(builder: (context) => const AddressPage()),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -137,7 +150,10 @@ class PersonalInfoPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(text, style: const TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'Poppins')),
+            Text(
+              text,
+              style: const TextStyle(color: Colors.black, fontSize: 20, fontFamily: 'Poppins'),
+            ),
             const Icon(Icons.arrow_forward_ios, color: Colors.black),
           ],
         ),
@@ -145,65 +161,48 @@ class PersonalInfoPage extends StatelessWidget {
     );
   }
 
-  void _showGenderSelect(BuildContext context) { // Gender pop up
+  void _showGenderSelect(BuildContext context) {
+    // Gender selection popup
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Center(child: Text('Gender')),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            backgroundColor: Colors.white,
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Center(child: Text('Gender')),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          backgroundColor: Colors.white,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildGenderOption(context, 'Male'),
+              _buildGenderOption(context, 'Female'),
+              _buildGenderOption(context, 'Others'),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-                SizedBox(
-                    width: 300,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shadowColor: Colors.transparent,
-                          alignment: Alignment.centerLeft
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Male', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
-                    )),
-
-                SizedBox(
-                    width: 300,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shadowColor: Colors.transparent,
-                          alignment: Alignment.centerLeft
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Female', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
-                    )),
-
-                SizedBox(
-                    width: 300,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          shadowColor: Colors.transparent,
-                          alignment: Alignment.centerLeft
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Others', style: TextStyle(fontFamily: 'Poppins', fontSize: 20)),
-                    )),
-              ],
-            ),
-          );
-        }
+  Widget _buildGenderOption(BuildContext context, String gender) {
+    return SizedBox(
+      width: 300,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          shadowColor: Colors.transparent,
+          alignment: Alignment.centerLeft,
+        ),
+        onPressed: () {
+          // Handle gender selection here (e.g., update user model)
+          Navigator.pop(context);
+        },
+        child: Text(
+          gender,
+          style: const TextStyle(fontFamily: 'Poppins', fontSize: 20),
+        ),
+      ),
     );
   }
 }

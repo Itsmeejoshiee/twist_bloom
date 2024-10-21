@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'add_edit_address.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
+import '../../user_session.dart'; // Import UserSession
 
 class AddressPage extends StatefulWidget {
   const AddressPage({super.key});
@@ -19,9 +20,9 @@ class _AddressPageState extends State<AddressPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Address',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25,
-          ),
+        title: const Text(
+          'Address',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -41,7 +42,8 @@ class _AddressPageState extends State<AddressPage> {
               children: [
                 if (regionCityDistrict != null) ...[
                   Container(
-                    margin: const EdgeInsets.only(top: 100, left: 32, right: 32, bottom: 12),
+                    margin: const EdgeInsets.only(
+                        top: 100, left: 32, right: 32, bottom: 12),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
@@ -65,25 +67,34 @@ class _AddressPageState extends State<AddressPage> {
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddEditAddressPage(
-                                    initialRegionCityDistrict: regionCityDistrict,
-                                    initialStreetBuilding: streetBuilding,
-                                    initialUnitFloor: unitFloor,
-                                    isEdit: true,
-                                    onSave: (newRegionCityDistrict, newStreetBuilding, newUnitFloor) {
-                                      setState(() {
-                                        regionCityDistrict = newRegionCityDistrict;
-                                        streetBuilding = newStreetBuilding;
-                                        unitFloor = newUnitFloor;
-                                      });
-                                      Navigator.pop(context);
-                                    },
+                              // Get userId from UserSession
+                              String? userId = UserSession().getUserId();
+                              if (userId != null) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AddEditAddressPage(
+                                      userId: userId, // Pass userId to AddEditAddressPage
+                                      initialRegionCityDistrict: regionCityDistrict,
+                                      initialStreetBuilding: streetBuilding,
+                                      initialUnitFloor: unitFloor,
+                                      isEdit: true,
+                                      onSave: (newRegionCityDistrict, newStreetBuilding, newUnitFloor) {
+                                        setState(() {
+                                          regionCityDistrict = newRegionCityDistrict;
+                                          streetBuilding = newStreetBuilding;
+                                          unitFloor = newUnitFloor;
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('User ID not found')),
+                                );
+                              }
                             },
                             child: const Text('Edit'),
                           ),
@@ -95,28 +106,38 @@ class _AddressPageState extends State<AddressPage> {
                 const Spacer(),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AddEditAddressPage(
-                          isEdit: false,
-                          onSave: (newRegionCityDistrict, newStreetBuilding, newUnitFloor) {
-                            setState(() {
-                              regionCityDistrict = newRegionCityDistrict;
-                              streetBuilding = newStreetBuilding;
-                              unitFloor = newUnitFloor;
-                            });
-                            Navigator.pop(context);
-                          },
+                    // Get userId from UserSession for adding a new address
+                    String? userId = UserSession().getUserId();
+                    if (userId != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddEditAddressPage(
+                            userId: userId, // Pass userId to AddEditAddressPage
+                            isEdit: false,
+                            onSave: (newRegionCityDistrict, newStreetBuilding, newUnitFloor) {
+                              setState(() {
+                                regionCityDistrict = newRegionCityDistrict;
+                                streetBuilding = newStreetBuilding;
+                                unitFloor = newUnitFloor;
+                              });
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('User ID not found')),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15), backgroundColor: const Color.fromRGBO(255, 182, 193, 1),
+                    padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    backgroundColor: const Color.fromRGBO(255, 182, 193, 1),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
-                    ), // Button color
+                    ),
                   ),
                   child: const Text('Add Address'),
                 ),
