@@ -12,7 +12,8 @@ class TulipEleganteDetails extends StatefulWidget {
 
 class _TulipEleganteDetails extends State<TulipEleganteDetails> {
   int quantity = 1;
-  final DatabaseReference _database = FirebaseDatabase.instance.ref(); // Reference to Firebase Database
+  final DatabaseReference _database =
+      FirebaseDatabase.instance.ref(); // Reference to Firebase Database
   final String selectedColorName = "Pink"; // Example color selection
 
   @override
@@ -54,7 +55,7 @@ class _TulipEleganteDetails extends State<TulipEleganteDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱260',
+                    'P260',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -116,10 +117,14 @@ class _TulipEleganteDetails extends State<TulipEleganteDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -135,8 +140,10 @@ class _TulipEleganteDetails extends State<TulipEleganteDetails> {
   // Function to handle adding pre-order details to Firebase
   void _addToCart() {
     String? userId = UserSession().getUserId(); // Retrieve the user ID
-    String currentDate = DateTime.now().toIso8601String(); // Get the current date in ISO format
-    String imagePath = 'assets/icon/product/bouquets/FeaturedProduct2.png'; // Path to the product image
+    String currentDate =
+        DateTime.now().toIso8601String(); // Get the current date in ISO format
+    String imagePath =
+        'assets/icon/product/bouquets/FeaturedProduct2.png'; // Path to the product image
 
     // Create a map of the pre-order details
     Map<String, dynamic> preOrderData = {
@@ -149,7 +156,11 @@ class _TulipEleganteDetails extends State<TulipEleganteDetails> {
     };
 
     // Push the data to the Firebase database under the specified path
-    _database.child('users/$userId/preorder').push().set(preOrderData).then((_) {
+    _database
+        .child('users/$userId/preorder')
+        .push()
+        .set(preOrderData)
+        .then((_) {
       // Show a confirmation message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Pre-order placed successfully!')),

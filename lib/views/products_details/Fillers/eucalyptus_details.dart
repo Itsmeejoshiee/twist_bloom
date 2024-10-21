@@ -29,7 +29,8 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
 
   String selectedColorName = 'Green'; // Default selected color
   int quantity = 1;
-  final DatabaseReference dbRef = FirebaseDatabase.instance.ref(); // Firebase reference
+  final DatabaseReference dbRef =
+      FirebaseDatabase.instance.ref(); // Firebase reference
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱30',
+                    'P30',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -110,10 +111,13 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                  child: const Text('CUSTOMIZE',
+                      style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
                 ),
               ),
             ],
@@ -133,7 +137,8 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
+          // Use StatefulBuilder to track changes within the modal
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -150,18 +155,21 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // 3 columns like the design
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
+                      childAspectRatio:
+                          3, // Adjust ratio to make the circles with labels fit
                     ),
                     itemBuilder: (context, index) {
                       final colorInfo = colors[index];
                       return GestureDetector(
                         onTap: () {
                           setModalState(() {
-                            selectedColorName = colorInfo['name']; // Update in both modal and parent
+                            selectedColorName = colorInfo[
+                                'name']; // Update in both modal and parent
                           });
                         },
                         child: Container(
@@ -182,9 +190,10 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
+                                    color:
+                                        selectedColorName == colorInfo['name']
+                                            ? const Color(0xFFE0D19E)
+                                            : Colors.transparent,
                                     width: 2,
                                   ),
                                 ),
@@ -246,8 +255,10 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
                         ),
                         child: const Text('Pre-order'),
                       ),
@@ -266,7 +277,8 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
   // Function to handle pre-ordering
   void _preOrderProduct() {
     // Get the user ID from UserSession
-    String? userId = UserSession().getUserId(); // Replace with your method to get user ID
+    String? userId =
+        UserSession().getUserId(); // Replace with your method to get user ID
     String path = '/users/$userId/preorder';
 
     // Get the current date
@@ -279,7 +291,8 @@ class _EucalyptusDetails extends State<EucalyptusDetails> {
       'quantity': quantity,
       'color': selectedColorName,
       'date': dateOfPreOrder, // Date of pre-order
-      'image': 'assets/icon/product/fillers/eucalyptus.png' // Product image path
+      'image':
+          'assets/icon/product/fillers/eucalyptus.png' // Product image path
     }).then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Pre-order placed successfully!')),

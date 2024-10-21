@@ -72,7 +72,7 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱35',
+                    'P35',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -112,10 +112,13 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                  child: const Text('CUSTOMIZE',
+                      style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
                 ),
               ),
             ],
@@ -152,11 +155,13 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // 3 columns like the design
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
+                      childAspectRatio:
+                          3, // Adjust ratio to make the circles with labels fit
                     ),
                     itemBuilder: (context, index) {
                       final colorInfo = colors[index];
@@ -184,9 +189,10 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
+                                    color:
+                                        selectedColorName == colorInfo['name']
+                                            ? const Color(0xFFE0D19E)
+                                            : Colors.transparent,
                                     width: 2,
                                   ),
                                 ),
@@ -247,7 +253,8 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
                         ),
                         child: const Text(
                           'Pre-order',
@@ -277,11 +284,16 @@ class _BabyBreathDetails extends State<BabyBreathDetails> {
       'quantity': quantity,
       'color': selectedColorName,
       'date': DateTime.now().toIso8601String(), // Add current date
-      'image': 'assets/icon/product/fillers/baby_breath.png', // Add product image path
+      'image':
+          'assets/icon/product/fillers/baby_breath.png', // Add product image path
     };
 
     // Push the data to the Firebase database under the specified path
-    _database.child('users/$userId/preorder').push().set(preOrderData).then((_) {
+    _database
+        .child('users/$userId/preorder')
+        .push()
+        .set(preOrderData)
+        .then((_) {
       // Show a confirmation message
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Pre-order added successfully!')),

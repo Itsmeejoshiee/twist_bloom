@@ -15,8 +15,10 @@ class _SunshineWonderDetails extends State<SunshineWonderDetails> {
   final DatabaseReference _databaseReference = FirebaseDatabase.instance.ref();
   final String bouquetName = "Sunshine Wonder Bouquets";
   final double bouquetPrice = 200.0;
-  String selectedColor = "Yellow"; // Default color (you can modify this as needed)
-  final String productImage = 'assets/icon/product/bouquets/FeaturedProduct4.png'; // Path to the product image
+  String selectedColor =
+      "Yellow"; // Default color (you can modify this as needed)
+  final String productImage =
+      'assets/icon/product/bouquets/FeaturedProduct4.png'; // Path to the product image
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +59,7 @@ class _SunshineWonderDetails extends State<SunshineWonderDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱200',
+                    'P200',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -120,10 +122,14 @@ class _SunshineWonderDetails extends State<SunshineWonderDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -139,10 +145,12 @@ class _SunshineWonderDetails extends State<SunshineWonderDetails> {
   // Function to add pre-order details to Firebase
   void _addPreOrderToFirebase() {
     String? userId = UserSession().getUserId(); // Get the user ID dynamically
-    String preOrderId = _databaseReference.child('users/$userId/preorder').push().key!;
+    String preOrderId =
+        _databaseReference.child('users/$userId/preorder').push().key!;
 
     // Get the current date
-    String currentDate = DateTime.now().toIso8601String(); // Use ISO 8601 format for consistency
+    String currentDate =
+        DateTime.now().toIso8601String(); // Use ISO 8601 format for consistency
 
     Map<String, dynamic> preOrderDetails = {
       'name': bouquetName,
@@ -153,7 +161,10 @@ class _SunshineWonderDetails extends State<SunshineWonderDetails> {
       'image': productImage, // Include the image path
     };
 
-    _databaseReference.child('users/$userId/preorder/$preOrderId').set(preOrderDetails).then((_) {
+    _databaseReference
+        .child('users/$userId/preorder/$preOrderId')
+        .set(preOrderDetails)
+        .then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Pre-order added successfully!')),
       );

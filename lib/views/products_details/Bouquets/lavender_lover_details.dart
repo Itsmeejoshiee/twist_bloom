@@ -14,8 +14,10 @@ class _LavenderLoverDetails extends State<LavenderLoverDetails> {
   int quantity = 1;
   final String productName = "Lavender Lover Bouquets";
   final int productPrice = 200;
-  final String productColor = 'Lavender'; // Example color, you can modify this as needed
-  final String productImage = 'assets/icon/product/bouquets/FeaturedProduct3.png'; // Path to product image
+  final String productColor =
+      'Lavender'; // Example color, you can modify this as needed
+  final String productImage =
+      'assets/icon/product/bouquets/FeaturedProduct3.png'; // Path to product image
 
   // Reference to the Firebase Realtime Database
   final DatabaseReference database = FirebaseDatabase.instance.ref();
@@ -23,7 +25,8 @@ class _LavenderLoverDetails extends State<LavenderLoverDetails> {
   // Function to handle pre-order logic
   void _handlePreOrder() {
     String? userId = UserSession().getUserId(); // Retrieve user ID
-    String currentDate = DateTime.now().toIso8601String(); // Get current date in ISO format
+    String currentDate =
+        DateTime.now().toIso8601String(); // Get current date in ISO format
 
     // Store data in the Firebase Realtime Database
     database.child('users/$userId/preorder').push().set({
@@ -86,7 +89,7 @@ class _LavenderLoverDetails extends State<LavenderLoverDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱200',
+                    'P200',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -145,10 +148,14 @@ class _LavenderLoverDetails extends State<LavenderLoverDetails> {
                         onPressed: _handlePreOrder,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),

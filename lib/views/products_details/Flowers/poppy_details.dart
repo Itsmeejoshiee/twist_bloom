@@ -72,7 +72,7 @@ class _PoppyDetails extends State<PoppyDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱45',
+                    'P45',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -112,10 +112,13 @@ class _PoppyDetails extends State<PoppyDetails> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                  child: const Text('CUSTOMIZE',
+                      style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
                 ),
               ),
             ],
@@ -151,7 +154,8 @@ class _PoppyDetails extends State<PoppyDetails> {
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -182,9 +186,10 @@ class _PoppyDetails extends State<PoppyDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
+                                    color:
+                                        selectedColorName == colorInfo['name']
+                                            ? const Color(0xFFE0D19E)
+                                            : Colors.transparent,
                                     width: 2,
                                   ),
                                 ),
@@ -244,10 +249,14 @@ class _PoppyDetails extends State<PoppyDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -264,11 +273,13 @@ class _PoppyDetails extends State<PoppyDetails> {
   // Function to handle pre-order logic
   void _handlePreOrder() {
     final userId = UserSession().getUserId(); // Get the userId
-    final databaseRef = FirebaseDatabase.instance.ref('/users/$userId/preorder');
+    final databaseRef =
+        FirebaseDatabase.instance.ref('/users/$userId/preorder');
 
     // Create the pre-order data with the current date and image path
     String formattedDate = DateTime.now().toIso8601String();
-    String productImage = 'assets/icon/product/flowers/poppy.png'; // Set the product image path
+    String productImage =
+        'assets/icon/product/flowers/poppy.png'; // Set the product image path
 
     Map<String, dynamic> preOrderData = {
       'name': flowerName,
@@ -276,7 +287,7 @@ class _PoppyDetails extends State<PoppyDetails> {
       'quantity': quantity,
       'color': selectedColorName,
       'date': formattedDate, // Add the date field
-      'image': productImage,  // Add the image field
+      'image': productImage, // Add the image field
     };
 
     // Save to Firebase

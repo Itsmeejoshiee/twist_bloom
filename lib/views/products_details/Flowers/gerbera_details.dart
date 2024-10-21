@@ -104,7 +104,7 @@ class _GerberaDetails extends State<GerberaDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱70',
+                    'P70',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),

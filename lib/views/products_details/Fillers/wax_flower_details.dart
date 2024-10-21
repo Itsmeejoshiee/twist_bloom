@@ -71,7 +71,7 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱35',
+                    'P35',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -111,10 +111,13 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                  child: const Text('CUSTOMIZE',
+                      style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
                 ),
               ),
             ],
@@ -134,7 +137,8 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
       ),
       backgroundColor: const Color(0xFFFFFAEA),
       builder: (context) {
-        return StatefulBuilder( // Use StatefulBuilder to track changes within the modal
+        return StatefulBuilder(
+          // Use StatefulBuilder to track changes within the modal
           builder: (BuildContext context, StateSetter setModalState) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -151,11 +155,13 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // 3 columns like the design
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
-                      childAspectRatio: 3, // Adjust ratio to make the circles with labels fit
+                      childAspectRatio:
+                          3, // Adjust ratio to make the circles with labels fit
                     ),
                     itemBuilder: (context, index) {
                       final colorInfo = colors[index];
@@ -163,7 +169,8 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
                         onTap: () {
                           setModalState(() {
                             setState(() {
-                              selectedColorName = colorInfo['name']; // Update in both modal and parent
+                              selectedColorName = colorInfo[
+                                  'name']; // Update in both modal and parent
                             });
                           });
                         },
@@ -185,9 +192,10 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
+                                    color:
+                                        selectedColorName == colorInfo['name']
+                                            ? const Color(0xFFE0D19E)
+                                            : Colors.transparent,
                                     width: 2,
                                   ),
                                 ),
@@ -254,10 +262,14 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -285,7 +297,8 @@ class _WaxFlowerDetails extends State<WaxFlowerDetails> {
       'quantity': quantity,
       'color': selectedColorName,
       'date': DateTime.now().toIso8601String(), // Add current date
-      'image': 'assets/icon/product/fillers/waxflower.png', // Product image path
+      'image':
+          'assets/icon/product/fillers/waxflower.png', // Product image path
     };
 
     // Save the pre-order details to Firebase Database

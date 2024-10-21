@@ -78,7 +78,7 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱45',
+                    'P45',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -118,10 +118,13 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                  child: const Text('CUSTOMIZE',
+                      style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
                 ),
               ),
             ],
@@ -157,7 +160,8 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -190,9 +194,10 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
+                                    color:
+                                        selectedColorName == colorInfo['name']
+                                            ? const Color(0xFFE0D19E)
+                                            : Colors.transparent,
                                     width: 2,
                                   ),
                                 ),
@@ -258,10 +263,14 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -290,11 +299,16 @@ class _LeatherFernDetails extends State<LeatherFernDetails> {
       'quantity': quantity,
       'color': selectedColorName,
       'date': currentDate, // Add the current date
-      'image': 'assets/icon/product/fillers/leather_fern.png', // Product image path
+      'image':
+          'assets/icon/product/fillers/leather_fern.png', // Product image path
     };
 
     // Push the pre-order details to the Firebase database
-    await dbRef.child('users/$userId/preorder').push().set(preOrderDetails).then((_) {
+    await dbRef
+        .child('users/$userId/preorder')
+        .push()
+        .set(preOrderDetails)
+        .then((_) {
       // Optionally, you can show a confirmation message or toast here
       print('Pre-order added successfully');
     }).catchError((error) {

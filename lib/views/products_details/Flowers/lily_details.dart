@@ -94,7 +94,7 @@ class _LilyDetailsState extends State<LilyDetails> {
     return const Row(
       children: [
         Text(
-          '₱65',
+          'P65',
           style: TextStyle(
             fontSize: 30,
             color: Color(0xFFFF92B2),
@@ -132,9 +132,11 @@ class _LilyDetailsState extends State<LilyDetails> {
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFFF92B2),
           padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         ),
-        child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+        child: const Text('CUSTOMIZE',
+            style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
       ),
     );
   }
@@ -208,7 +210,9 @@ class _LilyDetailsState extends State<LilyDetails> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       decoration: BoxDecoration(
-        color: selectedColorName == colorInfo['name'] ? const Color(0xFFE0D19E) : const Color(0xFFB3B3B3).withOpacity(.30),
+        color: selectedColorName == colorInfo['name']
+            ? const Color(0xFFE0D19E)
+            : const Color(0xFFB3B3B3).withOpacity(.30),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -229,7 +233,9 @@ class _LilyDetailsState extends State<LilyDetails> {
         shape: BoxShape.circle,
         color: colorInfo['color'],
         border: Border.all(
-          color: selectedColorName == colorInfo['name'] ? const Color(0xFFE0D19E) : Colors.transparent,
+          color: selectedColorName == colorInfo['name']
+              ? const Color(0xFFE0D19E)
+              : Colors.transparent,
           width: 2,
         ),
       ),
@@ -242,7 +248,9 @@ class _LilyDetailsState extends State<LilyDetails> {
       style: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
-        color: selectedColorName == colorInfo['name'] ? Colors.black : Colors.grey.shade700,
+        color: selectedColorName == colorInfo['name']
+            ? Colors.black
+            : Colors.grey.shade700,
       ),
     );
   }
@@ -284,7 +292,8 @@ class _LilyDetailsState extends State<LilyDetails> {
   }
 
   Future<void> _preOrder() async {
-    final DatabaseReference dbRef = FirebaseDatabase.instance.ref('/users/$userId/preorder');
+    final DatabaseReference dbRef =
+        FirebaseDatabase.instance.ref('/users/$userId/preorder');
 
     // Format the current date
     String formattedDate = DateTime.now().toIso8601String();

@@ -28,7 +28,8 @@ class _LavenderDetails extends State<LavenderDetails> {
 
   String selectedColorName = 'Violet'; // Default selected color
   int quantity = 1;
-  final DatabaseReference dbRef = FirebaseDatabase.instance.ref(); // Reference to your Firebase Database
+  final DatabaseReference dbRef =
+      FirebaseDatabase.instance.ref(); // Reference to your Firebase Database
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,7 @@ class _LavenderDetails extends State<LavenderDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱45',
+                    'P45',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -109,10 +110,13 @@ class _LavenderDetails extends State<LavenderDetails> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                  child: const Text('CUSTOMIZE',
+                      style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
                 ),
               ),
             ],
@@ -147,7 +151,8 @@ class _LavenderDetails extends State<LavenderDetails> {
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -178,9 +183,10 @@ class _LavenderDetails extends State<LavenderDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
+                                    color:
+                                        selectedColorName == colorInfo['name']
+                                            ? const Color(0xFFE0D19E)
+                                            : Colors.transparent,
                                     width: 2,
                                   ),
                                 ),
@@ -241,10 +247,14 @@ class _LavenderDetails extends State<LavenderDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -260,7 +270,8 @@ class _LavenderDetails extends State<LavenderDetails> {
 
   void _preOrderProduct() {
     String? userId = UserSession().getUserId(); // Get the user ID
-    String currentDate = DateTime.now().toIso8601String(); // Get current date in ISO 8601 format
+    String currentDate =
+        DateTime.now().toIso8601String(); // Get current date in ISO 8601 format
 
     // Prepare the pre-order details including date and image URL
     final preOrderDetails = {
@@ -269,7 +280,8 @@ class _LavenderDetails extends State<LavenderDetails> {
       'quantity': quantity,
       'color': selectedColorName,
       'date': currentDate, // Add current date
-      'image': 'assets/icon/product/fillers/lavender.png', // Add product image path
+      'image':
+          'assets/icon/product/fillers/lavender.png', // Add product image path
     };
 
     // Save the pre-order details to Firebase under /users/userId/preorder
@@ -284,6 +296,7 @@ class _LavenderDetails extends State<LavenderDetails> {
     });
   }
 }
+
 class TagWidget extends StatelessWidget {
   final String label;
 

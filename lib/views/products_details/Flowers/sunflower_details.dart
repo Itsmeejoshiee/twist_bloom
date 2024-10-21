@@ -71,7 +71,7 @@ class _SunflowerDetails extends State<SunflowerDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱75',
+                    'P75',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -111,10 +111,13 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFFFF92B2),
-                    padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 16.0),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 120, vertical: 16.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20)),
                   ),
-                  child: const Text('CUSTOMIZE', style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
+                  child: const Text('CUSTOMIZE',
+                      style: TextStyle(fontSize: 20, color: Color(0xFF59333E))),
                 ),
               ),
             ],
@@ -149,7 +152,8 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -160,7 +164,8 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                       return GestureDetector(
                         onTap: () {
                           setModalState(() {
-                            selectedColorName = colorInfo['name']; // Update selected color
+                            selectedColorName =
+                                colorInfo['name']; // Update selected color
                           });
                         },
                         child: Container(
@@ -180,9 +185,10 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName == colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
+                                    color:
+                                        selectedColorName == colorInfo['name']
+                                            ? const Color(0xFFE0D19E)
+                                            : Colors.transparent,
                                     width: 2,
                                   ),
                                 ),
@@ -243,10 +249,14 @@ class _SunflowerDetails extends State<SunflowerDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -262,7 +272,8 @@ class _SunflowerDetails extends State<SunflowerDetails> {
 
   // Method to add pre-order details to Firebase
   void _addToCart() {
-    final DatabaseReference database = FirebaseDatabase.instance.ref(); // Initialize Firebase Database reference
+    final DatabaseReference database = FirebaseDatabase.instance
+        .ref(); // Initialize Firebase Database reference
     String? userId = UserSession().getUserId(); // Get the dynamic user ID
 
     // Get the current date and format it
@@ -279,7 +290,11 @@ class _SunflowerDetails extends State<SunflowerDetails> {
     };
 
     // Push pre-order details to Firebase under /users/userId/preorder
-    database.child('users/$userId/preorder').push().set(preOrderDetails).then((_) {
+    database
+        .child('users/$userId/preorder')
+        .push()
+        .set(preOrderDetails)
+        .then((_) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Pre-order added to cart!')),
       );

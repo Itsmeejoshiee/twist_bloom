@@ -93,7 +93,7 @@ class _RoseDetails extends State<RoseDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱70',
+                    'P70',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -174,7 +174,8 @@ class _RoseDetails extends State<RoseDetails> {
                   GridView.builder(
                     shrinkWrap: true,
                     itemCount: colors.length,
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -205,10 +206,10 @@ class _RoseDetails extends State<RoseDetails> {
                                   shape: BoxShape.circle,
                                   color: colorInfo['color'],
                                   border: Border.all(
-                                    color: selectedColorName ==
-                                        colorInfo['name']
-                                        ? const Color(0xFFE0D19E)
-                                        : Colors.transparent,
+                                    color:
+                                        selectedColorName == colorInfo['name']
+                                            ? const Color(0xFFE0D19E)
+                                            : Colors.transparent,
                                     width: 2,
                                   ),
                                 ),
@@ -274,8 +275,9 @@ class _RoseDetails extends State<RoseDetails> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(
-                            fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -308,8 +310,11 @@ class _RoseDetails extends State<RoseDetails> {
     };
 
     // Update the user's pre-orders in the database
-    _databaseReference.child('users/$userId/preorder').push().set(
-        preOrderData).then((_) {
+    _databaseReference
+        .child('users/$userId/preorder')
+        .push()
+        .set(preOrderData)
+        .then((_) {
       print('Pre-order added successfully');
     }).catchError((error) {
       print('Failed to add pre-order: $error');

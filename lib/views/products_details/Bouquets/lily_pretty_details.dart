@@ -13,11 +13,13 @@ class LilyPrettyDetails extends StatefulWidget {
 
 class _LilyPrettyDetails extends State<LilyPrettyDetails> {
   int quantity = 1;
-  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref(); // Reference to Firebase Database
+  final DatabaseReference _dbRef =
+      FirebaseDatabase.instance.ref(); // Reference to Firebase Database
   final String itemName = "Lily Pretty Bouquets"; // Item name
   final double itemPrice = 200; // Item price
   String selectedColor = "Red"; // Default selected color
-  final String productImage = 'assets/icon/product/bouquets/FeaturedProduct1.png'; // Product image
+  final String productImage =
+      'assets/icon/product/bouquets/FeaturedProduct1.png'; // Product image
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
               const Row(
                 children: [
                   Text(
-                    '₱200',
+                    'P200',
                     style: TextStyle(
                       fontSize: 30,
                       color: Color(0xFFFF92B2),
@@ -120,10 +122,14 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFFFF92B2),
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
                         ),
-                        child: const Text('Add to Cart', style: TextStyle(fontSize: 16, color: Color(0xFF59333E))),
+                        child: const Text('Add to Cart',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF59333E))),
                       ),
                     ],
                   ),
@@ -140,7 +146,8 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
   Future<void> _addToPreOrder() async {
     try {
       String? userId = UserSession().getUserId(); // Get user ID from session
-      String orderDate = DateTime.now().toIso8601String(); // Format the current date
+      String orderDate =
+          DateTime.now().toIso8601String(); // Format the current date
       // Create a new order object
       Map<String, dynamic> orderData = {
         'name': itemName,
@@ -153,11 +160,13 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
       // Push the new order data to Firebase
       await _dbRef.child('users/$userId/preorder').push().set(orderData);
       // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Pre-order added successfully!')));
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Pre-order added successfully!')));
       Navigator.pop(context); // Optionally navigate back
     } catch (e) {
       // Handle any errors
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to add pre-order: $e')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Failed to add pre-order: $e')));
     }
   }
 }
