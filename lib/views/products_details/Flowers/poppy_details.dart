@@ -267,7 +267,7 @@ class _PoppyDetails extends State<PoppyDetails> {
     final databaseRef = FirebaseDatabase.instance.ref('/users/$userId/preorder');
 
     // Create the pre-order data with the current date and image path
-    String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String formattedDate = DateTime.now().toIso8601String();
     String productImage = 'assets/icon/product/flowers/poppy.png'; // Set the product image path
 
     Map<String, dynamic> preOrderData = {

@@ -287,14 +287,14 @@ class _LilyDetailsState extends State<LilyDetails> {
     final DatabaseReference dbRef = FirebaseDatabase.instance.ref('/users/$userId/preorder');
 
     // Format the current date
-    String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    String formattedDate = DateTime.now().toIso8601String();
 
     // Product image path
     String productImage = 'assets/icon/product/flowers/lily.png';
 
     // Push new order to Firebase
     await dbRef.push().set({
-      'flowerName': flowerName,
+      'name': flowerName,
       'price': price,
       'quantity': quantity,
       'color': selectedColorName,

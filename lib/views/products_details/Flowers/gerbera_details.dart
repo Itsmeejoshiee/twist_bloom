@@ -301,7 +301,7 @@ class _GerberaDetails extends State<GerberaDetails> {
   void _addToPreOrder() {
     String currentDate = DateTime.now().toIso8601String(); // Get current date in ISO format
     Map<String, dynamic> preorderData = {
-      'product': 'Gerbera Daisy',
+      'name': 'Gerbera Daisy',
       'color': selectedColorName,
       'quantity': quantity,
       'price': 70,

@@ -292,8 +292,7 @@ class _RoseDetails extends State<RoseDetails> {
   // Inside your _addPreOrderToDatabase method
   void _addPreOrderToDatabase() {
     // Create the current date and time formatted as a string
-    String currentDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(
-        DateTime.now());
+    String currentDate = DateTime.now().toIso8601String();
 
     // Define the price of the rose
     int price = 70; // Adjust this value if necessary
