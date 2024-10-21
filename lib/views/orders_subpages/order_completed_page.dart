@@ -1,12 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_receive_page.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_ship_page.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_rate_page.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_pay_page.dart';
+import 'package:twist_bloom/user_session.dart'; // Import UserSession to access userId
 
-class CompletedPage extends StatelessWidget {
+class CompletedPage extends StatefulWidget {
   const CompletedPage({super.key});
+
+  @override
+  _CompletedPageState createState() => _CompletedPageState();
+}
+
+class _CompletedPageState extends State<CompletedPage> {
+  final List<Map<String, dynamic>> products = []; // To hold fetched products
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProducts(); // Fetch products when the widget is initialized
+  }
+
+  Future<void> _fetchProducts() async {
+    final userId = UserSession().getUserId(); // Get the user ID
+    final database = FirebaseDatabase.instance.ref();
+
+    // Path to the "To Completed" folder
+    final completedPath = '/users/$userId/tocompleted';
+
+    // Get the products from Firebase
+    final snapshot = await database.child(completedPath).get();
+
+    if (snapshot.exists) {
+      // Clear existing products
+      products.clear();
+
+      // Convert snapshot to a list of maps
+      for (var product in snapshot.children) {
+        final productData = product.value as Map<Object?, Object?>?;
+        if (productData != null) {
+          products.add(Map<String, dynamic>.from(productData));
+        }
+      }
+      // Update the UI
+      setState(() {});
+    } else {
+      print("No products found in the completed folder.");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,26 +64,25 @@ class CompletedPage extends StatelessWidget {
           children: [
             _buildNavigationRow(context),
             const SizedBox(height: 16), // Add spacing between tabs and products
-            _buildProductCard(
-              context,
-              productName: 'Poppies and Rose Bouquet',
-              price: '₱150',
-              deliveredDate: 'Delivered on: September 20, 2024',
-              buttonText1: 'Rate',
-              buttonText2: 'Buy again', // Added "Buy again" button
-              buttonColor1: Color(0xFFE63D7C), // Pink button for "Rate"
-              buttonColor2: Color(0xFFFFFFFF), // White background for "Buy again"
-              textColor2: Color(0xFFE63D7C), // Pink text for "Buy again"
-            ),
-            const SizedBox(height: 12), // Space between product cards
-            _buildProductCard(
-              context,
-              productName: 'Tulip Elegante Bouquet',
-              price: '₱260',
-              deliveredDate: 'Delivered on: August 23, 2024',
-              buttonText1: 'Buy again', // Only one button
-              buttonColor1: Color(0xFFFFFFFF),
-              textColor1: Color(0xFFE63D7C), // Pink text for "Buy again"
+            // Display fetched product cards
+            Expanded(
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  final product = products[index];
+                  return _buildProductCard(
+                    context,
+                    productName: product['name'] ?? 'Unknown Product',
+                    price: '₱${product['price']?.toString() ?? '0'}',
+                    deliveredDate: 'Delivered on: ${product['deliveredDate'] ?? 'Unknown Date'}',
+                    buttonText1: 'Rate',
+                    buttonText2: 'Buy again', // Added "Buy again" button
+                    buttonColor1: Color(0xFFE63D7C), // Pink button for "Rate"
+                    buttonColor2: Color(0xFFFFFFFF), // White background for "Buy again"
+                    textColor2: Color(0xFFE63D7C), // Pink text for "Buy again"
+                  );
+                },
+              ),
             ),
           ],
         ),
@@ -205,5 +247,4 @@ class CompletedPage extends StatelessWidget {
       ),
     );
   }
-
 }

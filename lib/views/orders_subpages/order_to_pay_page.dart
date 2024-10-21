@@ -104,8 +104,12 @@ class _ToPayPageState extends State<ToPayPage> {
 
     String? userId = UserSession().getUserId(); // Replace with the actual user ID
 
-    // Move product to "To Ship" location
-    await _databaseRef.child('users/$userId/toship').push().set(product.toMap());
+    // Create a map with the product data and add the 'status' field
+    Map<String, dynamic> productWithStatus = product.toMap();
+    productWithStatus['status'] = 'Not Paid'; // Add the status field
+
+    // Move product to "To Ship" location with the status
+    await _databaseRef.child('users/$userId/toship').push().set(productWithStatus);
 
     // Remove the product from the "To Pay" section using its unique key
     await _databaseRef.child('users/$userId/checkout/${product.key}').remove();
@@ -117,6 +121,7 @@ class _ToPayPageState extends State<ToPayPage> {
       _isLoading = false; // Reset loading state
     });
   }
+
 
 
   @override
@@ -320,7 +325,6 @@ class _ToPayPageState extends State<ToPayPage> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ],

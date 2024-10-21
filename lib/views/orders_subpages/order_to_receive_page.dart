@@ -4,9 +4,55 @@ import 'order_to_pay_page.dart';
 import 'order_to_ship_page.dart';
 import 'order_completed_page.dart';
 import 'order_to_rate_page.dart';
+import 'package:firebase_database/firebase_database.dart';
+import '/../user_session.dart';
 
-class ToReceivePage extends StatelessWidget {
+class ToReceivePage extends StatefulWidget {
   const ToReceivePage({super.key});
+
+  @override
+  _ToReceivePageState createState() => _ToReceivePageState();
+}
+
+class _ToReceivePageState extends State<ToReceivePage> {
+  List<Map<String, dynamic>> products = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchProducts();
+  }
+
+  Future<void> _fetchProducts() async {
+    final userId = UserSession().getUserId(); // Get the user ID
+    final database = FirebaseDatabase.instance.ref();
+
+    // Path to the "To Ship" folder
+    final toreceivePath = '/users/$userId/toreceive';
+
+    // Get the products from Firebase
+    final snapshot = await database.child(toreceivePath).get();
+
+    if (snapshot.exists) {
+      // Clear existing products
+      products.clear();
+
+      // Convert snapshot to a list of maps
+      for (var product in snapshot.children) {
+        // Safely cast to Map<String, dynamic>
+        final productData = product.value as Map<Object?, Object?>?;
+        if (productData != null) {
+          products.add(Map<String, dynamic>.from(productData));
+        }
+      }
+
+      // Update the UI
+      setState(() {});
+    } else {
+      print("No products found in the cart.");
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +67,11 @@ class ToReceivePage extends StatelessWidget {
           children: [
             _buildNavigationRow(context),
             Expanded(
-              child: ListView(
-                children: [
-                  SizedBox(height: 10,),
-                  _buildPreOrderProduct(context), // Add the product widget here
-                ],
+              child: ListView.builder(
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  return _buildPreOrderProduct(context, products[index]);
+                },
               ),
             ),
           ],
@@ -69,7 +115,7 @@ class ToReceivePage extends StatelessWidget {
             label,
             style: TextStyle(
               fontSize: 12,
-              color: isCurrentPage ? Color(0xFFE63D7C) : Colors.black, // Set color based on current page
+              color: isCurrentPage ? const Color(0xFFE63D7C) : Colors.black, // Set color based on current page
             ),
           ),
           if (isCurrentPage) // Underline for the current page
@@ -77,14 +123,14 @@ class ToReceivePage extends StatelessWidget {
               margin: const EdgeInsets.only(top: 4),
               height: 2,
               width: 60,
-              color: Color(0xFFE63D7C),
+              color: const Color(0xFFE63D7C),
             ),
         ],
       ),
     );
   }
 
-  Widget _buildPreOrderProduct(BuildContext context) {
+  Widget _buildPreOrderProduct(BuildContext context, Map<String, dynamic> product) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: const Color(0xFFFAD0D4),
@@ -94,8 +140,8 @@ class ToReceivePage extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              width: 60, // Adjust width here (if necessary)
-              height: 60, // Adjust height here (if necessary)
+              width: 60,
+              height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 color: Colors.grey[300],
@@ -103,48 +149,50 @@ class ToReceivePage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  'assets/icon/product/bouquets/sample_design6.png',
+                  product['image'] ?? 'assets/icon/product/bouquets/sample_design6.png', // Default image if none provided
                   fit: BoxFit.cover,
                 ),
               ),
             ),
             const SizedBox(width: 16),
-            const Expanded(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Poppies and Rose Bouquet',
-                      style: TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 4),
-                  Text('₱150',
-                      style: TextStyle(
-                          fontSize: 14, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 4),
-                  Text('On September 21, 2024',
-                      style: TextStyle(fontSize: 10)),
-                  SizedBox(height: 4),
-                  Text('Expected Delivery: September 24, 2024',
-                      style: TextStyle(fontSize: 10)),
+                  Text(
+                    product['name'] ?? 'Product Name',
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    product['price'] ?? '₱0',
+                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'On ${product['orderDate'] ?? 'Date'}',
+                    style: const TextStyle(fontSize: 10),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    'Expected Delivery: ${product['expectedDelivery'] ?? 'Date'}',
+                    style: const TextStyle(fontSize: 10),
+                  ),
                 ],
               ),
             ),
             const SizedBox(width: 16),
             Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 SizedBox(
                   height: 30,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const CompletedPage()),
-                      );
+                      _moveToCompleted(context, product); // Pass the product to mark as received
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFFE63D7C),
+                      backgroundColor: const Color(0xFFE63D7C),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -177,6 +225,28 @@ class ToReceivePage extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _moveToCompleted(BuildContext context, Map<String, dynamic> product) async {
+    final userId = UserSession().getUserId(); // Get the user ID
+
+    // Reference to Firebase Database
+    final database = FirebaseDatabase.instance.ref();
+
+    // The path for the preorder and completed orders
+    final preorderPath = '/users/$userId/toreceive';
+    final completedPath = '/users/$userId/tocompleted';
+
+    // Move data from preorder to completed
+    await database.child(completedPath).push().set(product);
+    await database.child(preorderPath).remove(); // Optionally remove the original data
+
+    // Optionally, navigate to the completed page
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const CompletedPage()),
+          (route) => false,
     );
   }
 }

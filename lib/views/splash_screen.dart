@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:twist_bloom/views/signup_page.dart';
-//import 'package:twist_bloom/views/landing_page.dart';
 import 'dart:async';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
@@ -11,7 +10,6 @@ void main() {
 void _navigateToAuthPage(BuildContext context) {
   Navigator.of(context).push(
     PageRouteBuilder(
-      //pageBuilder: (context, animation, secondaryAnimation) => const HomePage(),
       pageBuilder: (context, animation, secondaryAnimation) =>
           const SignUpPage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {

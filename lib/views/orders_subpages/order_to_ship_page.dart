@@ -5,6 +5,7 @@ import 'order_to_pay_page.dart';
 import 'order_to_receive_page.dart';
 import 'order_completed_page.dart';
 import 'order_to_rate_page.dart';
+import '/../user_session.dart';  // Import the user session to get the userId
 
 class ToShipPage extends StatefulWidget {
   const ToShipPage({super.key});
@@ -14,25 +15,73 @@ class ToShipPage extends StatefulWidget {
 }
 
 class _ToShipPageState extends State<ToShipPage> {
-  final DatabaseReference _toShipRef = FirebaseDatabase.instance.ref().child('users/user1/toship');
+  String? userId;
+  late DatabaseReference _toShipRef;
+  late DatabaseReference _toReceiveRef;
   List<Map<dynamic, dynamic>> _products = [];
 
   @override
   void initState() {
     super.initState();
+    userId = UserSession().getUserId(); // Get the user ID here
+    _toShipRef = FirebaseDatabase.instance.ref().child('/users/$userId/toship');
+    _toReceiveRef = FirebaseDatabase.instance.ref().child('/users/$userId/toreceive');
     _fetchToShipProducts();
   }
 
   void _fetchToShipProducts() {
     _toShipRef.onValue.listen((event) {
-      final data = event.snapshot.value as Map<dynamic, dynamic>?;
+      final data = event.snapshot.value as Map<dynamic, dynamic>?; // Listen for changes
       if (data != null) {
         setState(() {
-          _products = data.entries.map((entry) => entry.value as Map<dynamic, dynamic>).toList();
+          // Logging the fetched data
+          print('Fetched products: $data');
+
+          _products = data.entries.map((entry) {
+            final product = entry.value as Map<dynamic, dynamic>;
+            // Ensure that the ID is included
+            product['id'] = entry.key; // Set the ID to the key
+            return product;
+          }).toList();
         });
       }
     });
   }
+
+
+  void _markAsPaid(Map<dynamic, dynamic> product) {
+    final newProductRef = _toReceiveRef.push();
+
+    final updatedProduct = {
+      'image': product['image'],
+      'name': product['name'],
+      'price': product['price'],
+      'date': product['date'],
+      'status': 'Paid',
+    };
+
+    print('Moving product to To Receive with ID: ${product['id']}');
+
+    newProductRef.set(updatedProduct).then((_) {
+      print('Product moved to To Receive successfully.');
+
+      // Attempt to remove the product from 'To Ship'
+      print('Attempting to remove product from To Ship with ID: ${product['id']}');
+
+      _toShipRef.child(product['id']).remove().then((_) {
+        print('Product removed from To Ship successfully.');
+        // Update local state
+        setState(() {
+          _products.removeWhere((item) => item['id'] == product['id']);
+        });
+      }).catchError((error) {
+        print('Failed to remove product from To Ship: $error');
+      });
+    }).catchError((error) {
+      print('Failed to move product to To Receive: $error');
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +164,7 @@ class _ToShipPageState extends State<ToShipPage> {
   }
 
   Widget _buildProductCard(BuildContext context, Map<dynamic, dynamic> product) {
-    final imageUrl = product['image'] ?? '';  // Get image URL from product details
+    final imageUrl = product['image'] ?? ''; // Get image URL from product details
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16),
@@ -182,7 +231,7 @@ class _ToShipPageState extends State<ToShipPage> {
                 SizedBox(
                   height: 30,
                   child: ElevatedButton(
-                    onPressed: () {}, // No action needed since it's already paid
+                    onPressed: () => _markAsPaid(product), // Call the function when pressed
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFFCE3E5), // Change to gray to indicate "Paid"
                       shape: RoundedRectangleBorder(
@@ -202,7 +251,6 @@ class _ToShipPageState extends State<ToShipPage> {
       ),
     );
   }
-
 
   Widget _buildPlaceholderImage() {
     return Image.asset(
