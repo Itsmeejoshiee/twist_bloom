@@ -11,7 +11,7 @@ class HelpPage extends StatelessWidget {
       home: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: const Text('Help & Support'),
+          title: const Text('Help & Support', style: TextStyle(fontFamily: 'Poppins')),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
@@ -43,6 +43,7 @@ class HelpPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
+                            fontFamily: 'Poppins'
                           ),
                         ),
                       ),
@@ -57,7 +58,8 @@ class HelpPage extends StatelessWidget {
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
+                              'Q1: What is Twist Bloom?\n'
+                                  'A: Twist Bloom is an online platform for purchasing and ordering flowers for all occasions.',
                             ),
                           ),
                         ),
@@ -74,7 +76,8 @@ class HelpPage extends StatelessWidget {
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
+                              'Q2: How can I track my order?\n'
+                                  'A: You can track your order through the tracking link sent to your email after purchase.',
                             ),
                           ),
                         ),
@@ -91,7 +94,8 @@ class HelpPage extends StatelessWidget {
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
+                              'Q3: Do you offer same-day delivery?\n'
+                                  'A: Yes, we offer same-day delivery on selected products if the order is placed before noon.',
                             ),
                           ),
                         ),
@@ -100,8 +104,10 @@ class HelpPage extends StatelessWidget {
                         title: Text(
                           'About Us',
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold
                           ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                       SizedBox(
@@ -115,7 +121,9 @@ class HelpPage extends StatelessWidget {
                           child: const Padding(
                             padding: EdgeInsets.all(8.0),
                             child: Text(
-                              'Lorem ipsum odor amet, consectetuer adipiscing elit. Ultrices malesuada massa',
+                              'At Twist Bloom, we believe that every moment deserves to be celebrated with flowers. '
+                                  'Our mission is to provide the freshest flowers and the most beautiful arrangements for every occasion, '
+                                  'backed by exceptional customer service.',
                             ),
                           ),
                         ),
@@ -123,7 +131,31 @@ class HelpPage extends StatelessWidget {
                       const SizedBox(height: 20),
                       TextButton(
                         onPressed: () {
-                          // Add your contact us logic here
+                          // Show the alert dialog when the button is pressed
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Details'), // Title of the alert dialog
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min, // Make the dialog size wrap its content
+                                  children: const [
+                                    Text('Email: twistandbloom@gmail.com'), // Email as subtext
+                                    SizedBox(height: 8), // Add some space between the lines
+                                    Text('Phone: 09123456789'), // Phone number as subtext
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(); // Close the dialog
+                                    },
+                                    child: const Text('Close'), // Button to close the dialog
+                                  ),
+                                ],
+                              );
+                            },
+                          );
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.black,
@@ -138,6 +170,7 @@ class HelpPage extends StatelessWidget {
                         ),
                         child: const Text('Contact Us'),
                       ),
+
                       const SizedBox(height: 20), // Adding some extra space at the bottom
                     ],
                   ),
