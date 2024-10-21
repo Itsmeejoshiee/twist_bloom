@@ -266,7 +266,7 @@ class _SunflowerDetails extends State<SunflowerDetails> {
     String? userId = UserSession().getUserId(); // Get the dynamic user ID
 
     // Get the current date and format it
-    String dateTimeNow = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    String dateTimeNow = DateTime.now().toIso8601String();
 
     // Create a map for pre-order details
     Map<String, dynamic> preOrderDetails = {

@@ -275,14 +275,14 @@ class _TulipDetails extends State<TulipDetails> {
     final database = FirebaseDatabase.instance.ref(); // Get the database reference
 
     // Get the current date and time in a readable format
-    final String preOrderDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    final String preOrderDate = DateTime.now().toIso8601String();
 
     // Get the user ID from UserSession
     String? userId = UserSession().getUserId();
 
     // Create a map for the pre-order data
     Map<String, dynamic> preOrderData = {
-      'product_name': 'Tulip',
+      'name': 'Tulip',
       'color': selectedColorName,
       'quantity': quantity,
       'price': price,

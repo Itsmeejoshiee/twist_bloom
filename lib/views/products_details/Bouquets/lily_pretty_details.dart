@@ -140,7 +140,7 @@ class _LilyPrettyDetails extends State<LilyPrettyDetails> {
   Future<void> _addToPreOrder() async {
     try {
       String? userId = UserSession().getUserId(); // Get user ID from session
-      String orderDate = DateFormat('yyyy-MM-dd').format(DateTime.now()); // Format the current date
+      String orderDate = DateTime.now().toIso8601String(); // Format the current date
       // Create a new order object
       Map<String, dynamic> orderData = {
         'name': itemName,

@@ -5,6 +5,7 @@ import 'package:twist_bloom/views/products_details/Bouquets/sunshine_wonder_deta
 import 'package:twist_bloom/views/products_details/Bouquets/tulip_elegante_details.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'dart:async';
+import '../user_session.dart';
 import '../widgets/product_ontap.dart';
 import 'promo_page.dart';
 import '../widgets/bottom_navbar.dart';
