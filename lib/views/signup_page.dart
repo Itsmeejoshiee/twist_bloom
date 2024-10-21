@@ -94,14 +94,6 @@ class _SignUpPageState extends State<SignUpPage> {
                             }
                           },
                         ),
-                        SizedBox(width: 16),
-                        IconButton(
-                          icon: Icon(Icons.facebook,
-                              size: 40, color: Colors.blue),
-                          onPressed: () {
-//Dito yung sa fb
-                          },
-                        ),
                       ],
                     ),
                     SizedBox(height: 32),
