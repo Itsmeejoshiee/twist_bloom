@@ -16,4 +16,8 @@ class UserSession {
   String? getUserId() {
     return userId;
   }
+
+  void logout() {
+    userId = null;
+  }
 }
