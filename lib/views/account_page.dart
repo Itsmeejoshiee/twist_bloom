@@ -1,8 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'account_subpages/personal_info_page.dart';
 import 'account_subpages/login_security.dart';
 import 'principal_classes.dart';
-import 'signin_page.dart';
+import 'signup_page.dart';
 import '../widgets/gradient_background.dart';
 
 class AccountPage extends StatelessWidget {
@@ -13,8 +14,11 @@ class AccountPage extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Account',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30,
+        title: const Text(
+          'Account',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
           ),
         ),
         leading: IconButton(
@@ -55,8 +59,8 @@ class AccountPage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: const AssetImage(
-                          'assets/profile_picture.png'),
+                      backgroundImage:
+                          const AssetImage('assets/profile_picture.png'),
                       // Profile Picture
                       child: RawMaterialButton(
                         onPressed: () {
@@ -80,7 +84,8 @@ class AccountPage extends StatelessWidget {
 
               // Second box
               Container(
-                margin: const EdgeInsets.only(top: 12, left: 32, right: 32, bottom: 12),
+                margin: const EdgeInsets.only(
+                    top: 12, left: 32, right: 32, bottom: 12),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -108,7 +113,8 @@ class AccountPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const PersonalInfoPage()),
+                            MaterialPageRoute(
+                                builder: (context) => const PersonalInfoPage()),
                           );
                         },
                         label: const Text(
@@ -132,7 +138,8 @@ class AccountPage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const LoginAndSecurity()),
+                            MaterialPageRoute(
+                                builder: (context) => const LoginAndSecurity()),
                           );
                         },
                         label: const Text(
@@ -150,7 +157,8 @@ class AccountPage extends StatelessWidget {
 
               // Third box
               Container(
-                margin: const EdgeInsets.only(top: 12, left: 32, right: 32, bottom: 12),
+                margin: const EdgeInsets.only(
+                    top: 12, left: 32, right: 32, bottom: 12),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -297,14 +305,12 @@ class AccountPage extends StatelessWidget {
                 if (password.isNotEmpty) {
                   // Proceed with account deletion logic
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Account deleted"),
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Account deleted"),
                   ));
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Password required"),
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Password required"),
                   ));
                 }
               },
@@ -332,9 +338,10 @@ class AccountPage extends StatelessWidget {
             TextButton(
               child: const Text('Log Out'),
               onPressed: () {
+                FirebaseAuth.instance.signOut();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const SignInPage()),
+                  MaterialPageRoute(builder: (context) => const SignUpPage()),
                 );
               },
             ),

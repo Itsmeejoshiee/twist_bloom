@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:twist_bloom/Views/signin_page.dart';
+import 'package:twist_bloom/views/signup_page.dart';
 import 'dart:async';
 import 'package:twist_bloom/widgets/gradient_background.dart';
-import 'package:twist_bloom/Views/landing_page.dart';
 
 void main() {
   runApp(const LoadingPage());
@@ -12,13 +11,15 @@ void _navigateToAuthPage(BuildContext context) {
   Navigator.of(context).push(
     PageRouteBuilder(
       //pageBuilder: (context, animation, secondaryAnimation) => const SignInPage(),
-      pageBuilder: (context, animation, secondaryAnimation) => const HomePage(),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const SignUpPage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
         const curve = Curves.easeInOut;
         var tween = Tween(begin: begin, end: end);
-        var offsetAnimation = animation.drive(tween.chain(CurveTween(curve: curve)));
+        var offsetAnimation =
+            animation.drive(tween.chain(CurveTween(curve: curve)));
         return SlideTransition(position: offsetAnimation, child: child);
       },
     ),

@@ -6,31 +6,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:twist_bloom/Views/landing_page.dart';
 import 'package:twist_bloom/Views/principal_classes.dart';
+import 'package:twist_bloom/Views/signin_page.dart';
 import 'package:twist_bloom/models/user_auth/firebase_auth_service.dart';
-import 'package:twist_bloom/views/signup_page.dart';
 import 'package:twist_bloom/widgets/gradient_background.dart';
 
 void main() {
-  runApp(const SignInPage());
+  runApp(const SignUpPage());
 }
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   bool _obscurePassword = true;
 
   final FirebaseAuthService _auth = FirebaseAuthService();
 
+  TextEditingController _fullnameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
+    _fullnameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -52,6 +54,14 @@ class _SignInPageState extends State<SignInPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 30),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 40.0),
+                      child: Text(
+                        "Let's Get Started",
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                     Text(
                       "Continue with",
                       style: TextStyle(fontSize: 14),
@@ -80,6 +90,11 @@ class _SignInPageState extends State<SignInPage> {
                       ],
                     ),
                     SizedBox(height: 32),
+                    _buildTextField(
+                        labelText: "Full Name",
+                        hintText: "Enter your full name",
+                        controller: _fullnameController),
+                    SizedBox(height: 25),
                     _buildTextField(
                         labelText: "E-mail",
                         hintText: "Enter your email",
@@ -115,7 +130,7 @@ class _SignInPageState extends State<SignInPage> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: _signIn,
+                          onPressed: _signUp,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFFF92B2),
                             foregroundColor: Colors.black,
@@ -125,7 +140,7 @@ class _SignInPageState extends State<SignInPage> {
                             ),
                             elevation: 4,
                           ),
-                          child: Text("Sign In"),
+                          child: Text("Register"),
                         ),
                       ),
                       SizedBox(height: 16),
@@ -135,10 +150,10 @@ class _SignInPageState extends State<SignInPage> {
                             style: TextStyle(fontSize: 16, color: Colors.black),
                             children: [
                               TextSpan(
-                                text: "Don't have an account? ",
+                                text: "Already have an account? ",
                               ),
                               TextSpan(
-                                text: "Sign Up",
+                                text: "Log in",
                                 style: TextStyle(
                                     color: Colors.blue,
                                     decoration: TextDecoration.none),
@@ -147,7 +162,7 @@ class _SignInPageState extends State<SignInPage> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            const SignUpPage(),
+                                            const SignInPage(),
                                       ),
                                     );
                                   },
@@ -209,11 +224,12 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
-  void _signIn() async {
+  void _signUp() async {
+    String username = _fullnameController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    User? user = await _auth.signInwithEmailAndPassword(email, password);
+    User? user = await _auth.signUpwithEmailAndPassword(email, password);
 
     if (user != null) {
       Navigator.push(
