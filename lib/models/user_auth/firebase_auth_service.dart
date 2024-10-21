@@ -5,11 +5,17 @@ class FirebaseAuthService {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<User?> signUpwithEmailAndPassword(
-      String email, String password) async {
+      String fullname, String email, String password) async {
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      return credential.user;
+      User? user = credential.user;
+      if (user != null) {
+        await user.updateProfile(displayName: fullname);
+        await user.reload();
+        user = _auth.currentUser;
+      }
+      return user;
     } catch (e) {
       print("Error Occured: $e");
     }
