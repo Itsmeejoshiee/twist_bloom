@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart'; // Add this package for the rating bar
 import 'package:twist_bloom/widgets/gradient_background.dart';
 import 'package:twist_bloom/views/orders_subpages/order_completed_page.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_receive_page.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_ship_page.dart';
 import 'package:twist_bloom/views/orders_subpages/order_to_pay_page.dart';
 
-class ToRatePage extends StatelessWidget {
+class ToRatePage extends StatefulWidget {
   const ToRatePage({super.key});
+
+  @override
+  _ToRatePageState createState() => _ToRatePageState();
+}
+
+class _ToRatePageState extends State<ToRatePage> {
+  List<String> itemsToRate = [
+    'Poppies and Rose Bouquet'
+  ]; // List of items to rate
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +30,15 @@ class ToRatePage extends StatelessWidget {
         body: Column(
           children: [
             _buildNavigationRow(context),
-            const SizedBox(height: 16), // Add spacing between tabs and products
-            _buildProductCard(
-              context,
-              productName: 'Poppies and Rose Bouquet',
-              price: '₱150',
-              deliveredDate: 'Delivered on: September 20, 2024',
-              buttonText: 'Rate',
-              buttonColor: Color(0xFFE63D7C), // Pink color for "Rate"
-            ),
+            const SizedBox(height: 16),
+            ...itemsToRate.map((item) => _buildProductCard(
+                  context,
+                  productName: item,
+                  price: '₱150',
+                  deliveredDate: 'Delivered on: September 20, 2024',
+                  buttonText: 'Rate',
+                  buttonColor: const Color(0xFFE63D7C),
+                )),
           ],
         ),
       ),
@@ -39,46 +49,53 @@ class ToRatePage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildNavigationButton('To Pay', const ToPayPage(), context, isCurrentPage: false),
-        _buildNavigationButton('To Ship', const ToShipPage(), context, isCurrentPage: false),
-        _buildNavigationButton('To Receive', const ToReceivePage(), context, isCurrentPage: false),
-        _buildNavigationButton('Completed', const CompletedPage(), context, isCurrentPage: false),
-        _buildNavigationButton('To Rate', const ToRatePage(), context, isCurrentPage: true),
+        _buildNavigationButton('To Pay', const ToPayPage(), context,
+            isCurrentPage: false),
+        _buildNavigationButton('To Ship', const ToShipPage(), context,
+            isCurrentPage: false),
+        _buildNavigationButton('To Receive', const ToReceivePage(), context,
+            isCurrentPage: false),
+        _buildNavigationButton('Completed', const CompletedPage(), context,
+            isCurrentPage: false),
+        _buildNavigationButton('To Rate', const ToRatePage(), context,
+            isCurrentPage: true),
       ],
     );
   }
 
-  Widget _buildNavigationButton(String label, Widget page, BuildContext context, {required bool isCurrentPage}) {
+  Widget _buildNavigationButton(String label, Widget page, BuildContext context,
+      {required bool isCurrentPage}) {
     return GestureDetector(
       onTap: isCurrentPage
           ? null
           : () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => page,
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              return child; // No animation
+              Navigator.pushAndRemoveUntil(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) => page,
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return child; // No animation
+                  },
+                ),
+                (Route<dynamic> route) => route.isFirst,
+              );
             },
-          ),
-              (Route<dynamic> route) => route.isFirst,
-        );
-      },
       child: Column(
         children: [
           Text(
             label,
             style: TextStyle(
               fontSize: 12,
-              color: isCurrentPage ? Color(0xFFE63D7C) : Colors.black, // Set color based on current page
+              color: isCurrentPage ? const Color(0xFFE63D7C) : Colors.black,
             ),
           ),
-          if (isCurrentPage) // Underline for the current page
+          if (isCurrentPage)
             Container(
               margin: const EdgeInsets.only(top: 4),
               height: 2,
               width: 60,
-              color: Color(0xFFE63D7C),
+              color: const Color(0xFFE63D7C),
             ),
         ],
       ),
@@ -86,17 +103,17 @@ class ToRatePage extends StatelessWidget {
   }
 
   Widget _buildProductCard(
-      BuildContext context, {
-        required String productName,
-        required String price,
-        required String deliveredDate,
-        required String buttonText,
-        required Color buttonColor,
-      }) {
+    BuildContext context, {
+    required String productName,
+    required String price,
+    required String deliveredDate,
+    required String buttonText,
+    required Color buttonColor,
+  }) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: const Color(0xFFFF92B2).withOpacity(0.35), // Matching the pink color
+      color: const Color(0xFFFF92B2).withOpacity(0.35),
       elevation: 0,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -113,7 +130,7 @@ class ToRatePage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  'assets/icon/product/bouquets/sample_design6.png', // Replace with the correct asset
+                  'assets/icon/product/bouquets/sample_design6.png',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -125,12 +142,14 @@ class ToRatePage extends StatelessWidget {
                 children: [
                   Text(
                     productName,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     price,
-                    style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -148,17 +167,17 @@ class ToRatePage extends StatelessWidget {
                   height: 30,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Implement your rating functionality here
+                      _showRatingDialog(context, productName);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonColor, // Dynamic button color for rating
+                      backgroundColor: buttonColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     child: Text(
                       buttonText,
-                      style: const TextStyle(fontSize: 12, color: Colors.white), // White text for button
+                      style: const TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
                 ),
@@ -166,6 +185,70 @@ class ToRatePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showRatingDialog(BuildContext context, String productName) {
+    double userRating = 3; // Default rating value
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Rate Product"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text("How would you rate this product?"),
+              const SizedBox(height: 16),
+              RatingBar.builder(
+                initialRating: 3,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemCount: 5,
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                onRatingUpdate: (rating) {
+                  userRating = rating;
+                },
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog without rating
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                _submitRating(productName, userRating);
+                Navigator.pop(context); // Close the dialog after rating
+              },
+              child: const Text("Submit"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _submitRating(String productName, double rating) {
+    // Remove the item from the list after rating
+    setState(() {
+      itemsToRate.remove(productName);
+    });
+
+    // Navigate back to the orders page
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            const CompletedPage(), // Navigate to the orders page
       ),
     );
   }
