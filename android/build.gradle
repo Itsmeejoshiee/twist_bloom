@@ -1,3 +1,16 @@
+buildscript {
+    ext.kotlin_version = '1.9.0' // Or use another compatible Kotlin version.
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:8.0.2" // Match your version with the Android Gradle Plugin.
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.gms:google-services:4.4.2" // For Google Services/Firebase
+    }
+}
+
 plugins {
     id("com.google.gms.google-services") version "4.4.2" apply false
 }
@@ -12,9 +25,6 @@ allprojects {
 rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
-subprojects {
-    project.evaluationDependsOn(':app')
 }
 
 tasks.register("clean", Delete) {
