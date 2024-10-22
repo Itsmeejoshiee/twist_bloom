@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\Users\emman\dev\flutter"
-export "FLUTTER_APPLICATION_PATH=C:\Users\emman\Downloads\adet app\twist_bloom"
+export "FLUTTER_ROOT=C:\Users\xcrayonex\AppData\Local\Flutter\flutter_windows_3.19.6-stable\flutter"
+export "FLUTTER_APPLICATION_PATH=C:\Users\xcrayonex\Documents\Coding Files\last\twist_bloom"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib\main.dart"
 export "FLUTTER_BUILD_DIR=build"

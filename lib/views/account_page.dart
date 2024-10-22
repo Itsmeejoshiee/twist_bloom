@@ -15,11 +15,13 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends State<AccountPage> {
   String? userName; // Variable to hold the user name
+  String? _profileImageUrl; // Variable to hold the profile image URL
 
   @override
   void initState() {
     super.initState();
     _fetchCurrentName();
+    _fetchUserProfile();
   }
 
   void _fetchCurrentName() {
@@ -32,6 +34,16 @@ class _AccountPageState extends State<AccountPage> {
     } else {
       setState(() {
         userName = 'User'; // Fallback if no display name is found
+      });
+    }
+  }
+
+  Future<void> _fetchUserProfile() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        userName = user.displayName ?? 'User';
+        _profileImageUrl = user.photoURL;
       });
     }
   }
@@ -89,8 +101,11 @@ class _AccountPageState extends State<AccountPage> {
                   children: [
                     CircleAvatar(
                       radius: 50,
+                      foregroundImage: _profileImageUrl != null
+                          ? NetworkImage(_profileImageUrl!)
+                          : null,
                       backgroundImage:
-                      const AssetImage('assets/profile_picture.png'),
+                          const AssetImage('assets/user_avatar.png'),
                       child: RawMaterialButton(
                         onPressed: () {
                           _showPhotoOptions(context);
@@ -101,9 +116,10 @@ class _AccountPageState extends State<AccountPage> {
                     ),
                     const SizedBox(height: 5, width: 318),
                     Text(
-                      userName ?? 'User', // Use fetched user name or fallback to 'User'
+                      userName ??
+                          'User', // Use fetched user name or fallback to 'User'
                       style: const TextStyle(
-                          fontSize: 32,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'Poppins'),
                     ),
@@ -148,7 +164,8 @@ class _AccountPageState extends State<AccountPage> {
                             );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('User ID not found')),
+                              const SnackBar(
+                                  content: Text('User ID not found')),
                             );
                           }
                         },
