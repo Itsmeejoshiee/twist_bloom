@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:twist_bloom/views/signin_page.dart';
+import 'package:twist_bloom/views/signup_page.dart';
 import 'account_subpages/personal_info_page.dart';
 import 'account_subpages/login_security.dart';
 import 'principal_classes.dart';
@@ -352,12 +354,23 @@ class _AccountPageState extends State<AccountPage> {
             ),
             TextButton(
               child: const Text('Delete'),
-              onPressed: () {
+              onPressed: () async {
                 String password = passwordController.text;
                 if (password.isNotEmpty) {
-                  // Proceed with account deletion logic
+                  try {
+                    User? user = FirebaseAuth.instance.currentUser;
+                    if (user != null) {
+                      await user.delete();
+                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpPage()),
+                      );
+                    }
+                  } catch (e) {
+                    print('Error deleting account: $e');
+                  }
                 }
-                Navigator.pop(context);
               },
             ),
           ],
@@ -382,9 +395,13 @@ class _AccountPageState extends State<AccountPage> {
             ),
             TextButton(
               child: const Text('Log Out'),
-              onPressed: () {
-                // Proceed with log out logic
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
                 Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInPage()),
+                );
               },
             ),
           ],
