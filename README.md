@@ -1,7 +1,10 @@
 # twist_bloom
 
-A new Flutter project.
+A Flutter project submitted to 6ADET.
 CS-301 
+
+Twist & Bloom is a seamless e-commerce platform designed to bring the Twist & Bloom shopping experience to your fingertips. 
+Discover and purchase your favorite products effortlessly, all in one convenient app!
 
 Group Members:
 Gorospe, Josiah Faith V.
